@@ -12,6 +12,7 @@ import {
 import axios from "axios";
 import useSWR from "swr";
 import { NextPageWithLayout } from "../_app";
+import Header from "@/components/landing_page/header";
 
 interface MovieList {
     results: Movie[];
@@ -33,20 +34,8 @@ const HomeDetail: NextPageWithLayout = () => {
 
     return (
         <>
-            <Box sx={{
-                display: "flex",
-                alignItems: "center",
-                flexGrow: 1,
-                width: "317px",
-                color: "#FFF",
-                fontSize: "20px",
-                fontWeight: 600,
-                lineHeight: "normal"
-            }}>
-                What do you want to watch?
-            </Box>
+            <Header />
             <Box sx={{ height: "21px" }}>
-
             </Box >
             <Box
                 sx={{
