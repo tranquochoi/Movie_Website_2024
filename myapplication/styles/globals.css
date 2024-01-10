@@ -1,0 +1,34 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.zoom-card {
+    transition: transform 0.3s ease-in-out;
+}
+
+.zoom-card:hover {
+    transform: scale(1.1);
+    /* Adjust the scale factor as needed */
+}
+
+.logoContainer {
+    height: 40px;
+    width: auto;
+}
+
+.logoImage {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
+
+:root {
+    background-color: #242A32;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        background-color: #242A32;
+
+    }
+}
