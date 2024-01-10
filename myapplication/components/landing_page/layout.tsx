@@ -22,9 +22,9 @@ interface MenuItemObject {
 
 export default function Layout({ children }: { children: React.ReactNode }) {
     const menu: MenuItemObject[] = [
-        { title: "Home", url: "/", icons: { normal: "/Home.png", active: "/ActiveHome.png" } },
-        { title: "Search", url: "/tab/search", icons: { normal: "/Search.png", active: "/ActiveSearch.png" } },
-        { title: "Watch list", url: "/tab/about", icons: { normal: "/Save.png", active: "/ActiveSave.png" } },
+        { title: "Home", url: "./home", icons: { normal: "/Home.png", active: "/ActiveHome.png" } },
+        { title: "Search", url: "./movie-search", icons: { normal: "/Search.png", active: "/ActiveSearch.png" } },
+        { title: "Watch list", url: "./movie-watchlist", icons: { normal: "/Save.png", active: "/ActiveSave.png" } },
     ];
 
     const [currentMenu, setCurrentMenu] = useState(0);
@@ -52,7 +52,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                                         padding: "8px 44px",
                                                     }}
                                                     onClick={() => setCurrentMenu(index)}
-                                                    disableRipple // Disable the ripple effect
+                                                    disableRipple
                                                 >
                                                     <img
                                                         src={currentMenu === index ? item.icons.active : item.icons.normal}
