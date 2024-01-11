@@ -28,9 +28,9 @@ export default function HomeMenu({}: {}) {
   const [currentMenu, setCurrentMenu] = useState(0);
 
   return (
-    <Box>
-      <Toolbar>
-        <Stack direction="row" gap={4}>
+    <Toolbar>
+      <Box>
+        <Stack direction="row" gap={2}>
           {menu.map((item, index) => (
             <Link
               key={item.url}
@@ -42,9 +42,7 @@ export default function HomeMenu({}: {}) {
             </Link>
           ))}
         </Stack>
-      </Toolbar>
-
-      <Toolbar />
-    </Box>
+      </Box>
+    </Toolbar>
   );
 }

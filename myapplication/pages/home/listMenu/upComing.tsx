@@ -9,10 +9,8 @@ import {
   Typography,
 } from "@mui/material";
 import useSWR from "swr";
-
 import Layout from "@/components/landing_page/layout";
 import axios from "axios";
-
 import { NextPageWithLayout } from "@/pages/_app";
 import HomeMenu from "@/components/landing_page/homeLayoutMenu";
 import HomeDetail from "..";
@@ -40,36 +38,64 @@ const UpComing: NextPageWithLayout = () => {
     return <Typography>Error loading data</Typography>;
   }
 
+  const moviesToShow = data.results.slice(0, 6);
+
   return (
     <Box
       sx={{
         display: "flex",
-        overflowX: "auto",
-        gap: 2,
+        flexDirection: "column",
+        gap: 1,
       }}
     >
-      {data.results.map((movie) => (
-        <Grid item xs={12} sm={6} md={4} lg={3} key={movie.id}>
-          <Link href={`/movie-detail/${movie.id}`} underline="none">
-            <Card
-              elevation={5}
-              className="zoom-card small-card"
-              sx={{ height: "95%", width: "290%" }}
+      {[...Array(10)].map((_, rowIndex) => (
+        <Box
+          key={rowIndex}
+          sx={{
+            display: "flex",
+            overflowX: "auto",
+            gap: 2,
+            flexWrap: "nowrap",
+          }}
+        >
+          {data?.results.slice(rowIndex * 2, rowIndex * 2 + 2).map((movie) => (
+            <Box
+              key={movie.id}
+              sx={{
+                flex: "0 0 auto",
+                marginRight: 0.5,
+              }}
             >
-              <CardMedia
-                component="img"
-                sx={{
-                  height: "100%",
-                  objectFit: "cover",
-                  width: "auto",
-                }}
-                image={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                alt={movie.title}
-              />
-              <CardContent></CardContent>
-            </Card>
-          </Link>
-        </Grid>
+              <Link href={`/movie-detail/${movie.id}`} underline="none">
+                <Card
+                  elevation={3}
+                  className="zoom-card small-card"
+                  sx={{
+                    height: "220px",
+                    width: "150px",
+                    borderRadius: "16px",
+                  }}
+                >
+                  <CardMedia
+                    component="img"
+                    sx={{
+                      height: "100%",
+                      objectFit: "cover",
+                      width: "100%",
+                      borderRadius: "16px",
+                    }}
+                    image={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                    alt={movie.title}
+                  />
+                  <CardContent />
+                </Card>
+              </Link>
+              <Box>
+                <Typography>Date</Typography>
+              </Box>
+            </Box>
+          ))}
+        </Box>
       ))}
     </Box>
   );
@@ -88,14 +114,3 @@ UpComing.getLayout = function getLayout(page) {
 };
 
 export default UpComing;
-
-// HomeDetail2.getLayout = function getLayout(page: ReactElement) {
-//   return (
-//     <Layout>
-//       {page}
-//       <Layout2 />
-//     </Layout>
-//   );
-// };
-
-// export default HomeDetail2;
