@@ -33,21 +33,21 @@ const HomeDetail: NextPageWithLayout = () => {
 
   return (
     <>
-      <Box sx={{
-        display: "flex",
-        alignItems: "center",
-        flexGrow: 1,
-        width: "317px",
-        color: "#FFF",
-        fontSize: "20px",
-        fontWeight: 600,
-        lineHeight: "normal"
-      }}>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          flexGrow: 1,
+          width: "317px",
+          color: "#FFF",
+          fontSize: "20px",
+          fontWeight: 600,
+          lineHeight: "normal",
+        }}
+      >
         What do you want to watch?
       </Box>
-      <Box sx={{ height: "21px" }}>
-
-      </Box >
+      <Box sx={{ height: "21px" }}></Box>
       <Box
         sx={{
           display: "flex",
@@ -67,7 +67,15 @@ const HomeDetail: NextPageWithLayout = () => {
             }}
           >
             <Link href={`/movie-detail/${movie.id}`} underline="none">
-              <Card elevation={5} className="zoom-card small-card" sx={{ height: "210px", width: "139.581px", borderRadius: "16px" }}>
+              <Card
+                elevation={5}
+                className="zoom-card small-card"
+                sx={{
+                  height: "210px",
+                  width: "139.581px",
+                  borderRadius: "16px",
+                }}
+              >
                 <CardMedia
                   component="img"
                   sx={{

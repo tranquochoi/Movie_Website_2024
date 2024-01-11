@@ -10,7 +10,10 @@ import {
   Link,
   Paper,
   Typography,
-  Autocomplete, // Import Autocomplete component
+  Autocomplete,
+  AppBar,
+  Toolbar,
+  IconButton, // Import Autocomplete component
 } from "@mui/material";
 import useSWR from "swr";
 import { NextPageWithLayout } from "../_app";
@@ -19,6 +22,8 @@ import axios from "axios";
 import {
   AccessTime, // Thời lượng icon
   CalendarToday,
+  ArrowBack,
+  Info,
 } from "@mui/icons-material";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 
@@ -84,6 +89,27 @@ const SearchDetail: NextPageWithLayout = () => {
 
   return (
     <Box>
+      <AppBar
+        position="static"
+        sx={{
+          backgroundColor: "#242A32",
+          marginBottom: "20px",
+          boxShadow: "none",
+        }}
+      >
+        <Toolbar>
+          <IconButton edge="start" color="inherit" aria-label="back">
+            <ArrowBack />
+          </IconButton>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            Search
+          </Typography>
+          <IconButton edge="end" color="inherit" aria-label="info">
+            <Info />
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+
       <Paper
         component="form"
         sx={{
@@ -99,7 +125,7 @@ const SearchDetail: NextPageWithLayout = () => {
       >
         <Autocomplete
           freeSolo
-          options={getOptions()} // Sử dụng hàm getOptions để lấy danh sách gợi ý
+          options={getOptions()}
           renderInput={(params) => (
             <InputBase
               {...params}
@@ -119,7 +145,7 @@ const SearchDetail: NextPageWithLayout = () => {
       <Grid container spacing={3}>
         {filteredResults.map((movie) => (
           <Grid item key={movie.id} xs={12} sm={6} md={4} lg={3}>
-            <Card>
+            <Card sx={{ boxShadow: "none", marginTop: "20px" }}>
               <Box
                 sx={{
                   display: "flex",
@@ -141,7 +167,7 @@ const SearchDetail: NextPageWithLayout = () => {
                     maxHeight: "120px",
                   }} // Điều chỉnh kích thước ảnh
                 />
-                <CardContent sx={{ flex: "2 1 auto", textAlign: "left" }}>
+                <CardContent sx={{ flex: "2 1 auto" }}>
                   <Typography variant="h6">{movie.title}</Typography>
                   <Typography>
                     <StarBorderIcon sx={{ fontSize: 30, color: "orange" }} />{" "}

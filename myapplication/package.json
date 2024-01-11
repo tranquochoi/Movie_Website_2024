@@ -1,38 +1,39 @@
 {
-	"name": "myapplication",
-	"version": "0.1.0",
-	"private": true,
-	"scripts": {
-		"dev": "next dev",
-		"build": "next build",
-		"start": "next start",
-		"lint": "next lint"
-	},
-	"dependencies": {
-		"@emotion/react": "^11.11.3",
-		"@emotion/styled": "^11.11.0",
-		"@mui/icons-material": "^5.15.2",
-		"@mui/material": "^5.15.2",
-		"@mui/styled-engine-sc": "^6.0.0-alpha.10",
-		"axios": "^1.6.3",
-		"express": "^4.18.2",
-		"next": "14.0.4",
-		"nodemon": "^3.0.2",
-		"react": "^18",
-		"react-dom": "^18",
-		"react-slick": "^0.29.0",
-		"slick-carousel": "^1.8.1",
-		"styled-components": "^6.1.6",
-		"swr": "^2.2.4"
-	},
-	"devDependencies": {
-		"@types/node": "^20",
-		"@types/react": "^18",
-		"@types/react-dom": "^18",
-		"@types/react-slick": "^0.23.13",
-		"autoprefixer": "^10.0.1",
-		"postcss": "^8",
-		"tailwindcss": "^3.3.0",
-		"typescript": "^5"
-	}
+  "name": "myapplication",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.11.3",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.15.2",
+    "@mui/material": "^5.15.2",
+    "@mui/styled-engine-sc": "^6.0.0-alpha.10",
+    "axios": "^1.6.3",
+    "express": "^4.18.2",
+    "next": "14.0.4",
+    "nodemon": "^3.0.2",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-router-dom": "^6.21.1",
+    "react-slick": "^0.29.0",
+    "slick-carousel": "^1.8.1",
+    "styled-components": "^6.1.6",
+    "swr": "^2.2.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "@types/react-slick": "^0.23.13",
+    "autoprefixer": "^10.0.1",
+    "postcss": "^8",
+    "tailwindcss": "^3.3.0",
+    "typescript": "^5.3.3"
+  }
 }
