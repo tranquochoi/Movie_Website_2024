@@ -72,7 +72,7 @@ const Popular: NextPageWithLayout = () => {
                   className="zoom-card small-card"
                   sx={{
                     height: "100px",
-                    width: "160px",
+                    width: "150px",
                   }}
                 >
                   <CardMedia
@@ -88,9 +88,7 @@ const Popular: NextPageWithLayout = () => {
                   <CardContent />
                 </Card>
               </Link>
-              <Box>
-                <Typography>{movie.title}</Typography>
-              </Box>
+              <Box>{movie.title}</Box>
             </Box>
           ))}
         </Box>
