@@ -87,9 +87,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                         <Typography
                           variant="subtitle2"
                           sx={{
-                            color: `${
-                              currentMenu === index ? "#0296E5" : "#67686D"
-                            }`,
+                            color: `${currentMenu === index ? "#0296E5" : "#67686D"
+                              }`,
                           }}
                           onClick={() => setCurrentMenu(index)}
                         >
