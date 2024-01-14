@@ -14,7 +14,7 @@ export default function Detail() {
     <>
     <NavDetail />
     <Box>
-        àhshagfj
+        àhshagfjd
     </Box>
 
     <TabDetail />
