@@ -12,17 +12,21 @@ import {
 } from "@mui/material";
 import Link from "next/link";
 import { title } from "process";
+import { Upcoming } from "@mui/icons-material";
+import Now from "@/pages/home/listMenu/now";
+import UpComing from "@/pages/home/listMenu/upComing";
+import TopRated from "@/pages/home/listMenu/topRated";
+import Popular from "@/pages/home/listMenu/popular";
 
 interface MenuItemObject {
   title: string;
-  url: string;
 }
 export default function HomeMenu({}: {}) {
   const menu: MenuItemObject[] = [
-    { title: "Now playing", url: "/home/listMenu/now" },
-    { title: "Up comming", url: "/home/listMenu/upComing" },
-    { title: "Top rated", url: "/home/listMenu/topRated" },
-    { title: "Popular", url: "/home/listMenu/popular" },
+    { title: "Now playing" },
+    { title: "Up comming" },
+    { title: "Top rated" },
+    { title: "Popular" },
   ];
   const typographyStyle = {
     color: "#FFF",
@@ -35,26 +39,43 @@ export default function HomeMenu({}: {}) {
   };
   const [currentMenu, setCurrentMenu] = useState(0);
 
+  const renderComponent = () => {
+    switch (currentMenu) {
+      case 0:
+        return <Now />;
+      case 1:
+        return <UpComing />;
+      case 2:
+        return <TopRated />;
+      case 3:
+        return <Popular />;
+      default:
+        return null;
+    }
+  };
   return (
-    <Toolbar>
-      <Box>
-        <Stack direction="row" gap={1}>
-          {menu.map((item, index) => (
-            <Link
-              key={item.url}
-              href={item.url}
-              style={{
-                textDecoration: "none",
-                borderBottom: index === currentMenu ? "3px solid #FFF" : "none", // 2px và màu sắc có thể được điều chỉnh
-                paddingBottom: "10px", // Khoảng cách xích xuống dưới
-              }}
-              onClick={() => setCurrentMenu(index)}
-            >
-              <Typography sx={typographyStyle}>{item.title}</Typography>
-            </Link>
-          ))}
-        </Stack>
-      </Box>
-    </Toolbar>
+    <>
+      <Toolbar>
+        <Box>
+          <Stack direction="row" gap={1}>
+            {menu.map((item, index) => (
+              <Box
+                key={item.title}
+                style={{
+                  textDecoration: "none",
+                  borderBottom:
+                    index === currentMenu ? "3px solid #FFF" : "none",
+                  paddingBottom: "10px",
+                }}
+                onClick={() => setCurrentMenu(index)}
+              >
+                <Typography sx={typographyStyle}>{item.title}</Typography>
+              </Box>
+            ))}
+          </Stack>
+        </Box>
+      </Toolbar>
+      {renderComponent()}
+    </>
   );
 }
