@@ -24,17 +24,17 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const menu: MenuItemObject[] = [
     {
       title: "Home",
-      url: "./home",
+      url: "/home",
       icons: { normal: "/Home.png", active: "/ActiveHome.png" },
     },
     {
       title: "Search",
-      url: "./movie-search",
+      url: "/movie-search",
       icons: { normal: "/Search.png", active: "/ActiveSearch.png" },
     },
     {
       title: "Watch list",
-      url: "./movie-watchlist",
+      url: "/movie-watchlist",
       icons: { normal: "/Save.png", active: "/ActiveSave.png" },
     },
   ];
@@ -69,9 +69,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                           onClick={() => setCurrentMenu(index)}
                           disableRipple
                         >
-                          <img
+                          <Box
+                            key={item.title}
+                            component="img"
                             src={
-                              currentMenu === index
+                              index === currentMenu
                                 ? item.icons.active
                                 : item.icons.normal
                             }
@@ -79,7 +81,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                             style={{
                               width: "21.739px",
                               height: "24px",
+                              borderBottom:
+                                index === currentMenu
+                                  ? "3px solid #FFF"
+                                  : "none",
+                              paddingBottom: "10px",
                             }}
+                            onClick={() => setCurrentMenu(index)}
                           />
                         </IconButton>
                       </Link>
@@ -87,8 +95,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                         <Typography
                           variant="subtitle2"
                           sx={{
-                            color: `${currentMenu === index ? "#0296E5" : "#67686D"
-                              }`,
+                            color: `${
+                              currentMenu === index ? "#0296E5" : "#67686D"
+                            }`,
                           }}
                           onClick={() => setCurrentMenu(index)}
                         >
