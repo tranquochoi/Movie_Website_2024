@@ -1,64 +1,120 @@
-import { Box, Card, CardContent, CardMedia, CircularProgress, Grid, Link, Typography } from '@mui/material';
-import useSWR from 'swr';
-import { NextPageWithLayout } from '../_app';
-import Layout from '@/components/landing_page/layout';
-import axios from 'axios';
+import type { ReactElement } from "react";
+import Layout from "@/components/landing_page/layout";
+import {
+  Box,
+  Card,
+  CardContent,
+  CardMedia,
+  CircularProgress,
+  Link,
+  Toolbar,
+  Typography,
+} from "@mui/material";
+import axios from "axios";
+import useSWR from "swr";
+import { NextPageWithLayout } from "../_app";
+import Header from "@/components/landing_page/header";
+import SearchBar from "@/components/landing_page/search";
+import HomeMenu from "@/components/landing_page/homeLayoutMenu";
 
 interface MovieList {
-    results: Movie[];
+  results: Movie[];
 }
 
 interface Movie {
-    id: string;
-    title: string;
-    poster_path: string;
+  id: string;
+  title: string;
+  poster_path: string;
 }
 
 const HomeDetail: NextPageWithLayout = () => {
-    const fetcher = (url: string) => axios.get(url).then((response) => response.data);
-    const { data, error } = useSWR<MovieList>('/movie/upcoming', fetcher);
+  const fetcher = (url: string) =>
+    axios.get(url).then((response) => response.data);
+  const { data, isLoading, error } = useSWR<MovieList>(
+    "/movie/upcoming",
+    fetcher
+  );
 
-    if (!data) {
-        return <CircularProgress />;
-    }
-
-    if (error) {
-        return <Typography>Error loading data</Typography>;
-    }
-
-    return (
-        <Box
+  return (
+    <>
+      <Header />
+      <Box sx={{ height: "21px" }}></Box>
+      <SearchBar />
+      <Box sx={{ height: "21px" }}></Box>
+      <Box
+        sx={{
+          display: "flex",
+          overflowX: "auto",
+          gap: 2,
+          flexWrap: "nowrap",
+        }}
+      >
+        {isLoading && <CircularProgress />}
+        {error && <Typography>Error loading data</Typography>}
+        {data?.results.map((movie) => (
+          <Box
+            key={movie.id}
             sx={{
-                display: 'flex',
-                overflowX: 'auto',
-                gap: 2,
+              flex: "0 0 auto",
+              marginRight: 2,
+              height: "220px",
             }}
-        >
-            {data.results.map((movie) => (
-                <Grid item xs={12} sm={6} md={4} lg={3} key={movie.id}>
-                    <Link href={`/movie-detail/${movie.id}`} underline="none">
-                        <Card elevation={5} className="zoom-card small-card" sx={{ height: '95%', width: '290%' }}>
-                            <CardMedia
-                                component="img"
-                                sx={{
-                                    height: '100%',
-                                    objectFit: 'cover',
-                                    width: 'auto',
-                                }}
-                                image={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                                alt={movie.title}
-                            />
-                            <CardContent></CardContent>
-                        </Card>
-                    </Link>
-                </Grid>
-            ))}
-        </Box>
-    );
+          >
+            <Link href={`/movie-detail/${movie.id}`} underline="none">
+              <Card
+                elevation={5}
+                className="small-card"
+                sx={{
+                  height: "210px",
+                  width: "139.581px",
+                  borderRadius: "16px",
+                }}
+              >
+                <CardMedia
+                  component="img"
+                  sx={{
+                    height: "100%",
+                    objectFit: "cover",
+                    width: "100%",
+                    borderRadius: "16px",
+                  }}
+                  image={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                  alt={movie.title}
+                />
+                <CardContent />
+              </Card>
+              <Box sx={{ position: "relative" }}>
+                <Typography
+                  sx={{
+                    position: "absolute",
+                    bottom: "-50px",
+                    left: "-20px",
+                    fontSize: "96px",
+                    color: "#242A32",
+                    padding: "4px 8px",
+                    overflow: "visible",
+                    textShadow: "1px 1px 4px #0296E5", // Thêm đường viền với màu và độ đậm mong muốn
+                  }}
+                >
+                  {data.results.indexOf(movie) + 1}
+                </Typography>
+              </Box>
+            </Link>
+          </Box>
+        ))}
+      </Box>
+    </>
+  );
 };
 
-HomeDetail.getLayout = function getLayout(page) {
-    return <Layout>{page}</Layout>;
+HomeDetail.getLayout = function getLayout(page: ReactElement) {
+  return (
+    <Layout>
+      {page}
+
+      <HomeMenu />
+    </Layout>
+  );
 };
 
 export default HomeDetail;
