@@ -23,7 +23,7 @@ export interface Movies {
   budget: string;
   genres: Genre[];
   overview: string;
-  popularity: number;
+  vote_average: number;
   release_date: string;
   runtime: number;
   video: boolean;
