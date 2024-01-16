@@ -14,8 +14,11 @@ import {
 } from "@mui/material";
 import Link from "next/link";
 import HomeIcon from "@mui/icons-material/Home";
+import HomeActiveIcon from "@mui/icons-material/HomeMiniTwoTone";
 import SearchIcon from "@mui/icons-material/Search";
+import SearchActiveIcon from "@mui/icons-material/ImageSearchTwoTone";
 import SaveIcon from "@mui/icons-material/Save";
+import SaveActiveIcon from "@mui/icons-material/SaveAltTwoTone";
 interface MenuItemObject {
   title: string;
   url: string;
@@ -27,17 +30,17 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     {
       title: "Home",
       url: "/home",
-      icons: { normal: HomeIcon, active: HomeIcon },
+      icons: { normal: HomeActiveIcon, active: HomeIcon },
     },
     {
       title: "Search",
       url: "/movie-search",
-      icons: { normal: SearchIcon, active: SearchIcon },
+      icons: { normal: SearchActiveIcon, active: SearchIcon },
     },
     {
       title: "Watch list",
       url: "/movie-watchlist",
-      icons: { normal: SaveIcon, active: SaveIcon },
+      icons: { normal: SaveActiveIcon, active: SaveIcon },
     },
   ];
 
