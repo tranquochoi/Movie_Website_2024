@@ -166,43 +166,50 @@ const SearchDetail: NextPageWithLayout = () => {
       <Grid container spacing={3}>
         {filteredResults.map((movie) => (
           <Grid item key={movie.id} xs={12} sm={6} md={4} lg={3}>
-            <Card sx={{ boxShadow: "none", marginTop: "20px" }}>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  bgcolor: "#242A32",
-                  border: "none",
-                  borderRadius: 0,
-                  color: "white",
-                }}
-              >
-                <CardMedia
-                  component="img"
-                  height="300"
-                  image={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                  alt={movie.title}
+            <Link href={`/movie-detail/${movie.id}`} underline="none">
+              <Card sx={{ boxShadow: "none", marginTop: "20px" }}>
+                <Box
                   sx={{
-                    flex: "1 1 auto",
-                    maxWidth: "95px",
-                    maxHeight: "120px",
+                    display: "flex",
+                    flexDirection: "row",
+                    bgcolor: "#242A32",
+                    border: "none",
+                    borderRadius: 0,
+                    color: "white",
+                    textAlign: "left",
                   }}
-                />
-                <CardContent sx={{ flex: "2 1 auto" }}>
-                  <Typography variant="h6">{movie.title}</Typography>
-                  <Typography>
-                    <StarBorderIcon sx={{ fontSize: 30, color: "orange" }} />{" "}
-                    {movie.vote_average}
-                  </Typography>
-                  <Typography>
-                    <CalendarToday /> {movie.release_date}
-                  </Typography>
-                  <Typography>
-                    <AccessTime /> {movie.runtime} minutes
-                  </Typography>
-                </CardContent>
-              </Box>
-            </Card>
+                >
+                  <CardMedia
+                    component="img"
+                    height="300"
+                    image={
+                      movie.poster_path
+                        ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                        : "/default.jpg"
+                    }
+                    alt={movie.title}
+                    sx={{
+                      flex: "1 1 auto",
+                      maxWidth: "95px",
+                      maxHeight: "120px",
+                    }}
+                  />
+                  <CardContent sx={{ flex: "2 1 auto" }}>
+                    <Typography variant="h6">{movie.title}</Typography>
+                    <Typography>
+                      <StarBorderIcon sx={{ fontSize: 30, color: "orange" }} />{" "}
+                      {movie.vote_average}
+                    </Typography>
+                    <Typography>
+                      <CalendarToday /> {movie.release_date}
+                    </Typography>
+                    <Typography>
+                      <AccessTime /> {movie.runtime} minutes
+                    </Typography>
+                  </CardContent>
+                </Box>
+              </Card>
+            </Link>
           </Grid>
         ))}
       </Grid>
