@@ -22,7 +22,11 @@ function RenderActress(props: { data: Cast[] }) {
                 marginBottom: "8px",
                 borderRadius: "50%", // Đặt border-radius thành 50% để tạo hình tròn
               }}
-              src={`https://image.tmdb.org/t/p/w500${credit.profile_path}`}
+              src={
+                credit.profile_path
+                  ? `https://image.tmdb.org/t/p/w500${credit.profile_path}`
+                  : "/default.jpg"
+              }
               alt=""
             />
             <Typography>{credit.original_name}</Typography>
