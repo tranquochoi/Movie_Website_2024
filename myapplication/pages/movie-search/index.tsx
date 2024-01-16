@@ -18,7 +18,12 @@ import useSWR from "swr";
 import { NextPageWithLayout } from "../_app";
 import Layout from "@/components/landing_page/layout";
 import axios from "axios";
-import { AccessTime, CalendarToday, ArrowBack, Info } from "@mui/icons-material";
+import {
+  AccessTime,
+  CalendarToday,
+  ArrowBack,
+  Info,
+} from "@mui/icons-material";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 
 interface MovieSearch {
@@ -57,8 +62,8 @@ const SearchDetail: NextPageWithLayout = () => {
 
   const filteredResults = searchTerm
     ? searchResults.filter((movie) =>
-      movie.title.toLowerCase().includes(searchTerm.toLowerCase())
-    )
+        movie.title.toLowerCase().includes(searchTerm.toLowerCase())
+      )
     : searchResults;
 
   if (!data) {
@@ -111,7 +116,7 @@ const SearchDetail: NextPageWithLayout = () => {
           alignItems: "center",
           width: "100%",
           borderRadius: 20,
-          position: 'relative', // Add this line to position the search icon
+          position: "relative", // Add this line to position the search icon
           "@media (max-width: 600px)": {
             width: "100%",
           },
@@ -124,14 +129,14 @@ const SearchDetail: NextPageWithLayout = () => {
             <InputBase
               {...params}
               sx={{
-                borderRadius: '16px',
-                background: '#3A3F47',
-                width: '318px',
-                height: '42px',
+                borderRadius: "16px",
+                background: "#3A3F47",
+                width: "318px",
+                height: "42px",
                 flexShrink: 0,
-                color: '#67686D',
-                padding: '8px',
-                border: '1px solid #67686D',
+                color: "#67686D",
+                padding: "8px",
+                border: "1px solid #67686D",
               }}
               placeholder="Search"
               inputProps={{
@@ -147,13 +152,13 @@ const SearchDetail: NextPageWithLayout = () => {
           src="/Search (1).png"
           alt="Search"
           style={{
-            width: '15.807px',
-            height: '16px',
-            position: 'absolute',
-            top: '50%',
-            right: '16px',
-            transform: 'translateY(-50%)',
-            cursor: 'pointer',
+            width: "15.807px",
+            height: "16px",
+            position: "absolute",
+            top: "50%",
+            right: "16px",
+            transform: "translateY(-50%)",
+            cursor: "pointer",
           }}
         />
       </Box>
