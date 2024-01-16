@@ -105,7 +105,7 @@ const Detail: NextPageWithLayout = () => {
 Detail.getLayout = function getLayout(page) {
     return (
         <Layout>
-            {page}
+            {page}1
         </Layout>
     );
 };
