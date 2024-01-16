@@ -1,7 +1,15 @@
 export interface Review {
-   results: Results[];
+  author: string;
+  author_details: Author_detail;
+  content: string;
+  created_at: string;
 }
-interface Results{
-    author:string;
-    content:string;
+export interface Author_detail {
+  name: string;
+  username: string;
+  avatar_path: string;
+  rating: GLfloat;
+}
+export interface ReviewSection {
+  results: Review[];
 }

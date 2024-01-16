@@ -101,16 +101,4 @@ const UpComing: NextPageWithLayout = () => {
   );
 };
 
-UpComing.getLayout = function getLayout(page) {
-  return (
-    <Layout>
-      <Box>
-        <HomeDetail />
-      </Box>
-      <HomeMenu />
-      <Box>{page}</Box>
-    </Layout>
-  );
-};
-
 export default UpComing;

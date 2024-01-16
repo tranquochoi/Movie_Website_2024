@@ -7,6 +7,7 @@ import {
   CardMedia,
   CircularProgress,
   Link,
+  Toolbar,
   Typography,
 } from "@mui/material";
 import axios from "axios";
@@ -56,12 +57,13 @@ const HomeDetail: NextPageWithLayout = () => {
             sx={{
               flex: "0 0 auto",
               marginRight: 2,
+              height: "220px",
             }}
           >
             <Link href={`/movie-detail/${movie.id}`} underline="none">
               <Card
                 elevation={5}
-                className="zoom-card small-card"
+                className="small-card"
                 sx={{
                   height: "210px",
                   width: "139.581px",
@@ -81,6 +83,22 @@ const HomeDetail: NextPageWithLayout = () => {
                 />
                 <CardContent />
               </Card>
+              <Box sx={{ position: "relative" }}>
+                <Typography
+                  sx={{
+                    position: "absolute",
+                    bottom: "-50px",
+                    left: "-20px",
+                    fontSize: "96px",
+                    color: "#242A32",
+                    padding: "4px 8px",
+                    overflow: "visible",
+                    textShadow: "1px 1px 4px #0296E5", // Thêm đường viền với màu và độ đậm mong muốn
+                  }}
+                >
+                  {data.results.indexOf(movie) + 1}
+                </Typography>
+              </Box>
             </Link>
           </Box>
         ))}
@@ -93,6 +111,7 @@ HomeDetail.getLayout = function getLayout(page: ReactElement) {
   return (
     <Layout>
       {page}
+
       <HomeMenu />
     </Layout>
   );

@@ -24,7 +24,57 @@ interface Movie {
   title: string;
   poster_path: string;
 }
+function RenderMovie(props: { data: Movie }) {
+  return (
+    <Box
+      key={props.data.id}
+      sx={{
+        flex: "0 0 auto",
+        marginRight: 0.5,
+        width: "100px",
+      }}
+    >
+      <Link href={`/movie-detail/${props.data.id}`} underline="none">
+        <Card
+          elevation={3}
+          sx={{
+            height: "145px",
+            width: "100px",
+            borderRadius: "5px",
+            boxShadow: "none", // Loại bỏ viền trắng
+          }}
+        >
+          <Box
+            component="img"
+            sx={{
+              height: "100%",
+              width: "100%",
+              borderRadius: "5px", // Đổi giá trị borderRadius theo ý muốn
+            }}
+            src={`https://image.tmdb.org/t/p/w500${props.data.poster_path}`}
+            alt={props.data.title}
+          />
 
+          <CardContent />
+        </Card>
+        <Typography
+          sx={{
+            marginLeft: "0px",
+            marginTop: "8px",
+            overflow: "hidden",
+            display: "-webkit-box",
+            WebkitBoxOrient: "vertical",
+            WebkitLineClamp: 2,
+            textAlign: "left", // Đảm bảo văn bản nằm ở bên trái
+            color: "#FFF",
+          }}
+        >
+          {props.data.title}
+        </Typography>
+      </Link>
+    </Box>
+  );
+}
 const Now: NextPageWithLayout = () => {
   const fetcher = (url: string) =>
     axios.get(url).then((response) => response.data);
@@ -37,8 +87,6 @@ const Now: NextPageWithLayout = () => {
   if (error) {
     return <Typography>Error loading data</Typography>;
   }
-
-  const moviesToShow = data.results.slice(0, 6);
 
   return (
     <Box
@@ -57,63 +105,7 @@ const Now: NextPageWithLayout = () => {
         }}
       >
         {data?.results.slice(0, 6).map((movie) => (
-          <Box
-            key={movie.id}
-            sx={{
-              flex: "0 0 auto",
-              marginRight: 0.5,
-            }}
-          >
-            <Link href={`/movie-detail/${movie.id}`} underline="none">
-              <Card
-                elevation={3}
-                className="zoom-card small-card"
-                sx={{ height: "145px", width: "100px", borderRadius: "16px" }}
-              >
-                <Box
-                  sx={{
-                    position: "relative",
-                    borderRadius: "16px",
-                    overflow: "hidden",
-                  }}
-                >
-                  <CardMedia
-                    component="img"
-                    sx={{
-                      height: "100%",
-                      objectFit: "cover",
-                      width: "100%",
-                      borderRadius: "16px",
-                    }}
-                    image={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                    alt={movie.title}
-                  />
-                  <Box
-                    sx={{
-                      position: "absolute",
-                      top: 80,
-                      left: 0,
-                      width: "100%",
-                      height: "45%",
-                      background: "rgba(0, 0, 0, 0.5)", // Đặt màu đen trong suốt tại đây
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      color: "white", // Chữ màu trắng
-                      borderBottomRadius: "16px",
-                      textAlign: "center",
-                      padding: "8px", // Padding để tạo khoảng cách giữa nền đen và nội dung
-                    }}
-                  >
-                    <Typography variant="subtitle2">{movie.title}</Typography>
-                    {/* Các thông tin khác có thể thêm vào đây */}
-                  </Box>
-                </Box>
-                <CardContent />
-              </Card>
-            </Link>
-          </Box>
+          <RenderMovie data={movie}></RenderMovie>
         ))}
       </Box>
       <Box
@@ -125,78 +117,10 @@ const Now: NextPageWithLayout = () => {
         }}
       >
         {data?.results.slice(6, 12).map((movie) => (
-          <Box
-            key={movie.id}
-            sx={{
-              flex: "0 0 auto",
-              marginRight: 0.5,
-            }}
-          >
-            <Link href={`/movie-detail/${movie.id}`} underline="none">
-              <Card
-                elevation={3}
-                className="zoom-card small-card"
-                sx={{ height: "145px", width: "100px", borderRadius: "16px" }}
-              >
-                <Box
-                  sx={{
-                    position: "relative",
-                    borderRadius: "16px",
-                    overflow: "hidden",
-                  }}
-                >
-                  <CardMedia
-                    component="img"
-                    sx={{
-                      height: "100%",
-                      objectFit: "cover",
-                      width: "100%",
-                      borderRadius: "16px",
-                    }}
-                    image={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                    alt={movie.title}
-                  />
-                  <Box
-                    sx={{
-                      position: "absolute",
-                      top: 80,
-                      left: 0,
-                      width: "100%",
-                      height: "45%",
-                      background: "rgba(0, 0, 0, 0.5)", // Đặt màu đen trong suốt tại đây
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      color: "white", // Chữ màu trắng
-                      borderBottomRadius: "16px",
-                      textAlign: "center",
-                      padding: "8px", // Padding để tạo khoảng cách giữa nền đen và nội dung
-                    }}
-                  >
-                    <Typography variant="subtitle2">{movie.title}</Typography>
-                    {/* Các thông tin khác có thể thêm vào đây */}
-                  </Box>
-                </Box>
-                <CardContent />
-              </Card>
-            </Link>
-          </Box>
+          <RenderMovie data={movie}></RenderMovie>
         ))}
       </Box>
     </Box>
-  );
-};
-
-Now.getLayout = function getLayout(page) {
-  return (
-    <Layout>
-      <Box>
-        <HomeDetail />
-      </Box>
-      <HomeMenu />
-      <Box>{page}</Box>
-    </Layout>
   );
 };
 
