@@ -74,7 +74,7 @@ const Detail: NextPageWithLayout = () => {
                 {data.title}
               </Typography>
             </Box>
-            <Box>
+            <Box sx={{pl:'40px'}}>
               <Typography variant="body1" sx={{ color: "white" }}>
                 <StarBorderIcon sx={{ fontSize: 30, color: "orange" }} />{" "}
                 {data.vote_average}
