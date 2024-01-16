@@ -57,7 +57,7 @@ export default function HomeMenu({}: {}) {
     <>
       <Toolbar>
         <Box>
-          <Stack direction="row" gap={1}>
+          <Stack direction="row" gap={2}>
             {menu.map((item, index) => (
               <Box
                 key={item.title}

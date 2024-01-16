@@ -13,11 +13,13 @@ import {
   Divider,
 } from "@mui/material";
 import Link from "next/link";
-
+import HomeIcon from "@mui/icons-material/Home";
+import SearchIcon from "@mui/icons-material/Search";
+import SaveIcon from "@mui/icons-material/Save";
 interface MenuItemObject {
   title: string;
   url: string;
-  icons: { normal: string; active: string };
+  icons: { normal: React.ElementType; active: React.ElementType };
 }
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -25,17 +27,17 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     {
       title: "Home",
       url: "/home",
-      icons: { normal: "/Home.png", active: "/ActiveHome.png" },
+      icons: { normal: HomeIcon, active: HomeIcon },
     },
     {
       title: "Search",
       url: "/movie-search",
-      icons: { normal: "/Search.png", active: "/ActiveSearch.png" },
+      icons: { normal: SearchIcon, active: SearchIcon },
     },
     {
       title: "Watch list",
       url: "/movie-watchlist",
-      icons: { normal: "/Save.png", active: "/ActiveSave.png" },
+      icons: { normal: SaveIcon, active: SaveIcon },
     },
   ];
 
@@ -44,13 +46,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <Container maxWidth="sm">
       <main>
-        <Box p={2} bgcolor="#242A32" color="white" textAlign="center">
+        <Box p={0} bgcolor="#242A32" color="white" textAlign="center">
           {children}
         </Box>
 
         <AppBar
           position="fixed"
-          style={{ top: "auto", bottom: 0, backgroundColor: "#242A32" }}
+          style={{ top: "auto", bottom: -4, backgroundColor: "#242A32" }}
         >
           <Divider sx={{ borderColor: "#0296E5", height: "1px" }} />
 
@@ -65,30 +67,18 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                           sx={{
                             color: "#67686D",
                             padding: "8px 44px",
+                            borderBottom:
+                              index === currentMenu ? "3px solid #FFF" : "none",
+                            paddingBottom: "10px",
                           }}
                           onClick={() => setCurrentMenu(index)}
                           disableRipple
                         >
-                          <Box
-                            key={item.title}
-                            component="img"
-                            src={
-                              index === currentMenu
-                                ? item.icons.active
-                                : item.icons.normal
-                            }
-                            alt={item.title}
-                            style={{
-                              width: "21.739px",
-                              height: "24px",
-                              borderBottom:
-                                index === currentMenu
-                                  ? "3px solid #FFF"
-                                  : "none",
-                              paddingBottom: "10px",
-                            }}
-                            onClick={() => setCurrentMenu(index)}
-                          />
+                          {index === currentMenu ? (
+                            <item.icons.active />
+                          ) : (
+                            <item.icons.normal />
+                          )}
                         </IconButton>
                       </Link>
                       <Link href={item.url} passHref>
