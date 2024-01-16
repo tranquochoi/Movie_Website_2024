@@ -5,7 +5,9 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
-import { Movies } from '@/pages/movie-detail/Models/Movies';
+import { Movie } from '@/pages/movie-detail/Models/Movies';
+import RenderActress from '@/pages/movie-detail/ListComponent/RenderActress';
+import RenderReview from '@/pages/movie-detail/ListComponent/RenderReview';
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -43,8 +45,8 @@ function a11yProps(index: number) {
 export function TabDetail() {
     const router = useRouter();
     const { id } = router.query;
-    const { data, isLoading, error } = useSWR<Movies>(
-        `/movie/${id}?language=en-US&append_to_response=videos,credits`
+    const { data, isLoading, error } = useSWR<Movie>(
+        `/movie/${id}?language=en-US&append_to_response=videos,credits,reviews`
     );
     const [value, setValue] = React.useState(0);
 
@@ -70,10 +72,10 @@ export function TabDetail() {
                 {data?.overview}
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
-                Item Two
+                <RenderReview data={data?.reviews.results}></RenderReview>
             </CustomTabPanel>
             <CustomTabPanel value={value} index={2}>
-                Item Three
+                <RenderActress data={data?.credits.cast}></RenderActress>
             </CustomTabPanel>
         </Box>
     );

@@ -10,14 +10,14 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
 import { Box, CardMedia, Stack, Typography } from "@mui/material";
-import { Movies } from './Models/Movies';
+import { Movie } from './Models/Movies';
 import config from '@/config';
 import { NextPageWithLayout } from '../_app';
 
 const Detail: NextPageWithLayout = () => {
     const router = useRouter();
     const { id } = router.query;
-    const { data, isLoading, error } = useSWR<Movies>(
+    const { data, isLoading, error } = useSWR<Movie>(
         `/movie/${id}?language=en-US&append_to_response=videos,credits`
     );
 
@@ -105,7 +105,7 @@ const Detail: NextPageWithLayout = () => {
 Detail.getLayout = function getLayout(page) {
     return (
         <Layout>
-            {page}1
+            {page}
         </Layout>
     );
 };

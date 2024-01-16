@@ -1,8 +1,9 @@
 import { CreditSection } from "./Credits";
+import { ReviewSection } from "./Reviews";
 import { VideoList } from "./Video";
 
 export interface MovieList {
-  results: Movies[];
+  results: Movie[];
 }
 
 export interface Genre {
@@ -15,7 +16,7 @@ export interface ProductionCountry {
   name: string;
 }
 
-export interface Movies {
+export interface Movie {
   id: string;
   title: string;
   poster_path: string;
@@ -30,4 +31,5 @@ export interface Movies {
   production_countries: ProductionCountry[];
   videos: VideoList;
   credits: CreditSection;
+  reviews: ReviewSection;
 }
