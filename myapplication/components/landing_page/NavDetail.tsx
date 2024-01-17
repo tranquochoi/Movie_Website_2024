@@ -55,7 +55,7 @@ export default function NavDetail() {
                     <ArrowBackIosNewOutlinedIcon />
                 </IconButton>
                 <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                    Search
+                    Detail
                 </Typography>
                 <IconButton edge="end" color="inherit" aria-label="info">
                     <BookmarkIcon />
