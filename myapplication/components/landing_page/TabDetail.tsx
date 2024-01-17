@@ -27,7 +27,7 @@ function CustomTabPanel(props: TabPanelProps) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
+        <Box p={1} sx={{ textAlign: "left" }}>
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -66,10 +66,18 @@ export function TabDetail() {
           <Tab
             label="About Movie"
             {...a11yProps(0)}
-            style={{ color: "white" }}
+            style={{ color: "white", textTransform: "none", fontFamily: "YourCustomFont, sans-serif" }}
           />
-          <Tab label="Reviews" {...a11yProps(1)} style={{ color: "white" }} />
-          <Tab label="Cast" {...a11yProps(2)} style={{ color: "white" }} />
+          <Tab
+            label="Reviews"
+            {...a11yProps(1)}
+            style={{ color: "white", textTransform: "none", fontFamily: "YourCustomFont, sans-serif" }}
+          />
+          <Tab
+            label="Cast"
+            {...a11yProps(2)}
+            style={{ color: "white", textTransform: "none", fontFamily: "YourCustomFont, sans-serif" }}
+          />
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>

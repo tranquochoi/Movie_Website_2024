@@ -23,6 +23,7 @@ interface Movie {
   id: string;
   title: string;
   poster_path: string;
+  vote_average: number;
 }
 function RenderMovie(props: { data: Movie }) {
   return (
@@ -40,8 +41,8 @@ function RenderMovie(props: { data: Movie }) {
           sx={{
             height: "145px",
             width: "100px",
-            borderRadius: "5px",
-            boxShadow: "none", // Loại bỏ viền trắng
+            borderRadius: "16px",
+            boxShadow: "none",
           }}
         >
           <Box
@@ -49,7 +50,7 @@ function RenderMovie(props: { data: Movie }) {
             sx={{
               height: "100%",
               width: "100%",
-              borderRadius: "5px", // Đổi giá trị borderRadius theo ý muốn
+
             }}
             src={`https://image.tmdb.org/t/p/w500${props.data.poster_path}`}
             alt={props.data.title}
@@ -62,11 +63,9 @@ function RenderMovie(props: { data: Movie }) {
             marginLeft: "0px",
             marginTop: "8px",
             overflow: "hidden",
-            display: "-webkit-box",
-            WebkitBoxOrient: "vertical",
-            WebkitLineClamp: 2,
-            textAlign: "left", // Đảm bảo văn bản nằm ở bên trái
+            textAlign: "left",
             color: "#FFF",
+            fontSize: "12px",
           }}
         >
           {props.data.title}

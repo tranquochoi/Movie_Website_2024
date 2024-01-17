@@ -12,7 +12,9 @@ const Header = () => {
             color: "#FFF",
             fontSize: "20px",
             fontWeight: 600,
-            lineHeight: "normal"
+            lineHeight: "normal",
+
+
         }}>
             What do you want to watch?
         </Box>

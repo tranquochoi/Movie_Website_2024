@@ -4,11 +4,10 @@ import useSWR from "swr";
 import Layout from "@/components/landing_page/layout";
 import NavDetail from "@/components/landing_page/NavDetail";
 import TabDetail from "@/components/landing_page/TabDetail";
-import StarBorderIcon from "@mui/icons-material/StarBorder";
-import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
+import StarIcon from '@mui/icons-material/Star'; import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import ConfirmationNumberIcon from "@mui/icons-material/ConfirmationNumber";
-import { Box, CardMedia, Stack, Typography } from "@mui/material";
+import { Box, CardMedia, CircularProgress, Stack, Typography } from "@mui/material";
 import { Movie } from "./Models/Movies";
 import config from "@/config";
 import { NextPageWithLayout } from "../_app";
@@ -22,8 +21,8 @@ const Detail: NextPageWithLayout = () => {
 
   if (isLoading)
     return (
-      <Typography sx={{ color: "red", fontSize: "80px" }}>
-        Loading...
+      <Typography>
+        {isLoading && <CircularProgress />}
       </Typography>
     );
 
@@ -38,27 +37,50 @@ const Detail: NextPageWithLayout = () => {
       <NavDetail />
       <Stack
         direction="column"
-        spacing={2}
         sx={{
           backgroundColor: "#242A32",
-          padding: "20px",
+          position: "relative",
+
         }}
       >
+
         <Box
           component="img"
           sx={{
             height: "auto",
-            width: "auto",
+            width: "100%",
             objectFit: "cover",
           }}
           src={config.image_path + data.backdrop_path}
           alt={data.title}
         />
-        <Stack direction="column" spacing={2}>
+
+        <Box
+          sx={{
+            backgroundColor: "rgba(50, 40, 54, 0.32)",
+            borderRadius: "8px",
+            padding: "4px",
+            position: "absolute",
+            top: "56%",
+            left: "84%",
+            transform: "translate(-8%, -40%)",
+            color: "white",
+            fontSize: "12px",
+          }}
+        >
+          <StarIcon sx={{ fontSize: 24, color: "orange" }} />
+          {data.vote_average}
+        </Box>
+
+        <Stack direction="column" spacing={1}>
           <Box sx={{ display: "flex", flexDirection: "row" }}>
             <Box
               component="img"
               sx={{
+                position: "absolute",
+                borderRadius: "16px",
+                right: "72%",
+                transform: "translate(-5%, -40%)",
                 width: "95px",
                 objectFit: "cover",
                 height: "120px",
@@ -66,44 +88,47 @@ const Detail: NextPageWithLayout = () => {
               src={config.image_path + data.poster_path}
               alt={data.title}
             />
+
             <Box>
               <Typography
-                variant="h6"
-                sx={{ color: "white", textAlign: "center" }}
+                sx={{
+                  height: "100px",
+                  color: "white",
+                  width: "100%",
+                  paddingTop: "8px",
+                  paddingLeft: "120px",
+                  fontSize: "18px",
+                  fontWeight: "600",
+                  flexDirection: "column"
+                }}
               >
                 {data.title}
               </Typography>
             </Box>
-            <Box sx={{pl:'40px'}}>
-              <Typography variant="body1" sx={{ color: "white" }}>
-                <StarBorderIcon sx={{ fontSize: 30, color: "orange" }} />{" "}
-                {data.vote_average}
-              </Typography>
-            </Box>
           </Box>
-
           <Stack direction="column" spacing={1} alignItems="center">
             <Stack direction="row" alignItems="center" spacing={1}>
-              <CalendarTodayIcon sx={{ color: "white", marginRight: "5px" }} />
-              <Typography variant="body1" sx={{ color: "white" }}>
+              <CalendarTodayIcon sx={{ color: "#92929D", marginRight: "5px" }} />
+              <Typography variant="body1" sx={{ color: "#92929D" }}>
                 {data.release_date}
               </Typography>
               <AccessTimeIcon
-                sx={{ color: "white", marginLeft: "10px", marginRight: "5px" }}
+                sx={{ color: "#92929D", marginLeft: "10px", marginRight: "5px" }}
               />
-              <Typography variant="body1" sx={{ color: "white" }}>
+              <Typography variant="body1" sx={{ color: "#92929D" }}>
                 {data.runtime} Minutes
               </Typography>
               <ConfirmationNumberIcon
-                sx={{ color: "white", marginLeft: "10px", marginRight: "5px" }}
+                sx={{ color: "#92929D", marginLeft: "10px", marginRight: "5px" }}
               />
-              <Typography variant="body1" sx={{ color: "white" }}>
+              <Typography variant="body1" sx={{ color: "#92929D" }}>
                 {data.genres[0]?.name}
               </Typography>
             </Stack>
           </Stack>
         </Stack>
-      </Stack>
+      </Stack >
+      <Box sx={{ height: "28px" }}></Box>
 
       <TabDetail />
     </>

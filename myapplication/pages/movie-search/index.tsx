@@ -15,16 +15,18 @@ import {
   IconButton,
 } from "@mui/material";
 import useSWR from "swr";
+import { useRouter } from "next/router";
 import { NextPageWithLayout } from "../_app";
 import Layout from "@/components/landing_page/layout";
 import axios from "axios";
 import {
   AccessTime,
   CalendarToday,
-  ArrowBack,
   Info,
 } from "@mui/icons-material";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
+import ArrowBackIosNewOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutlined';
+
 
 interface MovieSearch {
   results: Movie[];
@@ -41,6 +43,7 @@ interface Movie {
 }
 
 const SearchDetail: NextPageWithLayout = () => {
+  const router = useRouter();
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState<Movie[]>([]);
   const fetcher = (url: string) =>
@@ -62,8 +65,8 @@ const SearchDetail: NextPageWithLayout = () => {
 
   const filteredResults = searchTerm
     ? searchResults.filter((movie) =>
-        movie.title.toLowerCase().includes(searchTerm.toLowerCase())
-      )
+      movie.title.toLowerCase().includes(searchTerm.toLowerCase())
+    )
     : searchResults;
 
   if (!data) {
@@ -97,8 +100,13 @@ const SearchDetail: NextPageWithLayout = () => {
         }}
       >
         <Toolbar>
-          <IconButton edge="start" color="inherit" aria-label="back">
-            <ArrowBack />
+          <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="back"
+            onClick={() => router.back()}
+          >
+            <ArrowBackIosNewOutlinedIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Search
@@ -116,7 +124,7 @@ const SearchDetail: NextPageWithLayout = () => {
           alignItems: "center",
           width: "100%",
           borderRadius: 20,
-          position: "relative", // Add this line to position the search icon
+          position: "relative",
           "@media (max-width: 600px)": {
             width: "100%",
           },
@@ -129,14 +137,14 @@ const SearchDetail: NextPageWithLayout = () => {
             <InputBase
               {...params}
               sx={{
-                borderRadius: "16px",
-                background: "#3A3F47",
-                width: "318px",
-                height: "42px",
-                flexShrink: 0,
-                color: "#67686D",
-                padding: "8px",
-                border: "1px solid #67686D",
+                borderRadius: '16px',
+                background: '#3A3F47',
+                width: '184%',
+                height: '42px',
+                color: '#67686D',
+                padding: '8px',
+                border: '1px solid #67686D',
+                cursor: 'pointer',
               }}
               placeholder="Search"
               inputProps={{
