@@ -24,8 +24,55 @@ interface Movie {
   title: string;
   poster_path: string;
 }
+function RenderMovie(props: { data: Movie }) {
+  return (
+    <Box
+      key={props.data.id}
+      sx={{
+        flex: "0 0 auto",
+        marginRight: 0.5,
+        width: "100px",
+      }}
+    >
+      <Link href={`/movie-detail/${props.data.id}`} underline="none">
+        <Card
+          elevation={3}
+          sx={{
+            height: "145px",
+            width: "100px",
+            borderRadius: "16px",
+            boxShadow: "none",
+          }}
+        >
+          <Box
+            component="img"
+            sx={{
+              height: "100%",
+              width: "100%",
+            }}
+            src={`https://image.tmdb.org/t/p/w500${props.data.poster_path}`}
+            alt={props.data.title}
+          />
 
-const TopRated: NextPageWithLayout = () => {
+          <CardContent />
+        </Card>
+        <Typography
+          sx={{
+            marginLeft: "0px",
+            marginTop: "8px",
+            overflow: "hidden",
+            textAlign: "left",
+            color: "#FFF",
+            fontSize: "12px",
+          }}
+        >
+          {props.data.title}
+        </Typography>
+      </Link>
+    </Box>
+  );
+}
+const Top: NextPageWithLayout = () => {
   const fetcher = (url: string) =>
     axios.get(url).then((response) => response.data);
   const { data, error } = useSWR<MovieList>("/movie/top_rated", fetcher);
@@ -38,79 +85,41 @@ const TopRated: NextPageWithLayout = () => {
     return <Typography>Error loading data</Typography>;
   }
 
-  const moviesToShow = data.results.slice(0, 6);
-
   return (
     <Box
       sx={{
         display: "flex",
         flexDirection: "column",
-        gap: 1,
+        gap: 2,
       }}
     >
-      {data?.results.map((movie) => (
-        <Box
-          key={movie.id}
-          sx={{
-            display: "flex",
-            overflowX: "auto",
-            gap: 2,
-            flexWrap: "nowrap",
-          }}
-        >
-          <Box
-            key={movie.id}
-            sx={{
-              display: "flex",
-              flexDirection: "row", // Sử dụng column để đảm bảo Link và Box nằm trên cùng một hàng
-              marginRight: 0.5,
-            }}
-          >
-            <Link href={`/movie-detail/${movie.id}`} underline="none">
-              <Card
-                elevation={3}
-                className="zoom-card small-card"
-                sx={{
-                  height: "220px",
-                  width: "150px",
-                  borderRadius: "16px",
-                  marginBottom: 1, // Khoảng cách giữa Card và Typography
-                }}
-              >
-                <CardMedia
-                  component="img"
-                  sx={{
-                    height: "100%",
-                    objectFit: "cover",
-                    width: "100%",
-                    borderRadius: "16px",
-                  }}
-                  image={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                  alt={movie.title}
-                />
-                <CardContent />
-              </Card>
-            </Link>
-            <Box sx={{ marginLeft: "30px" }}>
-              <Typography>{movie.title}</Typography>
-            </Box>
-          </Box>
-        </Box>
-      ))}
+      <Box
+        sx={{
+          display: "flex",
+          overflowX: "auto",
+          gap: 1,
+          flexWrap: "nowrap",
+        }}
+      >
+        {data?.results.slice(0, 6).map((movie) => (
+          <RenderMovie data={movie}></RenderMovie>
+        ))}
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          overflowX: "auto",
+          gap: 1,
+          flexWrap: "nowrap",
+        }}
+      >
+        {data?.results.slice(6, 12).map((movie) => (
+          <RenderMovie data={movie}></RenderMovie>
+        ))}
+      </Box>
+      <Box sx={{ height: "56px" }}></Box>
     </Box>
   );
 };
 
-TopRated.getLayout = function getLayout(page) {
-  return (
-    <Layout>
-      <Box>
-        <HomeDetail />
-      </Box>
-      <HomeMenu />
-      <Box>{page}</Box>
-    </Layout>
-  );
-};
-
-export default TopRated;
+export default Top;
