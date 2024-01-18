@@ -50,6 +50,8 @@ const Detail: NextPageWithLayout = () => {
             height: "auto",
             width: "100%",
             objectFit: "cover",
+            borderRadius: "16px",
+
           }}
           src={config.image_path + data.backdrop_path}
           alt={data.title}
