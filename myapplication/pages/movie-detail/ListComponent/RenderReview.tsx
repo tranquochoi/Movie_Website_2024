@@ -1,22 +1,36 @@
-import { Box, Grid, Typography } from "@mui/material";
+import React, { useState } from "react";
+import { Box, Typography, Button } from "@mui/material";
 
-export interface Review {
+interface ReviewProps {
   author: string;
   author_details: Author_detail;
   content: string;
   created_at: string;
 }
-export interface Author_detail {
+
+interface Author_detail {
   name: string;
   username: string;
   avatar_path: string;
-  rating: GLfloat;
+  rating: number;
 }
-function RenderReview(props: { data: Review[] }) {
+
+function RenderReview(props: { data: ReviewProps[] }) {
+  const [expanded, setExpanded] = useState<number | null>(null);
+
+  const toggleExpand = (index: number) => {
+    setExpanded((prev) => (prev === index ? null : index));
+  };
+
+  const sanitizeContent = (content: string): string => {
+    return content.replace(/<em>/g, "").replace(/<\/em>/g, "");
+  };
+
   return (
     <>
-      {props.data.map((credit) => (
+      {props.data.map((credit, index) => (
         <Box
+          key={credit.created_at}
           sx={{
             display: "grid",
             gridTemplateColumns: "30% 70%",
@@ -67,18 +81,26 @@ function RenderReview(props: { data: Review[] }) {
                 overflow: "hidden",
                 display: "-webkit-box",
                 WebkitBoxOrient: "vertical",
-                WebkitLineClamp: 4,
+                WebkitLineClamp: expanded === index ? "unset" : 4,
                 marginBottom: "8px",
                 marginTop: "5px",
               }}
             >
-              {credit.content}
+              {sanitizeContent(credit.content)}
             </Typography>
+            {credit.content.length > 100 && (
+              <Button onClick={() => toggleExpand(index)}>
+                {expanded === index ? "Read Less" : "Read More"}
+              </Button>
+            )}
           </Box>
         </Box>
       ))}
     </>
   );
 }
+
 export default RenderReview;
+
+
 //<RenderReview data={data.reviews.results}></RenderReview>;
