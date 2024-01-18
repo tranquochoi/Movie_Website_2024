@@ -2,103 +2,84 @@ import type { ReactElement } from "react";
 import Layout from "@/components/landing_page/layout";
 import {
   Box,
-  Card,
-  CardContent,
-  CardMedia,
-  CircularProgress,
-  Link,
+  Container,
   Typography,
+  Grid,
+  Paper,
+  Avatar,
+  Link,
 } from "@mui/material";
-import axios from "axios";
-import useSWR from "swr";
 import { NextPageWithLayout } from "./_app";
 
-interface MovieList {
-  results: Movie[];
+interface TeamMember {
+  name: string;
+  role: string;
+  description: string;
+  avatarUrl: string;
 }
 
-interface Movie {
-  id: string;
-  title: string;
-  poster_path: string;
-}
+const teamMembers: TeamMember[] = [
+  {
+    name: "タン コック ホイ",
+    role: "Developer",
+    description: "Code lòi trĩ nhưng vẫn chưa xong dự án :))",
+    avatarUrl: "/hoi.jpg",
+  },
+  {
+    name: "タン",
+    role: "Developer",
+    description: "Code đối với anh là chuyện nhỏ =))",
+    avatarUrl: "/thanh.jpg",
+  },
+  {
+    name: "ユイ",
+    role: "Developer",
+    description: "Kẻ cuồng 'bạn thân', chúa tuể hủy diệt code.",
+    avatarUrl: "/duy.jpg",
+  },
+  {
+    name: "グエン トン ティン",
+    role: "Developer",
+    description: "Khó quá thì đi hỏi anh 'bạn thân'.",
+    avatarUrl: "/tin.jpg",
+  },
+];
 
 const HomeDetail: NextPageWithLayout = () => {
-  const fetcher = (url: string) =>
-    axios.get(url).then((response) => response.data);
-  const { data, isLoading, error } = useSWR<MovieList>(
-    "/movie/upcoming",
-    fetcher
-  );
-
   return (
-    <>
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          flexGrow: 1,
-          width: "317px",
-          color: "#FFF",
-          fontSize: "20px",
-          fontWeight: 600,
-          lineHeight: "normal",
-        }}
-      >
-        What do you want to watch?
-      </Box>
-      <Box sx={{ height: "21px" }}></Box>
-      <Box
-        sx={{
-          display: "flex",
-          overflowX: "auto",
-          gap: 2,
-          flexWrap: "nowrap",
-        }}
-      >
-        {isLoading && <CircularProgress />}
-        {error && <Typography>Error loading data</Typography>}
-        {data?.results.map((movie) => (
-          <Box
-            key={movie.id}
-            sx={{
-              flex: "0 0 auto",
-              marginRight: 2,
-            }}
-          >
-            <Link href={`/movie-detail/${movie.id}`} underline="none">
-              <Card
-                elevation={5}
-                className="zoom-card small-card"
-                sx={{
-                  height: "210px",
-                  width: "139.581px",
-                  borderRadius: "16px",
-                }}
-              >
-                <CardMedia
-                  component="img"
-                  sx={{
-                    height: "100%",
-                    objectFit: "cover",
-                    width: "100%",
-                    borderRadius: "16px",
-                  }}
-                  image={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                  alt={movie.title}
+    <Container>
+      <Box mt={4}>
+        <Typography variant="h4" align="center" gutterBottom style={{ color: "white" }}>
+          <Link href="/home" underline="none" color="inherit">
+            グループ　1
+          </Link>
+        </Typography>
+        <Grid container spacing={3} justifyContent="center">
+          {teamMembers.map((member, index) => (
+            <Grid item key={index} xs={12} md={6} lg={3}>
+              <Paper elevation={3} sx={{ p: 2, textAlign: "center" }}>
+                <Avatar
+                  alt={member.name}
+                  src={member.avatarUrl}
+                  sx={{ width: 100, height: 100, margin: "auto" }}
                 />
-                <CardContent />
-              </Card>
-            </Link>
-          </Box>
-        ))}
+                <Typography variant="h6" mt={2}>
+                  {member.name}
+                </Typography>
+                <Typography variant="subtitle1" color="textSecondary" mt={1}>
+                  {member.role}
+                </Typography>
+                <Typography variant="h6" mt={2}>
+                  {member.description}
+                </Typography>
+              </Paper>
+            </Grid>
+          ))}
+        </Grid>
       </Box>
-    </>
+      <Box sx={{ height: "50px" }}></Box>
+    </Container>
   );
-};
-
-HomeDetail.getLayout = function getLayout(page: ReactElement) {
-  return <Layout>{page}</Layout>;
 };
 
 export default HomeDetail;
