@@ -119,15 +119,10 @@ const SearchDetail: NextPageWithLayout = () => {
 
       <Box
         sx={{
-          p: "2px 4px",
-          display: "flex",
           alignItems: "center",
-          width: "100%",
           borderRadius: 20,
           position: "relative",
-          "@media (max-width: 600px)": {
-            width: "100%",
-          },
+
         }}
       >
         <Autocomplete
@@ -139,7 +134,7 @@ const SearchDetail: NextPageWithLayout = () => {
               sx={{
                 borderRadius: '16px',
                 background: '#3A3F47',
-                width: '184%',
+                width: '100%',
                 height: '42px',
                 color: '#67686D',
                 padding: '8px',
