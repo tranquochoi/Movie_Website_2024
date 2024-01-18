@@ -21,7 +21,7 @@ import Popular from "@/pages/home/listMenu/popular";
 interface MenuItemObject {
   title: string;
 }
-export default function HomeMenu({}: {}) {
+export default function HomeMenu({ }: {}) {
   const menu: MenuItemObject[] = [
     { title: "Now playing" },
     { title: "Up comming" },
@@ -30,12 +30,8 @@ export default function HomeMenu({}: {}) {
   ];
   const typographyStyle = {
     color: "#FFF",
-    textAlign: "center",
-    fontFamily: "Poppins",
-    fontSize: "14px",
-    fontStyle: "normal",
-    fontWeight: 700,
-    lineHeight: "normal",
+    fontSize: "12px",
+    fontWeight: 500,
   };
   const [currentMenu, setCurrentMenu] = useState(0);
 
@@ -57,7 +53,7 @@ export default function HomeMenu({}: {}) {
     <>
       <Toolbar>
         <Box>
-          <Stack direction="row" gap={2}>
+          <Stack direction="row" gap={5}>
             {menu.map((item, index) => (
               <Box
                 key={item.title}
@@ -65,7 +61,7 @@ export default function HomeMenu({}: {}) {
                   textDecoration: "none",
                   borderBottom:
                     index === currentMenu ? "3px solid #FFF" : "none",
-                  paddingBottom: "10px",
+                  paddingBottom: "5px",
                 }}
                 onClick={() => setCurrentMenu(index)}
               >

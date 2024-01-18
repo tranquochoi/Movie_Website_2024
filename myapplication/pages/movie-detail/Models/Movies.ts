@@ -1,3 +1,4 @@
+import internal from "stream";
 import { CreditSection } from "./Credits";
 import { ReviewSection } from "./Reviews";
 import { VideoList } from "./Video";
@@ -32,4 +33,5 @@ export interface Movie {
   videos: VideoList;
   credits: CreditSection;
   reviews: ReviewSection;
+  vote_count: number
 }

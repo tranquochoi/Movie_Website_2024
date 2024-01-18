@@ -13,9 +13,13 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import ArrowBackIosNewOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutlined';
 import TurnedInOutlinedIcon from '@mui/icons-material/TurnedInOutlined';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
+
+import { useRouter } from 'next/router';
 
 
 export default function NavDetail() {
+    const router = useRouter();
     const [auth, setAuth] = React.useState(true);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -33,51 +37,29 @@ export default function NavDetail() {
 
     return (
 
-        <AppBar sx={{ padding: '0px -10px',  boxShadow: 'none'}}>
-            <Toolbar sx={{ background: '#242A32' }}>
+        <AppBar
+            position="static"
+            sx={{
+                backgroundColor: "#242A32",
+                marginBottom: "20px",
+                boxShadow: "none",
+            }}
+        >
+            <Toolbar>
                 <IconButton
-                    size="large"
                     edge="start"
                     color="inherit"
-                    aria-label="menu"
-
+                    aria-label="back"
+                    onClick={() => router.back()}
                 >
                     <ArrowBackIosNewOutlinedIcon />
                 </IconButton>
                 <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                     Detail
                 </Typography>
-                {auth && (
-                    <div>
-                        <IconButton
-                            size="large"
-                            aria-label="account of current user"
-                            aria-controls="menu-appbar"
-                            aria-haspopup="true"
-                            onClick={handleMenu}
-                            color="inherit"
-                        >
-                            <TurnedInOutlinedIcon />
-                        </IconButton>
-                        <Menu
-                            id="menu-appbar"
-                            anchorEl={anchorEl}
-                            anchorOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            open={Boolean(anchorEl)}
-                            onClose={handleClose}
-                        >
-
-                        </Menu>
-                    </div>
-                )}
+                <IconButton edge="end" color="inherit" aria-label="info">
+                    <BookmarkIcon />
+                </IconButton>
             </Toolbar>
         </AppBar>
 

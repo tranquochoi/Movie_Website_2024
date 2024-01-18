@@ -16,6 +16,7 @@ import { NextPageWithLayout } from "../_app";
 import Header from "@/components/landing_page/header";
 import SearchBar from "@/components/landing_page/search";
 import HomeMenu from "@/components/landing_page/homeLayoutMenu";
+import StarBorderIcon from "@mui/icons-material/StarBorder";
 
 interface MovieList {
   results: Movie[];
@@ -37,6 +38,7 @@ const HomeDetail: NextPageWithLayout = () => {
 
   return (
     <>
+      <Box sx={{ height: "21px" }}></Box>
       <Header />
       <Box sx={{ height: "21px" }}></Box>
       <SearchBar />
@@ -57,7 +59,8 @@ const HomeDetail: NextPageWithLayout = () => {
             sx={{
               flex: "0 0 auto",
               marginRight: 2,
-              height: "220px",
+              height: "250px",
+
             }}
           >
             <Link href={`/movie-detail/${movie.id}`} underline="none">
@@ -65,9 +68,10 @@ const HomeDetail: NextPageWithLayout = () => {
                 elevation={5}
                 className="small-card"
                 sx={{
-                  height: "210px",
+                  height: "200px",
                   width: "139.581px",
                   borderRadius: "16px",
+
                 }}
               >
                 <CardMedia
@@ -91,9 +95,9 @@ const HomeDetail: NextPageWithLayout = () => {
                     left: "-20px",
                     fontSize: "96px",
                     color: "#242A32",
-                    padding: "4px 8px",
+                    padding: "4px 4px",
                     overflow: "visible",
-                    textShadow: "1px 1px 4px #0296E5", // Thêm đường viền với màu và độ đậm mong muốn
+                    textShadow: "1px 1px 4px #0296E5",
                   }}
                 >
                   {data.results.indexOf(movie) + 1}
@@ -101,6 +105,7 @@ const HomeDetail: NextPageWithLayout = () => {
               </Box>
             </Link>
           </Box>
+
         ))}
       </Box>
     </>
@@ -111,7 +116,6 @@ HomeDetail.getLayout = function getLayout(page: ReactElement) {
   return (
     <Layout>
       {page}
-
       <HomeMenu />
     </Layout>
   );
