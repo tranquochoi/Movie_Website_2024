@@ -17,16 +17,8 @@ import Header from "@/components/landing_page/header";
 import SearchBar from "@/components/landing_page/search";
 import HomeMenu from "@/components/landing_page/homeLayoutMenu";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
-
-interface MovieList {
-  results: Movie[];
-}
-
-interface Movie {
-  id: string;
-  title: string;
-  poster_path: string;
-}
+import StarIcon from "@mui/icons-material/Star";
+import { MovieList } from "../movie-detail/Models/Movies";
 
 const HomeDetail: NextPageWithLayout = () => {
   const fetcher = (url: string) =>
@@ -60,10 +52,28 @@ const HomeDetail: NextPageWithLayout = () => {
               flex: "0 0 auto",
               marginRight: 2,
               height: "250px",
-
             }}
           >
             <Link href={`/movie-detail/${movie.id}`} underline="none">
+              <Box sx={{ position: "relative" }}>
+                <Box
+                  sx={{
+                    marginTop: "20px",
+                    backgroundColor: "rgba(0, 0, 0, 0.5)",
+                    borderRadius: "8px",
+                    padding: "2px",
+                    left: "70%",
+
+                    position: "absolute",
+                    transform: "translate(-8%, -40%)",
+                    color: "white",
+                    fontSize: "12px",
+                  }}
+                >
+                  <StarIcon sx={{ fontSize: 24, color: "orange" }} />
+                  {movie.vote_average}
+                </Box>
+              </Box>
               <Card
                 elevation={5}
                 className="small-card"
@@ -71,7 +81,6 @@ const HomeDetail: NextPageWithLayout = () => {
                   height: "200px",
                   width: "139.581px",
                   borderRadius: "16px",
-
                 }}
               >
                 <CardMedia
@@ -105,7 +114,6 @@ const HomeDetail: NextPageWithLayout = () => {
               </Box>
             </Link>
           </Box>
-
         ))}
       </Box>
     </>
