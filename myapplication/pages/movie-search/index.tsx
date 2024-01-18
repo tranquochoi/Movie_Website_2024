@@ -171,20 +171,20 @@ const SearchDetail: NextPageWithLayout = () => {
         />
       </Box>
 
-      <Grid container spacing={3}>
+      <Grid container spacing={1}>
         {filteredResults.map((movie) => (
-          <Grid item key={movie.id} xs={12} sm={6} md={4} lg={3}>
+          <Grid item key={movie.id} xs={12} sm={2} md={4} lg={3}>
             <Link href={`/movie-detail/${movie.id}`} underline="none">
-              <Card sx={{ boxShadow: "none", marginTop: "20px" }}>
+              <Card sx={{ boxShadow: "none", marginTop: "4px" }}>
                 <Box
                   sx={{
                     display: "flex",
                     flexDirection: "row",
                     bgcolor: "#242A32",
                     border: "none",
-                    borderRadius: 0,
                     color: "white",
                     textAlign: "left",
+                    padding: "10px"
                   }}
                 >
                   <CardMedia
@@ -200,6 +200,8 @@ const SearchDetail: NextPageWithLayout = () => {
                       flex: "1 1 auto",
                       maxWidth: "95px",
                       maxHeight: "120px",
+                      borderRadius: "16px",
+                      marginTop: "24px"
                     }}
                   />
                   <CardContent sx={{ flex: "2 1 auto" }}>
