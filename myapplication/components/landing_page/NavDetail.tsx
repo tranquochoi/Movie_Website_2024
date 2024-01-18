@@ -41,8 +41,10 @@ export default function NavDetail() {
             position="static"
             sx={{
                 backgroundColor: "#242A32",
-                marginBottom: "20px",
+                marginTop: "10px",
+                marginBottom: "10px",
                 boxShadow: "none",
+                textAlign: "center"
             }}
         >
             <Toolbar>

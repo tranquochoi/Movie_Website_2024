@@ -50,7 +50,8 @@ const Detail: NextPageWithLayout = () => {
             height: "auto",
             width: "100%",
             objectFit: "cover",
-            borderRadius: "16px",
+            borderBottomLeftRadius: "16px",
+            borderBottomRightRadius: "16px",
 
           }}
           src={config.image_path + data.backdrop_path}
@@ -135,10 +136,6 @@ const Detail: NextPageWithLayout = () => {
       <TabDetail />
     </>
   );
-};
-
-Detail.getLayout = function getLayout(page) {
-  return <Layout>{page}</Layout>;
 };
 
 export default Detail;

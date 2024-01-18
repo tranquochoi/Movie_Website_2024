@@ -27,7 +27,7 @@ function CustomTabPanel(props: TabPanelProps) {
       {...other}
     >
       {value === index && (
-        <Box p={1} sx={{ textAlign: "left" }}>
+        <Box p={1} sx={{ textAlign: "left", color: "#FFF" }}>
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -55,7 +55,7 @@ export function TabDetail() {
   };
 
   return (
-    <Box sx={{ width: "100%" }}>
+    <Box sx={{ width: "100%", paddingLeft: "10px", paddingRight: "10px" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs
           value={value}
