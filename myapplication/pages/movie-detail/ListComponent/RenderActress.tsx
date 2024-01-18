@@ -13,31 +13,39 @@ function RenderActress(props: { data: Cast[] }) {
               paddingX: 2,
               marginBottom: "24px",
             }}
-          >           
-              <Box
-                component="img"
-                sx={{
-                  marginBottom: "8px",
-                  borderRadius: "50%",
-                  width: "100%",
-                  height: "auto",
-                  objectFit: "cover",
-                }}
-                src={
-                  credit.profile_path
-                    ? `https://image.tmdb.org/t/p/w500${credit.profile_path}`
-                    : "/default.jpg"
-                }
-                alt=""
-              />
-            
+          >
+            <Box
+              component="img"
+              sx={{
+                marginBottom: "8px",
+                borderRadius: "50%",
+                width: "100%",
+                height: "auto",
+                objectFit: "cover",
+              }}
+              src={
+                credit.profile_path
+                  ? `https://image.tmdb.org/t/p/w500${credit.profile_path}`
+                  : "/default.jpg"
+              }
+              alt=""
+            />
 
-            <Box sx={{ textAlign: 'center', }}>
-              <Typography sx={{ fontWeight: 'bold' }}>{credit.original_name}</Typography>
+            <Box sx={{ textAlign: "center" }}>
+              <Typography sx={{ fontWeight: "bold" }}>
+                {credit.original_name}
+              </Typography>
               as
-              <Typography sx={{ color: '#888', fontWeight: 'bold', fontFamily: 'cursive' }}>{credit.character}</Typography>
+              <Typography
+                sx={{
+                  color: "#888",
+                  fontWeight: "bold",
+                  fontFamily: "cursive",
+                }}
+              >
+                {credit.character}
+              </Typography>
             </Box>
-
           </Box>
         </Grid>
       ))}
