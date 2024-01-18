@@ -24,6 +24,7 @@ export interface Movie {
   backdrop_path: string;
   budget: string;
   genres: Genre[];
+  genre_ids: String[];
   overview: string;
   vote_average: number;
   release_date: string;
@@ -33,5 +34,5 @@ export interface Movie {
   videos: VideoList;
   credits: CreditSection;
   reviews: ReviewSection;
-  vote_count: number
+  vote_count: number;
 }

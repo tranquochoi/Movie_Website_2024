@@ -1,7 +1,16 @@
 import { Movie } from "@/pages/movie-detail/Models/Movies";
 import { Box, Card, CardContent, Link, Typography } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
+import { ListGenre } from "@/pages/movie-detail/Models/Geners";
+import axios from "axios";
+import useSWR from "swr";
 function RenderMovie2(props: { data: Movie }) {
+  const fetcher = (url: string) =>
+    axios.get(url).then((response) => response.data);
+  const { data: gener } = useSWR<ListGenre>(
+    "genre/movie/list?language=en",
+    fetcher
+  );
   return (
     <Box
       key={props.data.id}
@@ -82,17 +91,36 @@ function RenderMovie2(props: { data: Movie }) {
         >
           {props.data.title}
         </Typography>
-        <Typography
-          sx={{
-            marginLeft: "0px",
-            overflow: "hidden",
-            textAlign: "left",
-            color: "#888",
-            fontSize: "12px",
-          }}
-        >
-          {props.data.release_date}
-        </Typography>
+        <Box sx={{ display: "flex", flexDirection: "row" }}>
+          <Typography
+            sx={{
+              marginLeft: "0px",
+              overflow: "hidden",
+              textAlign: "left",
+              color: "#888",
+              fontSize: "12px",
+              width: "30%",
+            }}
+          >
+            {props.data.release_date}
+          </Typography>
+          {gener?.genres
+            .filter((gen) => props.data.genre_ids.includes(gen.id))
+            .slice(0, 2) // Chỉ lấy 2 phần tử đầu tiên
+            .map((gen) => (
+              <Typography
+                key={gen.id}
+                sx={{
+                  color: "#888", // Màu chữ trắng
+                  marginRight: "12px",
+                  fontSize: "12px",
+                  // Khoảng cách giữa nội dung và mép của box
+                }}
+              >
+                | {gen.name}
+              </Typography>
+            ))}
+        </Box>
       </Link>
     </Box>
   );
