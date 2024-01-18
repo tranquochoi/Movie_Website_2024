@@ -23,10 +23,7 @@ import { MovieList } from "../movie-detail/Models/Movies";
 const HomeDetail: NextPageWithLayout = () => {
   const fetcher = (url: string) =>
     axios.get(url).then((response) => response.data);
-  const { data, isLoading, error } = useSWR<MovieList>(
-    "/movie/upcoming",
-    fetcher
-  );
+  const { data, isLoading, error } = useSWR<MovieList>("/movie/upcoming");
 
   return (
     <>

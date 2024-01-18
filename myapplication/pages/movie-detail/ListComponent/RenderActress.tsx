@@ -20,11 +20,7 @@ function RenderActress(props: { data: Cast[] }) {
                 marginBottom: "8px",
                 borderRadius: "50%",
                 width: "100%",
-<<<<<<< HEAD
-                height: "auto",
-=======
                 height: "200px",
->>>>>>> origin/feature/detail
                 objectFit: "cover",
               }}
               src={
