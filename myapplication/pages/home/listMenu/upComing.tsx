@@ -22,7 +22,7 @@ import RenderMovie from "./renderMovie";
 const UpComing: NextPageWithLayout = () => {
   const fetcher = (url: string) =>
     axios.get(url).then((response) => response.data);
-  const { data, error } = useSWR<MovieList>("/movie/upcoming", fetcher);
+  const { data, error } = useSWR<MovieList>("/movie/upcoming");
 
   if (!data) {
     return <CircularProgress />;
@@ -37,16 +37,21 @@ const UpComing: NextPageWithLayout = () => {
       sx={{
         display: "flex",
         flexDirection: "column",
-        gap: 2,
-        marginBottom: "70px",
+        gap: 5,
       }}
     >
+
       <Box
         sx={{
+          paddingTop: "24px",
           display: "flex",
           overflowX: "auto",
           gap: 1,
           flexWrap: "nowrap",
+          margin: "-14px",
+          paddingLeft: "18px",
+          paddingRight: "16px"
+
         }}
       >
         {data?.results.slice(0, 6).map((movie) => (
@@ -59,12 +64,17 @@ const UpComing: NextPageWithLayout = () => {
           overflowX: "auto",
           gap: 1,
           flexWrap: "nowrap",
+          margin: "-14px",
+          paddingLeft: "18px",
+          paddingRight: "16px"
+
         }}
       >
         {data?.results.slice(6, 12).map((movie) => (
           <RenderMovie data={movie}></RenderMovie>
         ))}
       </Box>
+      <Box sx={{ height: "32px" }} />
     </Box>
   );
 };

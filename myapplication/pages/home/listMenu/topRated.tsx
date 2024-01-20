@@ -38,16 +38,20 @@ const TopRated: NextPageWithLayout = () => {
       sx={{
         display: "flex",
         flexDirection: "column",
-        gap: 2,
-        marginBottom: "70px",
+        gap: 5,
       }}
     >
       <Box
         sx={{
+          paddingTop: "24px",
           display: "flex",
           overflowX: "auto",
           gap: 1,
           flexWrap: "nowrap",
+          margin: "-14px",
+          paddingLeft: "18px",
+          paddingRight: "16px"
+
         }}
       >
         {data?.results.slice(0, 6).map((movie) => (
@@ -60,12 +64,18 @@ const TopRated: NextPageWithLayout = () => {
           overflowX: "auto",
           gap: 1,
           flexWrap: "nowrap",
+          margin: "-14px",
+          paddingLeft: "18px",
+          paddingRight: "16px"
+
         }}
       >
         {data?.results.slice(6, 12).map((movie) => (
           <RenderMovie2 data={movie}></RenderMovie2>
         ))}
       </Box>
+      <Box sx={{ height: "32px" }} />
+
     </Box>
   );
 };
