@@ -183,6 +183,21 @@ const SearchDetail: NextPageWithLayout = () => {
         />
       </Box>
 
+      {searchTerm.length > 0 && searchResults.length === 0 && (
+        <Box sx={{ textAlign: "center", padding: "50px" }}>
+          <img
+            src="/cantfound.svg"
+            alt="Error"
+            style={{
+              width: "352px",
+              height: "290px",
+              display: "block",
+              margin: "auto",
+            }}
+          />
+        </Box>
+      )}
+
       <Grid container spacing={1}>
         {displayedMovies.map((movie) => (
           <Grid item key={movie.id} xs={12} sm={2} md={4} lg={3}>
@@ -224,9 +239,6 @@ const SearchDetail: NextPageWithLayout = () => {
                     </Typography>
                     <Typography>
                       <CalendarToday /> {movie.release_date}
-                    </Typography>
-                    <Typography>
-                      <AccessTime /> {movie.runtime} minutes
                     </Typography>
                   </CardContent>
                 </Box>
