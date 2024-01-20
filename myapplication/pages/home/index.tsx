@@ -19,6 +19,7 @@ import HomeMenu from "@/components/landing_page/homeLayoutMenu";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import StarIcon from "@mui/icons-material/Star";
 import { MovieList } from "../movie-detail/Models/Movies";
+import Person from "@/components/Person";
 
 const HomeDetail: NextPageWithLayout = () => {
   const fetcher = (url: string) =>
@@ -27,7 +28,7 @@ const HomeDetail: NextPageWithLayout = () => {
 
   return (
     <>
-      <Box sx={{ height: "21px", marginTop: "-8px" }}></Box>
+      <Box sx={{ height: "21px" }}></Box>
       <Header />
       <Box sx={{ height: "21px", marginTop: "-8px" }}></Box>
       <SearchBar />
