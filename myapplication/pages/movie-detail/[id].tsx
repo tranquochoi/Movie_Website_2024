@@ -4,13 +4,15 @@ import useSWR from "swr";
 import Layout from "@/components/landing_page/layout";
 import NavDetail from "@/components/landing_page/NavDetail";
 import TabDetail from "@/components/landing_page/TabDetail";
-import StarIcon from '@mui/icons-material/Star'; import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
+import StarIcon from "@mui/icons-material/Star";
+import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import ConfirmationNumberIcon from "@mui/icons-material/ConfirmationNumber";
 import { Box, CardMedia, CircularProgress, Stack, Typography } from "@mui/material";
 import { Movie } from "./Models/Movies";
 import config from "@/config";
 import { NextPageWithLayout } from "../_app";
+import { green } from "@mui/material/colors";
 
 const Detail: NextPageWithLayout = () => {
   const router = useRouter();
@@ -19,14 +21,17 @@ const Detail: NextPageWithLayout = () => {
     `/movie/${id}?language=en-US&append_to_response=videos,credits`
   );
 
-  if (isLoading)
+  if (isLoading) {
     return (
       <Typography>
         {isLoading && <CircularProgress />}
       </Typography>
     );
+  }
 
-  if (error) return <Typography sx={{ color: "red" }}>Error</Typography>;
+  if (error) {
+    return <Typography sx={{ color: "red" }}>Error</Typography>;
+  }
 
   if (!data) {
     return <>Không có dữ liệu</>;
@@ -40,10 +45,8 @@ const Detail: NextPageWithLayout = () => {
         sx={{
           backgroundColor: "#242A32",
           position: "relative",
-
         }}
       >
-
         <Box
           component="img"
           sx={{
@@ -52,7 +55,6 @@ const Detail: NextPageWithLayout = () => {
             objectFit: "cover",
             borderBottomLeftRadius: "16px",
             borderBottomRightRadius: "16px",
-
           }}
           src={config.image_path + data.backdrop_path}
           alt={data.title}
@@ -64,7 +66,7 @@ const Detail: NextPageWithLayout = () => {
             borderRadius: "8px",
             padding: "4px",
             position: "absolute",
-            top: "56%",
+            top: "44%",
             left: "84%",
             transform: "translate(-8%, -40%)",
             color: "white",
@@ -102,13 +104,14 @@ const Detail: NextPageWithLayout = () => {
                   paddingLeft: "120px",
                   fontSize: "18px",
                   fontWeight: "600",
-                  flexDirection: "column"
+                  flexDirection: "column",
                 }}
               >
                 {data.title}
               </Typography>
             </Box>
           </Box>
+
           <Stack direction="column" spacing={1} alignItems="center">
             <Stack direction="row" alignItems="center" spacing={1}>
               <CalendarTodayIcon sx={{ color: "#92929D", marginRight: "5px" }} />
@@ -121,16 +124,40 @@ const Detail: NextPageWithLayout = () => {
               <Typography variant="body1" sx={{ color: "#92929D" }}>
                 {data.runtime} Minutes
               </Typography>
-              <ConfirmationNumberIcon
-                sx={{ color: "#92929D", marginLeft: "10px", marginRight: "5px" }}
-              />
-              <Typography variant="body1" sx={{ color: "#92929D" }}>
-                {data.genres[0]?.name}
-              </Typography>
+            </Stack>
+
+            <Stack direction="row" textAlign="left" spacing={1}>
+              <Typography
+                sx={{ color: "#92929D", fontSize: '20px',pl:'10px',pt:'10px' }}
+              >Genres:</Typography>
+              <Box sx={{
+                color: "#92929D",
+                display: "flex",
+                flexDirection: "row",
+                flexWrap: "wrap",
+              }}>
+                {data.genres.map((genre) => (
+                  <Box
+                    key={genre.id}
+                    sx={{
+                      border: "2px solid #888",
+                      color: "white ",
+                      padding: "4px 8px",
+                      borderRadius: "4px",
+                      marginRight: "8px",
+                      marginTop:"10px"                     
+                    }}
+                  >
+                    {genre.name}
+                  </Box>
+
+                ))}
+              </Box>
             </Stack>
           </Stack>
         </Stack>
-      </Stack >
+      </Stack>
+
       <Box sx={{ height: "28px" }}></Box>
 
       <TabDetail />
