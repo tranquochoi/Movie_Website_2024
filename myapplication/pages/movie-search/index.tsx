@@ -218,6 +218,7 @@ const SearchDetail: NextPageWithLayout = () => {
           </Grid>
         ))}
       </Grid>
+      <Box sx={{ height: "100px" }} />
     </Box>
   );
 };
