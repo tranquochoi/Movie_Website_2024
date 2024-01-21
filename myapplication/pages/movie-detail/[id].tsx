@@ -22,11 +22,7 @@ const Detail: NextPageWithLayout = () => {
   );
 
   if (isLoading) {
-    return (
-      <Typography>
-        {isLoading && <CircularProgress />}
-      </Typography>
-    );
+    return <Typography>{isLoading && <CircularProgress />}</Typography>;
   }
 
   if (error) {
@@ -139,7 +135,7 @@ const Detail: NextPageWithLayout = () => {
             }}>
               {data.genres.map((genre) => (
                 <Box
-                  key={genre.id}
+                  key={genre.id.toString()}
                   sx={{
                     border: "2px solid #888",
                     color: "white ",

@@ -8,6 +8,7 @@ import useSWR from "swr";
 import { Movie } from "@/pages/movie-detail/Models/Movies";
 import RenderActress from "@/pages/movie-detail/ListComponent/RenderActress";
 import RenderReview from "@/pages/movie-detail/ListComponent/RenderReview";
+import RenderImages from "@/pages/movie-detail/ListComponent/RenderImages";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -66,17 +67,38 @@ export function TabDetail() {
           <Tab
             label="About Movie"
             {...a11yProps(0)}
-            style={{ color: "white", textTransform: "none", fontFamily: "YourCustomFont, sans-serif" }}
+            style={{
+              color: "white",
+              textTransform: "none",
+              fontFamily: "YourCustomFont, sans-serif",
+            }}
           />
           <Tab
             label="Reviews"
             {...a11yProps(1)}
-            style={{ color: "white", textTransform: "none", fontFamily: "YourCustomFont, sans-serif" }}
+            style={{
+              color: "white",
+              textTransform: "none",
+              fontFamily: "YourCustomFont, sans-serif",
+            }}
           />
           <Tab
             label="Cast"
             {...a11yProps(2)}
-            style={{ color: "white", textTransform: "none", fontFamily: "YourCustomFont, sans-serif" }}
+            style={{
+              color: "white",
+              textTransform: "none",
+              fontFamily: "YourCustomFont, sans-serif",
+            }}
+          />
+          <Tab
+            label="Images"
+            {...a11yProps(3)}
+            style={{
+              color: "white",
+              textTransform: "none",
+              fontFamily: "YourCustomFont, sans-serif",
+            }}
           />
         </Tabs>
       </Box>
@@ -88,6 +110,9 @@ export function TabDetail() {
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
         <RenderActress data={data?.credits.cast}></RenderActress>
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={3}>
+        <RenderImages id={id}></RenderImages>
       </CustomTabPanel>
     </Box>
   );
