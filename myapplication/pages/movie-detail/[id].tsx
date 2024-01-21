@@ -5,9 +5,6 @@ import Layout from "@/components/landing_page/layout";
 import NavDetail from "@/components/landing_page/NavDetail";
 import TabDetail from "@/components/landing_page/TabDetail";
 import StarIcon from "@mui/icons-material/Star";
-import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import ConfirmationNumberIcon from "@mui/icons-material/ConfirmationNumber";
 import { Box, CardMedia, CircularProgress, Stack, Typography } from "@mui/material";
 import { format } from "date-fns";
 import { Movie } from "./Models/Movies";
@@ -47,8 +44,7 @@ const Detail: NextPageWithLayout = () => {
       >
         <Box
           component="img"
-          sx={{
-            height: "auto",
+          sx={{            
             width: "100%",
             objectFit: "cover",
             borderBottomLeftRadius: "16px",
@@ -62,13 +58,12 @@ const Detail: NextPageWithLayout = () => {
           sx={{
             backgroundColor: "rgba(50, 40, 54, 0.32)",
             borderRadius: "8px",
-            padding: "4px",
+            padding: "2px",
             position: "absolute",
-            top: "44%",
+            top: "38%",
             left: "84%",
             transform: "translate(-8%, -40%)",
             color: "white",
-            fontSize: "12px",
           }}
         >
           <StarIcon sx={{ fontSize: 24, color: "orange" }} />
@@ -83,10 +78,10 @@ const Detail: NextPageWithLayout = () => {
                 position: "absolute",
                 borderRadius: "16px",
                 right: "72%",
-                transform: "translate(-5%, -40%)",
+                transform: "translate(0%, -42%)",
                 width: "95px",
                 objectFit: "cover",
-                height: "120px",
+                height: "130px",
               }}
               src={config.image_path + data.poster_path}
               alt={data.title}
@@ -97,10 +92,10 @@ const Detail: NextPageWithLayout = () => {
                 sx={{
                   height: "100px",
                   color: "white",
-                  width: "100%",
-                  paddingTop: "8px",
-                  paddingLeft: "120px",
-                  fontSize: "18px",
+                  width: "90%",
+                  paddingTop: "10px",
+                  paddingLeft: "130px",
+                  fontSize: "1rem",
                   fontWeight: "600",
                   flexDirection: "column",
                 }}
@@ -111,17 +106,17 @@ const Detail: NextPageWithLayout = () => {
           </Box>
 
           <Stack direction="column" alignItems="left" spacing={1}>
-            <Typography variant="body1" sx={{ color: "#92929D", fontSize: '20px', pl: '26px', pt: '10px' }}>
+            <Typography variant="body1" sx={{ color: "#92929D", fontSize: '1.25rem', pl: '26px', pt: '10px' }}>
               Date release: {formattedReleaseDate}
             </Typography>
-            <Typography variant="body1" sx={{ color: "#92929D", fontSize: '20px', pl: '26px', pt: '10px' }}>
+            <Typography variant="body1" sx={{ color: "#92929D", fontSize: '1.25rem', pl: '26px', pt: '10px' }}>
               Length: {data.runtime} Minutes
             </Typography>
           </Stack>
 
           <Stack direction="row" alignItems="left" spacing={1}>
             <Typography
-              sx={{ color: "#92929D", fontSize: '20px', pl: '26px', pt: '10px' }}
+              sx={{ color: "#92929D", fontSize: '1.25rem', pl: '26px', pt: '10px' }}
             >Genres:</Typography>
             <Box sx={{
               color: "#92929D",
