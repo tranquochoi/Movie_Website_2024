@@ -48,7 +48,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
         <AppBar
           position="fixed"
-          style={{ top: "auto", bottom: -5, backgroundColor: "#242A32" }}
+          style={{ top: "auto", bottom: -1, backgroundColor: "#242A32" }}
         >
           <Toolbar>
             <Grid container justifyContent="space-around" alignItems="center">
