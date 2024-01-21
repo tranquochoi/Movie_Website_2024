@@ -4,7 +4,7 @@ import StarIcon from "@mui/icons-material/Star";
 function RenderMovie(props: { data: Movie }) {
   return (
     <Box
-      key={props.data.id}
+      key={props.data.id.toString()}
       sx={{
         flex: "0 0 auto",
         marginRight: 0.5,

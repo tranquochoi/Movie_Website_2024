@@ -19,6 +19,7 @@ import HomeMenu from "@/components/landing_page/homeLayoutMenu";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import StarIcon from "@mui/icons-material/Star";
 import { MovieList } from "../movie-detail/Models/Movies";
+import Person from "@/components/Person";
 
 const HomeDetail: NextPageWithLayout = () => {
   const fetcher = (url: string) =>
@@ -29,15 +30,17 @@ const HomeDetail: NextPageWithLayout = () => {
     <>
       <Box sx={{ height: "21px" }}></Box>
       <Header />
-      <Box sx={{ height: "21px" }}></Box>
+      <Box sx={{ height: "21px", marginTop: "-8px" }}></Box>
       <SearchBar />
-      <Box sx={{ height: "21px" }}></Box>
+      <Box sx={{ height: "38px", marginTop: "-8px" }}></Box>
       <Box
         sx={{
           display: "flex",
           overflowX: "auto",
           gap: 2,
           flexWrap: "nowrap",
+          margin: "-14px",
+          paddingLeft: "18px"
         }}
       >
         {isLoading && <CircularProgress />}
@@ -60,7 +63,6 @@ const HomeDetail: NextPageWithLayout = () => {
                     borderRadius: "8px",
                     padding: "2px",
                     left: "70%",
-
                     position: "absolute",
                     transform: "translate(-8%, -40%)",
                     color: "white",

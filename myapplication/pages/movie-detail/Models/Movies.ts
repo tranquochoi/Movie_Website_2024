@@ -8,7 +8,7 @@ export interface MovieList {
 }
 
 export interface Genre {
-  id: string;
+  id: Int16Array;
   name: string;
 }
 
@@ -16,9 +16,16 @@ export interface ProductionCountry {
   iso_3166_1: string;
   name: string;
 }
+export interface ImageFilm {
+  file_path: string;
+  width: Int16Array;
+}
+export interface ListImage {
+  backdrops: ImageFilm[];
+}
 
 export interface Movie {
-  id: string;
+  id: Int16Array;
   title: string;
   poster_path: string;
   backdrop_path: string;
