@@ -8,7 +8,13 @@ import StarIcon from "@mui/icons-material/Star";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import ConfirmationNumberIcon from "@mui/icons-material/ConfirmationNumber";
-import { Box, CardMedia, CircularProgress, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  CardMedia,
+  CircularProgress,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { Movie } from "./Models/Movies";
 import config from "@/config";
 import { NextPageWithLayout } from "../_app";
@@ -22,11 +28,7 @@ const Detail: NextPageWithLayout = () => {
   );
 
   if (isLoading) {
-    return (
-      <Typography>
-        {isLoading && <CircularProgress />}
-      </Typography>
-    );
+    return <Typography>{isLoading && <CircularProgress />}</Typography>;
   }
 
   if (error) {
@@ -114,12 +116,18 @@ const Detail: NextPageWithLayout = () => {
 
           <Stack direction="column" spacing={1} alignItems="center">
             <Stack direction="row" alignItems="center" spacing={1}>
-              <CalendarTodayIcon sx={{ color: "#92929D", marginRight: "5px" }} />
+              <CalendarTodayIcon
+                sx={{ color: "#92929D", marginRight: "5px" }}
+              />
               <Typography variant="body1" sx={{ color: "#92929D" }}>
                 {data.release_date}
               </Typography>
               <AccessTimeIcon
-                sx={{ color: "#92929D", marginLeft: "10px", marginRight: "5px" }}
+                sx={{
+                  color: "#92929D",
+                  marginLeft: "10px",
+                  marginRight: "5px",
+                }}
               />
               <Typography variant="body1" sx={{ color: "#92929D" }}>
                 {data.runtime} Minutes
@@ -128,14 +136,23 @@ const Detail: NextPageWithLayout = () => {
 
             <Stack direction="row" textAlign="left" spacing={1}>
               <Typography
-                sx={{ color: "#92929D", fontSize: '20px',pl:'10px',pt:'10px' }}
-              >Genres:</Typography>
-              <Box sx={{
-                color: "#92929D",
-                display: "flex",
-                flexDirection: "row",
-                flexWrap: "wrap",
-              }}>
+                sx={{
+                  color: "#92929D",
+                  fontSize: "20px",
+                  pl: "10px",
+                  pt: "10px",
+                }}
+              >
+                Genres:
+              </Typography>
+              <Box
+                sx={{
+                  color: "#92929D",
+                  display: "flex",
+                  flexDirection: "row",
+                  flexWrap: "wrap",
+                }}
+              >
                 {data.genres.map((genre) => (
                   <Box
                     key={genre.id}
@@ -145,12 +162,11 @@ const Detail: NextPageWithLayout = () => {
                       padding: "4px 8px",
                       borderRadius: "4px",
                       marginRight: "8px",
-                      marginTop:"10px"                     
+                      marginTop: "10px",
                     }}
                   >
                     {genre.name}
                   </Box>
-
                 ))}
               </Box>
             </Stack>

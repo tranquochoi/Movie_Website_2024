@@ -66,17 +66,29 @@ export function TabDetail() {
           <Tab
             label="About Movie"
             {...a11yProps(0)}
-            style={{ color: "white", textTransform: "none", fontFamily: "YourCustomFont, sans-serif" }}
+            style={{
+              color: "white",
+              textTransform: "none",
+              fontFamily: "YourCustomFont, sans-serif",
+            }}
           />
           <Tab
             label="Reviews"
             {...a11yProps(1)}
-            style={{ color: "white", textTransform: "none", fontFamily: "YourCustomFont, sans-serif" }}
+            style={{
+              color: "white",
+              textTransform: "none",
+              fontFamily: "YourCustomFont, sans-serif",
+            }}
           />
           <Tab
             label="Cast"
             {...a11yProps(2)}
-            style={{ color: "white", textTransform: "none", fontFamily: "YourCustomFont, sans-serif" }}
+            style={{
+              color: "white",
+              textTransform: "none",
+              fontFamily: "YourCustomFont, sans-serif",
+            }}
           />
         </Tabs>
       </Box>
