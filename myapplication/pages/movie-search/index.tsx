@@ -28,6 +28,7 @@ import { AccessTime, CalendarToday, Info } from "@mui/icons-material";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import ArrowBackIosNewOutlinedIcon from "@mui/icons-material/ArrowBackIosNewOutlined";
 import { Movie } from "./Models/Movies";
+import { format } from "date-fns";
 
 const SearchDetail: NextPageWithLayout = () => {
   const router = useRouter();
@@ -38,7 +39,7 @@ const SearchDetail: NextPageWithLayout = () => {
   const { data, error } = useSWR<Movie>("/movie/upcoming");
   const [isDialogOpen, setDialogOpen] = useState(false);
   const [displayedMovies, setDisplayedMovies] = useState<Movie[]>([]);
-  const moviesPerPage = 10;
+  const moviesPerPage = 5;
 
   useEffect(() => {
     const handleSearch = async () => {
@@ -67,13 +68,16 @@ const SearchDetail: NextPageWithLayout = () => {
     );
   };
 
-  const filteredResults = searchTerm.length
-    ? searchResults.filter((movie) =>
-        searchTerm.every((term) =>
-          movie.title.toLowerCase().includes(term.toLowerCase())
-        )
-      )
-    : searchResults;
+  const formatRating = (rating: number) => {
+    const scaledRating = rating / 2;
+    if (scaledRating === 5) {
+      return "5.0";
+    } else if (scaledRating % 1 === 0.5) {
+      return scaledRating.toString();
+    } else {
+      return Math.round(scaledRating).toString() + ".0";
+    }
+  };
 
   if (!data) {
     return <CircularProgress />;
@@ -202,7 +206,16 @@ const SearchDetail: NextPageWithLayout = () => {
         {displayedMovies.map((movie) => (
           <Grid item key={movie.id} xs={12} sm={2} md={4} lg={3}>
             <Link href={`/movie-detail/${movie.id}`} underline="none">
-              <Card sx={{ boxShadow: "none", marginTop: "4px" }}>
+              <Card
+                sx={{
+                  boxShadow: "none",
+                  marginTop: "4px",
+                  transition: "filter 0.2s",
+                  "&:hover": {
+                    filter: "brightness(1.3)",
+                  },
+                }}
+              >
                 <Box
                   sx={{
                     display: "flex",
@@ -228,17 +241,22 @@ const SearchDetail: NextPageWithLayout = () => {
                       maxWidth: "95px",
                       maxHeight: "120px",
                       borderRadius: "16px",
-                      marginTop: "24px",
+                      //marginTop: "24px",
                     }}
                   />
                   <CardContent sx={{ flex: "2 1 auto" }}>
                     <Typography variant="h6">{movie.title}</Typography>
                     <Typography>
                       <StarBorderIcon sx={{ fontSize: 30, color: "orange" }} />{" "}
-                      {movie.vote_average}
+                      {formatRating(movie.vote_average)}
                     </Typography>
                     <Typography>
-                      <CalendarToday /> {movie.release_date}
+                      {movie.release_date && (
+                        <>
+                          <CalendarToday />{" "}
+                          {format(new Date(movie.release_date), "dd/MM/yyyy")}
+                        </>
+                      )}
                     </Typography>
                   </CardContent>
                 </Box>
@@ -246,12 +264,14 @@ const SearchDetail: NextPageWithLayout = () => {
             </Link>
           </Grid>
         ))}
-        {displayedMovies.length < searchResults.length && (
+      </Grid>
+      {displayedMovies.length < searchResults.length && (
+        <Box sx={{ textAlign: "center", marginTop: "20px", padding: "10px" }}>
           <Button onClick={handleLoadMore} variant="outlined" color="primary">
             Load More
           </Button>
-        )}
-      </Grid>
+        </Box>
+      )}
       <Box sx={{ height: "100px" }} />
     </Box>
   );
