@@ -14,6 +14,9 @@ function RenderImages(props: { id: Int16Array }) {
   const teaserVideo = video?.videos.results.find((video) =>
     video.name.includes("ailer")
   );
+
+  const youtubeVideoUrl = `https://www.youtube.com/embed/${teaserVideo?.key}?autoplay=1`;
+
   return (
     <Box
       sx={{
@@ -42,47 +45,19 @@ function RenderImages(props: { id: Int16Array }) {
             height: "176px",
           }}
         >
-          <Box
-            sx={{
-              backgroundImage: `url('https://i.ytimg.com/vi/${teaserVideo?.key}/hqdefault.jpg')`,
-              width: 1,
-              height: {
-                xs: "100%",
-                sm: "100%",
-              },
-              backgroundPosition: "center center",
-              backgroundRepeat: "false",
-              backgroundSize: "cover",
-              justifyContent: "center",
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <Link
-              href={`https://www.youtube.com/watch?v=Fbb4e_Q6wR8`}
-              target="_blank"
-              rel="noopener"
-            >
-              <Box
-                bgcolor="white"
-                borderRadius={12}
-                width={40}
-                height={40}
-                sx={{
-                  justifyContent: "center",
-                  display: "flex",
-                  alignItems: "center",
-                  opacity: "50%",
-                }}
-              >
-                <PlayArrow />
-              </Box>
-            </Link>
-          </Box>
+          <iframe
+            title="teaserVideo"
+            width="100%"
+            height="100%"
+            src={youtubeVideoUrl}
+            frameBorder="0"
+            allowFullScreen
+          />
         </Box>
 
-        {data?.backdrops.slice(0, 10).map((ig) => (
+        {data?.backdrops.slice(0, 10).map((ig, index) => (
           <Box
+            key={index}
             sx={{
               flex: "0 0 auto",
               marginRight: 0.5,
@@ -105,4 +80,5 @@ function RenderImages(props: { id: Int16Array }) {
     </Box>
   );
 }
+
 export default RenderImages;
