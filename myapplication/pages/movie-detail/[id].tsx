@@ -9,10 +9,10 @@ import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import ConfirmationNumberIcon from "@mui/icons-material/ConfirmationNumber";
 import { Box, CardMedia, CircularProgress, Stack, Typography } from "@mui/material";
+import { format } from "date-fns";
 import { Movie } from "./Models/Movies";
 import config from "@/config";
 import { NextPageWithLayout } from "../_app";
-import { green } from "@mui/material/colors";
 
 const Detail: NextPageWithLayout = () => {
   const router = useRouter();
@@ -36,6 +36,12 @@ const Detail: NextPageWithLayout = () => {
   if (!data) {
     return <>Không có dữ liệu</>;
   }
+
+  
+  const formattedReleaseDate = format(
+    new Date(data.release_date),
+    "dd/MM/yyyy"
+  );
 
   return (
     <>
@@ -112,48 +118,42 @@ const Detail: NextPageWithLayout = () => {
             </Box>
           </Box>
 
-          <Stack direction="column" spacing={1} alignItems="center">
-            <Stack direction="row" alignItems="center" spacing={1}>
-              <CalendarTodayIcon sx={{ color: "#92929D", marginRight: "5px" }} />
-              <Typography variant="body1" sx={{ color: "#92929D" }}>
-                {data.release_date}
-              </Typography>
-              <AccessTimeIcon
-                sx={{ color: "#92929D", marginLeft: "10px", marginRight: "5px" }}
-              />
-              <Typography variant="body1" sx={{ color: "#92929D" }}>
-                {data.runtime} Minutes
-              </Typography>
-            </Stack>
+          <Stack direction="column" alignItems="left" spacing={1}>
+            <Typography variant="body1" sx={{ color: "#92929D", fontSize: '20px', pl: '26px', pt: '10px' }}>
+              Date release: {formattedReleaseDate}
+            </Typography>
+            <Typography variant="body1" sx={{ color: "#92929D", fontSize: '20px', pl: '26px', pt: '10px' }}>
+              Length: {data.runtime} Minutes
+            </Typography>
+          </Stack>
 
-            <Stack direction="row" textAlign="left" spacing={1}>
-              <Typography
-                sx={{ color: "#92929D", fontSize: '20px',pl:'10px',pt:'10px' }}
-              >Genres:</Typography>
-              <Box sx={{
-                color: "#92929D",
-                display: "flex",
-                flexDirection: "row",
-                flexWrap: "wrap",
-              }}>
-                {data.genres.map((genre) => (
-                  <Box
-                    key={genre.id}
-                    sx={{
-                      border: "2px solid #888",
-                      color: "white ",
-                      padding: "4px 8px",
-                      borderRadius: "4px",
-                      marginRight: "8px",
-                      marginTop:"10px"                     
-                    }}
-                  >
-                    {genre.name}
-                  </Box>
+          <Stack direction="row" alignItems="left" spacing={1}>
+            <Typography
+              sx={{ color: "#92929D", fontSize: '20px', pl: '26px', pt: '10px' }}
+            >Genres:</Typography>
+            <Box sx={{
+              color: "#92929D",
+              display: "flex",
+              flexDirection: "row",
+              flexWrap: "wrap",
+            }}>
+              {data.genres.map((genre) => (
+                <Box
+                  key={genre.id}
+                  sx={{
+                    border: "2px solid #888",
+                    color: "white ",
+                    padding: "4px 8px",
+                    borderRadius: "4px",
+                    marginRight: "8px",
+                    marginTop: "10px"
+                  }}
+                >
+                  {genre.name}
+                </Box>
 
-                ))}
-              </Box>
-            </Stack>
+              ))}
+            </Box>
           </Stack>
         </Stack>
       </Stack>
