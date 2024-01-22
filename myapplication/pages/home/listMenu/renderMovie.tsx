@@ -1,7 +1,18 @@
 import { Movie } from "@/pages/movie-detail/Models/Movies";
 import { Box, Card, CardContent, Link, Typography } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
+
 function RenderMovie(props: { data: Movie }) {
+  const convertToStarRating = (roundedVote: number): string => {
+    const starRating = roundedVote / 2;
+
+    const shortenedRating = parseFloat(starRating.toFixed(1));
+
+    return shortenedRating % 1 === 0 ? shortenedRating.toFixed(1) : shortenedRating.toString();
+  };
+
+  const roundedVote = parseFloat(props.data.vote_average.toFixed(1));
+
   return (
     <Box
       key={props.data.id.toString()}
@@ -36,7 +47,7 @@ function RenderMovie(props: { data: Movie }) {
             }}
           >
             <StarIcon sx={{ fontSize: 24, color: "orange" }} />
-            {props.data.vote_average}
+            {convertToStarRating(roundedVote)}
           </Box>
           <Box
             component="img"
@@ -82,4 +93,5 @@ function RenderMovie(props: { data: Movie }) {
     </Box>
   );
 }
+
 export default RenderMovie;

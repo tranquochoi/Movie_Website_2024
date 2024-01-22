@@ -22,7 +22,7 @@ import RenderMovie from "./renderMovie";
 const UpComing: NextPageWithLayout = () => {
   const fetcher = (url: string) =>
     axios.get(url).then((response) => response.data);
-  const { data, error } = useSWR<MovieList>("/movie/upcoming");
+  const { data, error } = useSWR<MovieList>("/movie/upcoming", fetcher);
 
   if (!data) {
     return <CircularProgress />;

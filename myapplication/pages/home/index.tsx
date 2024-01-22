@@ -16,7 +16,6 @@ import { NextPageWithLayout } from "../_app";
 import Header from "@/components/landing_page/header";
 import SearchBar from "@/components/landing_page/search";
 import HomeMenu from "@/components/landing_page/homeLayoutMenu";
-import StarBorderIcon from "@mui/icons-material/StarBorder";
 import StarIcon from "@mui/icons-material/Star";
 import Person from "@/components/Person";
 import { MovieList } from "../movie-detail/Models/Movies";
@@ -26,6 +25,10 @@ const HomeDetail: NextPageWithLayout = () => {
     axios.get(url).then((response) => response.data);
 
   const { data, isLoading, error } = useSWR<MovieList>("/movie/popular");
+
+  const getStarRating = (averageVote: number): number => {
+    return parseFloat(Math.min(5, Math.max(1, averageVote / 2)).toFixed(1));
+  };
 
   return (
     <>
@@ -85,7 +88,7 @@ const HomeDetail: NextPageWithLayout = () => {
                   }}
                 >
                   <StarIcon sx={{ fontSize: 24, color: "orange" }} />
-                  {movie.vote_average}
+                  {getStarRating(movie.vote_average)}
                 </Box>
               </Box>
 
