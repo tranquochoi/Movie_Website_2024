@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import Layout from "@/components/landing_page/layout";
@@ -36,18 +36,22 @@ import { ListGenre } from "../movie-detail/Models/Geners";
 const Categories: NextPageWithLayout = () => {
   const router = useRouter();
   const { id } = router.query;
+  const [selectedGenreId, setSelectedGenreId] = useState<string | null>(
+    id as string
+  );
   const fetcher = (url: string) =>
     axios.get(url).then((response) => response.data);
   const { data, isLoading, error } = useSWR<MovieList>(
     "/movie/now_playing",
     fetcher
   );
+
   const { data: gener } = useSWR<ListGenre>(
-    "genre/movie/list?language=en",
+    "genre/movie/list?language=en&page=3",
     fetcher
   );
   const movieGener = data?.results.filter((movie) =>
-    movie.genre_ids.includes(parseInt(id as string))
+    movie.genre_ids.includes(parseInt(selectedGenreId as string))
   );
   if (isLoading) {
     return <Typography>{isLoading && <CircularProgress />}</Typography>;
@@ -73,25 +77,30 @@ const Categories: NextPageWithLayout = () => {
         }}
       >
         {gener?.genres.map((genre) => (
-          <Link href={`/geners/${genre.id}`} underline="none">
-            <Box
-              key={genre.id.toString()}
-              sx={{
-                border: "2px solid #888",
-                color: "white ",
-                padding: "4px 8px",
-                borderRadius: "2px",
-                marginRight: "8px",
-                marginTop: "10px",
-              }}
-            >
-              {genre.name}
-            </Box>
-          </Link>
+          <Box
+            key={genre.id.toString()}
+            sx={{
+              border: "2px solid #888",
+              color: "white ",
+              padding: "4px 8px",
+              borderRadius: "2px",
+              marginRight: "8px",
+              marginTop: "10px",
+            }}
+            onClick={() => setSelectedGenreId(genre.id.toString())}
+          >
+            {genre.name}
+          </Box>
         ))}
       </Box>
-      <Box sx={{ padding: "6px" }}>
-        <Grid container spacing={1}>
+      <Typography
+        sx={{ color: "white ", fontSize: "18px", textAlign: "center" }}
+      >
+        Slected:
+        {gener?.genres.find((tl) => tl.id == (selectedGenreId as string))?.name}
+      </Typography>
+      <Box sx={{ padding: "6px", textAlign: "center" }}>
+        <Grid container spacing={3}>
           {movieGener?.map((movie, index) => (
             <Grid item xs={4} sm={3} md={4} key={index}>
               <RenderMovie data={movie} />

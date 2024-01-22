@@ -9,6 +9,7 @@ import {
   Box,
   CardMedia,
   CircularProgress,
+  Link,
   Stack,
   Typography,
 } from "@mui/material";
@@ -159,19 +160,21 @@ const Detail: NextPageWithLayout = () => {
               }}
             >
               {data.genres.map((genre) => (
-                <Box
-                  key={genre.id.toString()}
-                  sx={{
-                    border: "2px solid #888",
-                    color: "white ",
-                    padding: "4px 8px",
-                    borderRadius: "4px",
-                    marginRight: "8px",
-                    marginTop: "10px",
-                  }}
-                >
-                  {genre.name}
-                </Box>
+                <Link href={`/geners/${genre.id}`} underline="none">
+                  <Box
+                    key={genre.id.toString()}
+                    sx={{
+                      border: "2px solid #888",
+                      color: "white ",
+                      padding: "4px 8px",
+                      borderRadius: "4px",
+                      marginRight: "8px",
+                      marginTop: "10px",
+                    }}
+                  >
+                    {genre.name}
+                  </Box>
+                </Link>
               ))}
             </Box>
           </Stack>
