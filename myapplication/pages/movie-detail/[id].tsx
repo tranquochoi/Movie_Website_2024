@@ -44,7 +44,7 @@ const Detail: NextPageWithLayout = () => {
       >
         <Box
           component="img"
-          sx={{            
+          sx={{
             width: "100%",
             objectFit: "cover",
             borderBottomLeftRadius: "16px",
