@@ -30,10 +30,7 @@ const Detail: NextPageWithLayout = () => {
     return <>Không có dữ liệu</>;
   }
 
-  const formattedReleaseDate = format(
-    new Date(data.release_date),
-    "dd/MM/yyyy"
-  );
+  const formattedReleaseDate = format(new Date(data.release_date), "dd/MM/yyyy");
 
   return (
     <>
@@ -47,8 +44,7 @@ const Detail: NextPageWithLayout = () => {
       >
         <Box
           component="img"
-          sx={{
-            height: "200px",
+          sx={{            
             width: "100%",
             objectFit: "cover",
             borderBottomLeftRadius: "16px",
@@ -70,8 +66,8 @@ const Detail: NextPageWithLayout = () => {
             color: "white",
           }}
         >
-          <StarIcon sx={{ fontSize: "1rem", color: "orange" }} />
-          {data.vote_average}
+          <StarIcon sx={{ fontSize: 24, color: "orange" }} />
+          {(data.vote_average * 0.5).toFixed(1)}
         </Box>
 
         <Stack direction="column" spacing={1}>
