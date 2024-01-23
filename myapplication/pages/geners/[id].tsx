@@ -40,8 +40,9 @@ const Categories: NextPageWithLayout = () => {
   const router = useRouter();
   const { id } = router.query;
   const [selectedGenreId, setSelectedGenreId] = useState<string | null>(
-    id as string
+    id ? String(id) : null
   );
+
   const fetcher = (url: string) =>
     axios.get(url).then((response) => response.data);
   const { data, isLoading, error } = useSWR<MovieList>(
@@ -56,6 +57,7 @@ const Categories: NextPageWithLayout = () => {
   const movieGener = data?.results.filter((movie) =>
     movie.genre_ids.includes(parseInt(selectedGenreId as string))
   );
+
   if (isLoading) {
     return <Typography>{isLoading && <CircularProgress />}</Typography>;
   }
@@ -102,9 +104,18 @@ const Categories: NextPageWithLayout = () => {
         ))}
       </Box>
       <Typography
-        sx={{ color: "white ", fontSize: "18px", textAlign: "center" }}
+        sx={{
+          color: "white",
+          fontSize: "18px",
+          textAlign: "center",
+          padding: "10px", // Thêm padding để tạo khoảng cách
+          backgroundColor: "#161722", // Một màu nền để nổi bật
+          borderRadius: "0px", // Góc bo tròn cho ô chữ
+          fontWeight: "bold", // Tăng độ đậm của chữ
+          fontFamily: "Arial, sans-serif", // Chọn font chữ
+          // Thêm các thuộc tính khác nếu cần
+        }}
       >
-        Slected:
         {gener?.genres.find((tl) => tl.id == (selectedGenreId as string))?.name}
       </Typography>
       <Box sx={{ padding: "6px", textAlign: "center" }}>
