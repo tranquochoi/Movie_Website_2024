@@ -40,7 +40,7 @@ const HomeDetail: NextPageWithLayout = () => {
           gap: 2,
           flexWrap: "nowrap",
           margin: "-14px",
-          paddingLeft: "18px"
+          paddingLeft: "18px",
         }}
       >
         {isLoading && <CircularProgress />}
