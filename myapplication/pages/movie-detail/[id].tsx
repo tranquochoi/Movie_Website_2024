@@ -19,7 +19,7 @@ const Detail: NextPageWithLayout = () => {
   );
 
   if (isLoading) {
-    return <Typography>{isLoading && <CircularProgress />}</Typography>;
+    return <Typography fontSize={"250px"} textAlign={"center"}>{isLoading && <CircularProgress />}</Typography>;
   }
 
   if (error) {
