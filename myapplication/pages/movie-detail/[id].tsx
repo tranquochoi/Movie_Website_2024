@@ -5,6 +5,7 @@ import Layout from "@/components/landing_page/layout";
 import NavDetail from "@/components/landing_page/NavDetail";
 import TabDetail from "@/components/landing_page/TabDetail";
 import StarIcon from "@mui/icons-material/Star";
+import StarOutlineIcon from "@mui/icons-material/StarOutline";
 import {
   Box,
   CardMedia,
@@ -26,7 +27,11 @@ const Detail: NextPageWithLayout = () => {
   );
 
   if (isLoading) {
-    return <Typography fontSize={"250px"} textAlign={"center"}>{isLoading && <CircularProgress />}</Typography>;
+    return (
+      <Typography fontSize={"250px"} textAlign={"center"}>
+        {isLoading && <CircularProgress />}
+      </Typography>
+    );
   }
 
   if (error) {
@@ -41,6 +46,23 @@ const Detail: NextPageWithLayout = () => {
     new Date(data.release_date),
     "dd/MM/yyyy"
   );
+
+  // Function to generate star icons based on the vote average
+  const renderStarIcons = (voteAverage: number) => {
+    const stars = [];
+    const rating = voteAverage * 0.5;
+    const roundedRating = Math.round(rating);
+
+    for (let i = 1; i <= 5; i++) {
+      if (i <= roundedRating) {
+        stars.push(<StarIcon key={i} sx={{ fontSize: 24, color: "orange" }} />);
+      } else {
+        stars.push(<StarOutlineIcon key={i} sx={{ fontSize: 24, color: "orange" }} />);
+      }
+    }
+
+    return stars;
+  };
 
   return (
     <>
@@ -64,21 +86,7 @@ const Detail: NextPageWithLayout = () => {
           alt={data.title}
         />
 
-        <Box
-          sx={{
-            backgroundColor: "rgba(50, 40, 54, 0.32)",
-            borderRadius: "8px",
-            padding: "2px",
-            position: "absolute",
-            top: "38%",
-            left: "84%",
-            transform: "translate(-8%, -40%)",
-            color: "white",
-          }}
-        >
-          <StarIcon sx={{ fontSize: 24, color: "orange" }} />
-          {(data.vote_average * 0.5).toFixed(1)}
-        </Box>
+
 
         <Stack direction="column" spacing={1}>
           <Box sx={{ display: "flex", flexDirection: "row" }}>
@@ -97,24 +105,31 @@ const Detail: NextPageWithLayout = () => {
               alt={data.title}
             />
 
-            <Box>
-              <Typography
-                sx={{
-                  height: "100px",
-                  color: "white",
-                  width: "90%",
-                  paddingTop: "10px",
-                  paddingLeft: "130px",
-                  fontSize: "1rem",
-                  fontWeight: "600",
-                  flexDirection: "column",
-                }}
-              >
-                {data.title}
-              </Typography>
+
+            <Box sx={{
+              height: "100px",
+              color: "white",
+              width: "100%",
+              paddingTop: "10px",
+              paddingLeft: "130px",
+              fontSize: "1.2rem",
+              fontWeight: "600",
+              flexDirection: "column",
+            }}>
+              {data.title}
             </Box>
           </Box>
 
+          <Box
+            sx={{
+              paddingRight: "28%",
+              color: "white",
+              textAlign: "center"
+            }}
+          >
+            {renderStarIcons(data.vote_average)}  From {data.vote_count.toLocaleString()} users
+
+          </Box>
           <Stack direction="column" alignItems="left" spacing={1}>
             <Typography
               variant="body1"
@@ -179,7 +194,7 @@ const Detail: NextPageWithLayout = () => {
             </Box>
           </Stack>
         </Stack>
-      </Stack>
+      </Stack >
 
       <Box sx={{ height: "28px" }}></Box>
 
