@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ReactElement, useState } from "react";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import Layout from "@/components/landing_page/layout";
@@ -32,6 +32,9 @@ import axios from "axios";
 import { Movie, MovieList } from "../movie-detail/Models/Movies";
 import RenderMovie from "../home/listMenu/renderMovie";
 import { ListGenre } from "../movie-detail/Models/Geners";
+import HomeMenu from "@/components/landing_page/homeLayoutMenu";
+import Header from "@/components/landing_page/header";
+import NavGenres from "@/components/landing_page/NavGenres";
 
 const Categories: NextPageWithLayout = () => {
   const router = useRouter();
@@ -66,6 +69,7 @@ const Categories: NextPageWithLayout = () => {
   }
   return (
     <>
+      <NavGenres />
       <Box
         sx={{
           color: "#92929D",
@@ -86,6 +90,10 @@ const Categories: NextPageWithLayout = () => {
               borderRadius: "2px",
               marginRight: "8px",
               marginTop: "10px",
+              "&:hover": {
+                backgroundColor: "red",
+                cursor: "pointer",
+              },
             }}
             onClick={() => setSelectedGenreId(genre.id.toString())}
           >
