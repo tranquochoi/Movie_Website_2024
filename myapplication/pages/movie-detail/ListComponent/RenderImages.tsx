@@ -12,7 +12,7 @@ function RenderImages(props: { id: Int16Array }) {
     `/movie/${props.id}?language=en-US&append_to_response=videos`
   );
   const teaserVideo = video?.videos.results.find((video) =>
-    video.name.includes("Official")
+    video.name.includes("ailer")
   );
 
   const youtubeVideoUrl = `https://www.youtube.com/embed/${teaserVideo?.key}?autoplay=1`;

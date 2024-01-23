@@ -5,7 +5,14 @@ import Layout from "@/components/landing_page/layout";
 import NavDetail from "@/components/landing_page/NavDetail";
 import TabDetail from "@/components/landing_page/TabDetail";
 import StarIcon from "@mui/icons-material/Star";
-import { Box, CardMedia, CircularProgress, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  CardMedia,
+  CircularProgress,
+  Link,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { format } from "date-fns";
 import { Movie } from "./Models/Movies";
 import config from "@/config";
@@ -30,7 +37,10 @@ const Detail: NextPageWithLayout = () => {
     return <>Không có dữ liệu</>;
   }
 
-  const formattedReleaseDate = format(new Date(data.release_date), "dd/MM/yyyy");
+  const formattedReleaseDate = format(
+    new Date(data.release_date),
+    "dd/MM/yyyy"
+  );
 
   return (
     <>
@@ -106,38 +116,65 @@ const Detail: NextPageWithLayout = () => {
           </Box>
 
           <Stack direction="column" alignItems="left" spacing={1}>
-            <Typography variant="body1" sx={{ color: "#92929D", fontSize: '1.25rem', pl: '26px', pt: '10px' }}>
+            <Typography
+              variant="body1"
+              sx={{
+                color: "#92929D",
+                fontSize: "1.25rem",
+                pl: "26px",
+                pt: "10px",
+              }}
+            >
               Date release: {formattedReleaseDate}
             </Typography>
-            <Typography variant="body1" sx={{ color: "#92929D", fontSize: '1.25rem', pl: '26px', pt: '10px' }}>
+            <Typography
+              variant="body1"
+              sx={{
+                color: "#92929D",
+                fontSize: "1.25rem",
+                pl: "26px",
+                pt: "10px",
+              }}
+            >
               Length: {data.runtime} Minutes
             </Typography>
           </Stack>
 
           <Stack direction="row" alignItems="left" spacing={1}>
             <Typography
-              sx={{ color: "#92929D", fontSize: '1.25rem', pl: '26px', pt: '10px' }}
-            >Genres:</Typography>
-            <Box sx={{
-              color: "#92929D",
-              display: "flex",
-              flexDirection: "row",
-              flexWrap: "wrap",
-            }}>
+              sx={{
+                color: "#92929D",
+                fontSize: "1.25rem",
+                pl: "26px",
+                pt: "10px",
+              }}
+            >
+              Genres:
+            </Typography>
+            <Box
+              sx={{
+                color: "#92929D",
+                display: "flex",
+                flexDirection: "row",
+                flexWrap: "wrap",
+              }}
+            >
               {data.genres.map((genre) => (
-                <Box
-                  key={genre.id.toString()}
-                  sx={{
-                    border: "2px solid #888",
-                    color: "white ",
-                    padding: "4px 8px",
-                    borderRadius: "4px",
-                    marginRight: "8px",
-                    marginTop: "10px"
-                  }}
-                >
-                  {genre.name}
-                </Box>
+                <Link href={`/geners/${genre.id}`} underline="none">
+                  <Box
+                    key={genre.id.toString()}
+                    sx={{
+                      border: "2px solid #888",
+                      color: "white ",
+                      padding: "4px 8px",
+                      borderRadius: "4px",
+                      marginRight: "8px",
+                      marginTop: "10px",
+                    }}
+                  >
+                    {genre.name}
+                  </Box>
+                </Link>
               ))}
             </Box>
           </Stack>

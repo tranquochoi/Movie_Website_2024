@@ -31,7 +31,7 @@ export interface Movie {
   backdrop_path: string;
   budget: string;
   genres: Genre[];
-  genre_ids: String[];
+  genre_ids: number[];
   overview: string;
   vote_average: number;
   release_date: string;
