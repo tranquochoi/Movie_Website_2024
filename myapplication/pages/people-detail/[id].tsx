@@ -192,7 +192,7 @@ const PeopleDetail: NextPageWithLayout = () => {
         <Box sx={{ mt: 3, borderTop: "1px solid #777" }}>
           <Typography
             sx={{
-              color: "#242760",
+              color: "greenyellow",
               fontFamily: "Inter",
               fontSize: "24px",
               fontWeight: 600,
