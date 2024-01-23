@@ -14,14 +14,6 @@ function RenderMovie2(props: { data: Movie }) {
     fetcher
   );
 
-  const convertToStarRating = (voteAverage: number): string => {
-    const starRating = voteAverage / 2;
-
-    const shortenedRating = parseFloat(starRating.toFixed(1));
-
-    return shortenedRating % 1 === 0 ? shortenedRating.toFixed(1) : shortenedRating.toString();
-  };
-
   return (
     <Box
       key={props.data.id.toString()}
@@ -56,7 +48,7 @@ function RenderMovie2(props: { data: Movie }) {
             }}
           >
             <StarIcon sx={{ fontSize: 24, color: "orange" }} />
-            {convertToStarRating(props.data.vote_average)}
+            {(props.data.vote_average * 0.5).toFixed(1)}
           </Box>
           <Box
             sx={{
