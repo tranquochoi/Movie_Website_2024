@@ -68,17 +68,6 @@ const SearchDetail: NextPageWithLayout = () => {
     );
   };
 
-  const formatRating = (rating: number) => {
-    const scaledRating = rating / 2;
-    if (scaledRating === 5) {
-      return "5.0";
-    } else if (scaledRating % 1 === 0.5) {
-      return scaledRating.toString();
-    } else {
-      return Math.round(scaledRating).toString() + ".0";
-    }
-  };
-
   if (!data) {
     return <CircularProgress />;
   }
@@ -247,8 +236,8 @@ const SearchDetail: NextPageWithLayout = () => {
                   <CardContent sx={{ flex: "2 1 auto" }}>
                     <Typography variant="h6">{movie.title}</Typography>
                     <Typography>
-                      <StarBorderIcon sx={{ fontSize: 30, color: "orange" }} />{" "}
-                      {formatRating(movie.vote_average)}
+                      <StarBorderIcon sx={{ fontSize: 30, color: "orange" }} />
+                      {(movie.vote_average * 0.5).toFixed(1)}
                     </Typography>
                     <Typography>
                       {movie.release_date && (
