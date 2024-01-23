@@ -16,23 +16,39 @@ import { NextPageWithLayout } from "../_app";
 import Header from "@/components/landing_page/header";
 import SearchBar from "@/components/landing_page/search";
 import HomeMenu from "@/components/landing_page/homeLayoutMenu";
-import StarBorderIcon from "@mui/icons-material/StarBorder";
 import StarIcon from "@mui/icons-material/Star";
-import { MovieList } from "../movie-detail/Models/Movies";
 import Person from "@/components/Person";
+import { MovieList } from "../movie-detail/Models/Movies";
 
 const HomeDetail: NextPageWithLayout = () => {
   const fetcher = (url: string) =>
     axios.get(url).then((response) => response.data);
-  const { data, isLoading, error } = useSWR<MovieList>("/movie/upcoming");
+
+  const { data, isLoading, error } = useSWR<MovieList>("/movie/popular");
+
+  const getStarRating = (averageVote: number): number => {
+    return parseFloat(Math.min(5, Math.max(1, averageVote / 2)).toFixed(1));
+  };
 
   return (
     <>
       <Box sx={{ height: "21px" }}></Box>
+
       <Header />
+
       <Box sx={{ height: "21px", marginTop: "-8px" }}></Box>
+
       <SearchBar />
-      <Box sx={{ height: "38px", marginTop: "-8px" }}></Box>
+
+      <Box sx={{ height: "20px", marginTop: "-8px" }}></Box>
+      <Box sx={{
+        marginLeft: "6px",
+        height: "38px",
+        display: "flex",
+        color: "#FFF",
+        fontSize: "16px",
+      }}>New Arrival</Box>
+      <Box sx={{ height: "20px", marginTop: "-8px" }} />
       <Box
         sx={{
           display: "flex",
@@ -44,10 +60,12 @@ const HomeDetail: NextPageWithLayout = () => {
         }}
       >
         {isLoading && <CircularProgress />}
+
         {error && <Typography>Error loading data</Typography>}
-        {data?.results.map((movie) => (
+
+        {data?.results.map((movie, index) => (
           <Box
-            key={movie.id}
+            key={movie.id.toString()}
             sx={{
               flex: "0 0 auto",
               marginRight: 2,
@@ -70,9 +88,10 @@ const HomeDetail: NextPageWithLayout = () => {
                   }}
                 >
                   <StarIcon sx={{ fontSize: 24, color: "orange" }} />
-                  {movie.vote_average}
+                  {getStarRating(movie.vote_average)}
                 </Box>
               </Box>
+
               <Card
                 elevation={5}
                 className="small-card"
@@ -80,6 +99,7 @@ const HomeDetail: NextPageWithLayout = () => {
                   height: "200px",
                   width: "139.581px",
                   borderRadius: "16px",
+                  overflow: "hidden",
                 }}
               >
                 <CardMedia
@@ -89,12 +109,14 @@ const HomeDetail: NextPageWithLayout = () => {
                     objectFit: "cover",
                     width: "100%",
                     borderRadius: "16px",
+                    boxSizing: "border-box",
                   }}
-                  image={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                  loading="lazy"
+                  src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                   alt={movie.title}
                 />
-                <CardContent />
               </Card>
+
               <Box sx={{ position: "relative" }}>
                 <Typography
                   sx={{
@@ -108,7 +130,7 @@ const HomeDetail: NextPageWithLayout = () => {
                     textShadow: "1px 1px 4px #0296E5",
                   }}
                 >
-                  {data.results.indexOf(movie) + 1}
+                  {index + 1}
                 </Typography>
               </Box>
             </Link>

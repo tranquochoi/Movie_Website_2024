@@ -1,6 +1,7 @@
 import { Movie } from "@/pages/movie-detail/Models/Movies";
 import { Box, Card, CardContent, Link, Typography } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
+
 function RenderMovie(props: { data: Movie }) {
   return (
     <Box
@@ -36,7 +37,7 @@ function RenderMovie(props: { data: Movie }) {
             }}
           >
             <StarIcon sx={{ fontSize: 24, color: "orange" }} />
-            {props.data.vote_average}
+            {(props.data.vote_average * 0.5).toFixed(1)}
           </Box>
           <Box
             component="img"
@@ -82,4 +83,5 @@ function RenderMovie(props: { data: Movie }) {
     </Box>
   );
 }
+
 export default RenderMovie;

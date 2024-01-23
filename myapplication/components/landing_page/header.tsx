@@ -5,6 +5,7 @@ import Person from '../Person';
 const Header = () => {
     return (
         <Box sx={{
+            marginLeft: "6px",
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",

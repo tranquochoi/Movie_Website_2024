@@ -4,13 +4,16 @@ import StarIcon from "@mui/icons-material/Star";
 import { ListGenre } from "@/pages/movie-detail/Models/Geners";
 import axios from "axios";
 import useSWR from "swr";
+
 function RenderMovie2(props: { data: Movie }) {
   const fetcher = (url: string) =>
     axios.get(url).then((response) => response.data);
+
   const { data: gener } = useSWR<ListGenre>(
     "genre/movie/list?language=en",
     fetcher
   );
+
   return (
     <Box
       key={props.data.id.toString()}
@@ -45,19 +48,19 @@ function RenderMovie2(props: { data: Movie }) {
             }}
           >
             <StarIcon sx={{ fontSize: 24, color: "orange" }} />
-            {props.data.vote_average}
+            {(props.data.vote_average * 0.5).toFixed(1)}
           </Box>
           <Box
             sx={{
-              backgroundColor: "rgba(255, 0, 0, 1)", // Màu đỏ với độ trong suốt 50%
+              backgroundColor: "rgba(255, 0, 0, 1)",
               padding: "4px",
               top: "20%",
               left: "2%",
               position: "absolute",
               transform: "translate(-8%, -40%)",
-              color: "white", // Chữ màu trắng
+              color: "white",
               fontSize: "15px",
-              fontWeight: "bold", // Độ đậm của chữ
+              fontWeight: "bold",
             }}
           >
             Recomend
@@ -106,15 +109,14 @@ function RenderMovie2(props: { data: Movie }) {
           </Typography>
           {gener?.genres
             .filter((gen) => props.data.genre_ids.includes(gen.id))
-            .slice(0, 2) // Chỉ lấy 2 phần tử đầu tiên
+            .slice(0, 2)
             .map((gen) => (
               <Typography
                 key={gen.id}
                 sx={{
-                  color: "#888", // Màu chữ trắng
+                  color: "#888",
                   marginRight: "12px",
                   fontSize: "12px",
-                  // Khoảng cách giữa nội dung và mép của box
                 }}
               >
                 | {gen.name}
@@ -125,4 +127,5 @@ function RenderMovie2(props: { data: Movie }) {
     </Box>
   );
 }
+
 export default RenderMovie2;
