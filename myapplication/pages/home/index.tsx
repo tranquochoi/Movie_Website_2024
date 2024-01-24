@@ -20,8 +20,6 @@ import StarIcon from "@mui/icons-material/Star";
 import Person from "@/components/Person";
 import { MovieList } from "../movie-detail/Models/Movies";
 
-// ... (import statements)
-
 const HomeDetail: NextPageWithLayout = () => {
   const fetcher = (url: string) =>
     axios.get(url).then((response) => response.data);
@@ -31,7 +29,7 @@ const HomeDetail: NextPageWithLayout = () => {
   const getStarRating = (averageVote: number): string => {
     const rating = Math.min(5, Math.max(1, averageVote / 2));
     const formattedRating = rating.toFixed(1);
-    return formattedRating.endsWith('') ? formattedRating : formattedRating;
+    return formattedRating.endsWith('.0') ? formattedRating : formattedRating;
   };
 
   return (
