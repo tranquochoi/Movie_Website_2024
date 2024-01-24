@@ -1,10 +1,13 @@
-import { Box, Grid, Link, Typography } from "@mui/material";
-import { Cast } from "../Models/Credits";
-import useSWR from "swr";
+import { Box } from "@mui/material";
 import { ListImage, Movie } from "../Models/Movies";
-import axios from "axios";
-import { PlayArrow } from "@mui/icons-material";
-function RenderImages(props: { id: Int16Array }) {
+import useSWR from "swr";
+import { useState } from "react";
+
+interface RenderImagesProps {
+  id: number;
+}
+
+const RenderImages: React.FC<RenderImagesProps> = (props) => {
   const { data, isLoading, error } = useSWR<ListImage>(
     `/movie/${props.id}/images`
   );
@@ -16,6 +19,18 @@ function RenderImages(props: { id: Int16Array }) {
   );
 
   const youtubeVideoUrl = `https://www.youtube.com/embed/${teaserVideo?.key}?autoplay=1`;
+
+  const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(
+    null
+  );
+
+  const openImage = (index: number) => {
+    setSelectedImageIndex(index);
+  };
+
+  const closeImage = () => {
+    setSelectedImageIndex(null);
+  };
 
   return (
     <Box
@@ -63,13 +78,19 @@ function RenderImages(props: { id: Int16Array }) {
               marginRight: 0.5,
               width: "300px",
               height: "176px",
+              cursor: "pointer",
+              "&:hover": {
+                opacity: 0.8,
+              },
             }}
+            onClick={() => openImage(index)}
           >
             <Box
               component="img"
               sx={{
                 height: "100%",
                 width: "100%",
+                objectFit: "cover",
               }}
               src={`https://image.tmdb.org/t/p/w500${ig.file_path}`}
               alt={"None"}
@@ -77,8 +98,44 @@ function RenderImages(props: { id: Int16Array }) {
           </Box>
         ))}
       </Box>
+
+      {selectedImageIndex !== null && (
+        <Box
+          onClick={closeImage}
+          sx={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            backgroundColor: "rgba(0, 0, 0, 0.9)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 9999,
+          }}
+        >
+          <Box
+            sx={{
+              maxWidth: "90%",
+              maxHeight: "90%",
+            }}
+          >
+            <Box
+              component="img"
+              src={`https://image.tmdb.org/t/p/w500${data?.backdrops[selectedImageIndex].file_path}`}
+              alt={"None"}
+              sx={{
+                width: "100%",
+                height: "100%",
+                objectFit: "contain",
+              }}
+            />
+          </Box>
+        </Box>
+      )}
     </Box>
   );
-}
+};
 
 export default RenderImages;
