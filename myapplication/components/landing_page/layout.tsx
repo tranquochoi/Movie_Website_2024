@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import SearchIcon from "@mui/icons-material/Search";
-import BookmarkIcon from '@mui/icons-material/Bookmark';
+import BookmarkIcon from "@mui/icons-material/Bookmark";
 
 interface MenuItemObject {
   title: string;
@@ -33,7 +33,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     // Get the current route and update the currentMenu state
-    const currentRouteIndex = menu.findIndex(item => item.url === router.pathname);
+    const currentRouteIndex = menu.findIndex(
+      (item) => item.url === router.pathname
+    );
     if (currentRouteIndex !== -1) {
       setCurrentMenu(currentRouteIndex);
     }
@@ -57,20 +59,24 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   <Link href={item.url} key={item.url}>
                     <div
                       onClick={() => setCurrentMenu(index)}
-                      style={{ textAlign: 'center', cursor: 'pointer' }}
+                      style={{ textAlign: "center", cursor: "pointer" }}
                     >
                       <IconButton
                         sx={{
-                          color: `${currentMenu === index ? "#0296E5" : "#67686D"}`,
+                          color: `${
+                            currentMenu === index ? "#0296E5" : "#67686D"
+                          }`,
                           padding: "16px 40px",
-                          height: "24px"
+                          height: "24px",
                         }}
                       >
                         {item.icon}
                       </IconButton>
                       <Typography
                         variant="caption"
-                        color={`${currentMenu === index ? "#0296E5" : "#67686D"}`}
+                        color={`${
+                          currentMenu === index ? "#0296E5" : "#67686D"
+                        }`}
                       >
                         {item.title}
                       </Typography>
