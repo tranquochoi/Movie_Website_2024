@@ -56,9 +56,9 @@ export default function NavDetail() {
                 >
                     <ArrowBackIosNewOutlinedIcon />
                 </IconButton>
-                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                <Box sx={{ flexGrow: 1 }}>
                     Detail
-                </Typography>
+                </Box>
                 <IconButton edge="end" color="inherit" aria-label="info">
                     <BookmarkIcon />
                 </IconButton>

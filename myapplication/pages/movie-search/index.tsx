@@ -42,12 +42,14 @@ const SearchDetail: NextPageWithLayout = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalMovies, setTotalMovies] = useState(0);
   const [moviesDisplayedCount, setMoviesDisplayedCount] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   const moviesPerPage = 20;
 
   useEffect(() => {
     const handleSearch = async () => {
       try {
+        setIsLoading(true);
         if (searchTerm.length === 0) {
           setSearchResults([]);
           setTotalMovies(0);
@@ -69,13 +71,15 @@ const SearchDetail: NextPageWithLayout = () => {
           setMoviesDisplayedCount((prevCount) =>
             prevCount === 0 ? prevCount : prevCount + 1
           );
-          // Nếu kết quả rỗng, cập nhật lại trạng thái kết quả
           setSearchResults([]);
           setTotalMovies(0);
           setDisplayedMovies([]);
+          setCurrentPage(1);
         }
       } catch (error) {
         console.error("Error searching for movies:", error);
+      } finally {
+        setIsLoading(false); // Kết thúc loading khi tìm kiếm hoàn thành
       }
     };
 
@@ -86,8 +90,13 @@ const SearchDetail: NextPageWithLayout = () => {
     event: React.ChangeEvent<unknown>,
     value: number
   ) => {
-    setCurrentPage(value);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    setIsLoading(true); // Bắt đầu loading khi chuyển trang
+    try {
+      setCurrentPage(value);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } finally {
+      setIsLoading(false); // Kết thúc loading khi chuyển trang hoàn thành
+    }
   };
 
   const getOptions = () => {
@@ -189,7 +198,7 @@ const SearchDetail: NextPageWithLayout = () => {
           }}
         />
       </Box>
-
+      {isLoading && <CircularProgress />}
       <Grid container spacing={1}>
         {displayedMovies.map((movie) => (
           <Grid item key={movie.id} xs={12} sm={2} md={4} lg={3}>
