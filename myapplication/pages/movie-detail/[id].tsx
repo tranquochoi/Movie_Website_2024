@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import useSWR from "swr";
 import Layout from "@/components/landing_page/layout";
 import NavDetail from "@/components/landing_page/NavDetail";
-import TabDetail from "@/components/landing_page/TabDetail";
 import StarIcon from "@mui/icons-material/Star";
 import StarOutlineIcon from "@mui/icons-material/StarOutline";
 import {
@@ -18,6 +17,7 @@ import { format } from "date-fns";
 import { Movie } from "./Models/Movies";
 import config from "@/config";
 import { NextPageWithLayout } from "../_app";
+import { TabDetail } from "@/components/landing_page/TabDetail";
 
 const Detail: NextPageWithLayout = () => {
   const router = useRouter();
@@ -95,8 +95,8 @@ const Detail: NextPageWithLayout = () => {
               sx={{
                 position: "absolute",
                 borderRadius: "16px",
-                right: "72%",
-                transform: "translate(0%, -42%)",
+                left: "20px",
+                transform: "translate(0%, -38%)",
                 width: "95px",
                 objectFit: "cover",
                 height: "130px",
@@ -109,10 +109,10 @@ const Detail: NextPageWithLayout = () => {
             <Box sx={{
               height: "100px",
               color: "white",
-              width: "100%",
-              paddingTop: "10px",
-              paddingLeft: "130px",
-              fontSize: "1.2rem",
+              width: "95%",
+              pl: "138px",
+              pt: "10px",
+              fontSize: "1.1rem",
               fontWeight: "600",
               flexDirection: "column",
             }}>
@@ -122,50 +122,48 @@ const Detail: NextPageWithLayout = () => {
 
           <Box
             sx={{
-              paddingRight: "28%",
               color: "white",
-              textAlign: "center"
+              pl: "20px",
+              pt: "10px",
             }}
           >
             {renderStarIcons(data.vote_average)}  From {data.vote_count.toLocaleString()} users
 
           </Box>
           <Stack direction="column" alignItems="left" spacing={1}>
-            <Typography
-              variant="body1"
+            <Box
               sx={{
                 color: "#92929D",
-                fontSize: "1.25rem",
+                fontSize: "1rem",
                 pl: "26px",
                 pt: "10px",
               }}
             >
               Date release: {formattedReleaseDate}
-            </Typography>
-            <Typography
-              variant="body1"
+            </Box>
+            <Box
               sx={{
                 color: "#92929D",
-                fontSize: "1.25rem",
+                fontSize: "1rem",
                 pl: "26px",
                 pt: "10px",
               }}
             >
               Length: {data.runtime} Minutes
-            </Typography>
+            </Box>
           </Stack>
 
           <Stack direction="row" alignItems="left" spacing={1}>
-            <Typography
+            <Box
               sx={{
                 color: "#92929D",
-                fontSize: "1.25rem",
+                fontSize: "1rem",
                 pl: "26px",
                 pt: "10px",
               }}
             >
               Genres:
-            </Typography>
+            </Box>
             <Box
               sx={{
                 color: "#92929D",
@@ -179,6 +177,7 @@ const Detail: NextPageWithLayout = () => {
                   <Box
                     key={genre.id.toString()}
                     sx={{
+                      fontSize: "12px",
                       border: "2px solid #888",
                       color: "white ",
                       padding: "4px 8px",
@@ -197,8 +196,8 @@ const Detail: NextPageWithLayout = () => {
       </Stack >
 
       <Box sx={{ height: "28px" }}></Box>
-
       <TabDetail />
+
     </>
   );
 };
