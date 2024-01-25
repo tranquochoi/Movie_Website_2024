@@ -6,14 +6,23 @@ import { MovieList } from "../movie-detail/Models/Movies";
 import RenderMovie from "../home/listMenu/renderMovie";
 import { ListGenre } from "../movie-detail/Models/Geners";
 import NavGenres from "@/components/landing_page/NavGenres";
-import { Box, CircularProgress, Typography, Button, Popover, Grid } from "@mui/material";
+import {
+  Box,
+  CircularProgress,
+  Typography,
+  Button,
+  Popover,
+  Grid,
+} from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { NextPageWithLayout } from "../_app";
 
 const Categories: NextPageWithLayout = () => {
   const router = useRouter();
   const { id } = router.query;
-  const [selectedGenre, setSelectedGenre] = useState<string | null>(id ? String(id) : null);
+  const [selectedGenre, setSelectedGenre] = useState<string | null>(
+    id ? String(id) : null
+  );
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -64,7 +73,10 @@ const Categories: NextPageWithLayout = () => {
           padding: "6px",
         }}
       >
-        <Button onClick={handleMenuOpen} sx={{ display: "flex", alignItems: "center", color: 'white' }}>
+        <Button
+          onClick={handleMenuOpen}
+          sx={{ display: "flex", alignItems: "center", color: "white" }}
+        >
           Thể loại <KeyboardArrowDownIcon />
         </Button>
 
@@ -82,10 +94,9 @@ const Categories: NextPageWithLayout = () => {
           }}
           PaperProps={{
             style: {
-              backgroundColor: "#242A32", 
+              backgroundColor: "#242A32",
             },
           }}
-        
         >
           <Box
             sx={{
@@ -104,8 +115,12 @@ const Categories: NextPageWithLayout = () => {
                   borderRadius: "2px",
                   marginRight: "8px",
                   marginTop: "10px",
-                  backgroundColor: selectedGenre === genre.id.toString() ? "#4a92ff" : "transparent",
-                  color: selectedGenre === genre.id.toString() ? "white" : "#949494",
+                  backgroundColor:
+                    selectedGenre === genre.id.toString()
+                      ? "#4a92ff"
+                      : "transparent",
+                  color:
+                    selectedGenre === genre.id.toString() ? "white" : "#949494",
                   "&:hover": {
                     backgroundColor: "#4a92ff",
                     cursor: "pointer",
