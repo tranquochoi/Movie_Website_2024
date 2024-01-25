@@ -18,7 +18,7 @@ const Header = () => {
           fontWeight: 600,
         }}
       >
-        <Typography>What do you want to watch huh?</Typography>
+        <Typography>THE MOVIE</Typography>
         <AvatarView />
       </Box>
     </>

@@ -43,13 +43,18 @@ function LoggedInAvatar(props: { data: User }) {
       router.reload();
     }
   };
+  const { data, isLoading, error } = useSWR<User>(
+    `/account/${getCookie(
+      "session_id"
+    )}?language=en-US&append_to_response=videos,credits`
+  );
 
   return (
     <>
       <Button onClick={handleMenuClick} variant="text" sx={{ color: "white" }}>
         <Stack direction="row" gap={1}>
           {avatar_path ? <Box component="img" src={avatar_path} /> : <Person />}
-          <Typography>{username}</Typography>
+          <Typography>{data?.username}</Typography>
         </Stack>
       </Button>
       <Menu

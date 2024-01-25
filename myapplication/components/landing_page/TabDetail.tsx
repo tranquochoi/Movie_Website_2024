@@ -117,7 +117,7 @@ export function TabDetail() {
             style={{
               color: "white",
               textTransform: "none",
-              fontFamily: "YourCustomFont, sans-serif",
+              fontFamily: " sans-serif",
             }}
           />
           <Tab
@@ -126,7 +126,7 @@ export function TabDetail() {
             style={{
               color: "white",
               textTransform: "none",
-              fontFamily: "YourCustomFont, sans-serif",
+              fontFamily: " sans-serif",
             }}
           />
           <Tab
@@ -135,7 +135,7 @@ export function TabDetail() {
             style={{
               color: "white",
               textTransform: "none",
-              fontFamily: "YourCustomFont, sans-serif",
+              fontFamily: "sans-serif",
             }}
           />
 
