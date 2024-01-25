@@ -14,7 +14,7 @@ const theme = createTheme({
 
 axios.defaults.baseURL = "https://api.themoviedb.org/3";
 axios.defaults.headers["Authorization"] =
-  "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2NzYxZTM4YjM5NTMwYjU3OTc3MzlkYzBhOGRmN2UwNSIsInN1YiI6IjU4OTdlOWYzYzNhMzY4NzcwZTAwMzU3MiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.86yfgjl1aDWXL3e09Ab2VgrE_6NJ_USUA2CneAkyQBA";
+  "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5NWM3N2I0ZmZiZDRhNWNjMzVjM2I3OWQyYjlhYTRmYiIsInN1YiI6IjY1NmQ4NTJmODgwNTUxMDBhZWU5ZWVhZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.RWLZ8jyDiYhzKP1QSQADAny36mv6cHaG6uAVlEQBNTU";
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;

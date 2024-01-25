@@ -49,7 +49,7 @@ function LoggedInAvatar(props: { data: User }) {
       <Button onClick={handleMenuClick} variant="text" sx={{ color: "white" }}>
         <Stack direction="row" gap={1}>
           {avatar_path ? <Box component="img" src={avatar_path} /> : <Person />}
-          <Typography>{username}</Typography>
+          <Typography>{getCookie("session_id")}</Typography>
         </Stack>
       </Button>
       <Menu
