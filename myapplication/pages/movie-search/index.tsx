@@ -18,6 +18,7 @@ import {
   DialogContent,
   DialogActions,
   Button,
+  Pagination,
 } from "@mui/material";
 import useSWR from "swr";
 import { useRouter } from "next/router";
@@ -36,45 +37,58 @@ const SearchDetail: NextPageWithLayout = () => {
   const [searchResults, setSearchResults] = useState<Movie[]>([]);
   const fetcher = (url: string) =>
     axios.get(url).then((response) => response.data);
-  const { data, error } = useSWR<Movie>("/movie/upcoming");
   const [isDialogOpen, setDialogOpen] = useState(false);
   const [displayedMovies, setDisplayedMovies] = useState<Movie[]>([]);
-  const moviesPerPage = 5;
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalMovies, setTotalMovies] = useState(0);
+  const [moviesDisplayedCount, setMoviesDisplayedCount] = useState(0);
+
+  const moviesPerPage = 20;
 
   useEffect(() => {
     const handleSearch = async () => {
       try {
+        if (searchTerm.length === 0) {
+          setSearchResults([]);
+          setTotalMovies(0);
+          setMoviesDisplayedCount(0);
+          setDisplayedMovies([]);
+          return;
+        }
+
         const response = await fetcher(
-          `/search/movie?query=${searchTerm.join("+")}`
+          `/search/movie?query=${searchTerm.join("+")}&page=${currentPage}`
         );
-        setSearchResults(response.results);
-        setDisplayedMovies(response.results.slice(0, moviesPerPage));
+
+        if (response.results.length > 0) {
+          setSearchResults(response.results);
+          setTotalMovies(response.total_results);
+          setMoviesDisplayedCount(response.results.length);
+          setDisplayedMovies(response.results.slice(0, moviesPerPage));
+        } else {
+          setMoviesDisplayedCount((prevCount) =>
+            prevCount === 0 ? prevCount : prevCount + 1
+          );
+          // Nếu kết quả rỗng, cập nhật lại trạng thái kết quả
+          setSearchResults([]);
+          setTotalMovies(0);
+          setDisplayedMovies([]);
+        }
       } catch (error) {
         console.error("Error searching for movies:", error);
       }
     };
 
     handleSearch();
-  }, [searchTerm]);
+  }, [searchTerm, currentPage]);
 
-  const handleLoadMore = () => {
-    setDisplayedMovies((prev) =>
-      prev.concat(
-        searchResults.slice(
-          prev.length,
-          Math.min(prev.length + moviesPerPage, searchResults.length)
-        )
-      )
-    );
+  const handlePageChange = async (
+    event: React.ChangeEvent<unknown>,
+    value: number
+  ) => {
+    setCurrentPage(value);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
-
-  if (!data) {
-    return <CircularProgress />;
-  }
-
-  if (error) {
-    return <Typography>Error loading data</Typography>;
-  }
 
   const getOptions = () => {
     if (searchTerm.length === 0) {
@@ -176,21 +190,6 @@ const SearchDetail: NextPageWithLayout = () => {
         />
       </Box>
 
-      {searchTerm.length > 0 && searchResults.length === 0 && (
-        <Box sx={{ textAlign: "center", padding: "50px" }}>
-          <img
-            src="/cantfound.svg"
-            alt="Error"
-            style={{
-              width: "352px",
-              height: "290px",
-              display: "block",
-              margin: "auto",
-            }}
-          />
-        </Box>
-      )}
-
       <Grid container spacing={1}>
         {displayedMovies.map((movie) => (
           <Grid item key={movie.id} xs={12} sm={2} md={4} lg={3}>
@@ -254,14 +253,41 @@ const SearchDetail: NextPageWithLayout = () => {
           </Grid>
         ))}
       </Grid>
-      {displayedMovies.length < searchResults.length && (
-        <Box sx={{ textAlign: "center", marginTop: "20px", padding: "10px" }}>
-          <Button onClick={handleLoadMore} variant="outlined" color="primary">
-            Load More
-          </Button>
+      {totalMovies > moviesPerPage && (
+        <Box
+          sx={{
+            textAlign: "center",
+            marginTop: "20px",
+            paddingBottom: "70px",
+            width: "100%",
+            justifyContent: "center",
+          }}
+        >
+          <Pagination
+            count={Math.ceil(totalMovies / moviesPerPage)}
+            page={currentPage}
+            onChange={handlePageChange}
+            variant="outlined"
+            shape="rounded"
+            sx={{
+              "& .MuiPaginationItem-root": {
+                color: "white",
+                borderColor: "#67686D",
+              },
+              "& .MuiPaginationItem-root.Mui-selected": {
+                backgroundColor: "#0296E5",
+              },
+              "& .MuiPaginationItem-root:hover": {
+                backgroundColor: "rgba(0, 0, 0, 0)",
+              },
+              "& .MuiPaginationItem-icon": {
+                backgroundColor: "#67686D",
+                fontSize: "30px",
+              },
+            }}
+          />
         </Box>
       )}
-      <Box sx={{ height: "100px" }} />
     </Box>
   );
 };
