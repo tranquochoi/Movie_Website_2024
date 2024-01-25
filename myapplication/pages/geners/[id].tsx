@@ -1,47 +1,37 @@
-import React, { ReactElement, useState } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
 import useSWR from "swr";
-import Layout from "@/components/landing_page/layout";
-import NavDetail from "@/components/landing_page/NavDetail";
-import TabDetail from "@/components/landing_page/TabDetail";
-import StarIcon from "@mui/icons-material/Star";
-import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import ConfirmationNumberIcon from "@mui/icons-material/ConfirmationNumber";
-import {
-  Box,
-  CardMedia,
-  CircularProgress,
-  FormControl,
-  Grid,
-  InputLabel,
-  Link,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-  Stack,
-  Typography,
-} from "@mui/material";
-
-import config from "@/config";
-import { NextPageWithLayout } from "../_app";
-import { green } from "@mui/material/colors";
-
-import { parse } from "path";
 import axios from "axios";
-import { Movie, MovieList } from "../movie-detail/Models/Movies";
+import { MovieList } from "../movie-detail/Models/Movies";
 import RenderMovie from "../home/listMenu/renderMovie";
 import { ListGenre } from "../movie-detail/Models/Geners";
-import HomeMenu from "@/components/landing_page/homeLayoutMenu";
-import Header from "@/components/landing_page/header";
 import NavGenres from "@/components/landing_page/NavGenres";
+import {
+  Box,
+  CircularProgress,
+  Typography,
+  Button,
+  Popover,
+  Grid,
+} from "@mui/material";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { NextPageWithLayout } from "../_app";
 
 const Categories: NextPageWithLayout = () => {
   const router = useRouter();
   const { id } = router.query;
-  const [selectedGenreId, setSelectedGenreId] = useState<string | null>(
+  const [selectedGenre, setSelectedGenre] = useState<string | null>(
     id ? String(id) : null
   );
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+
+  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
 
   const fetcher = (url: string) =>
     axios.get(url).then((response) => response.data);
@@ -55,7 +45,7 @@ const Categories: NextPageWithLayout = () => {
     fetcher
   );
   const movieGener = data?.results.filter((movie) =>
-    movie.genre_ids.includes(parseInt(selectedGenreId as string))
+    movie.genre_ids.includes(parseInt(selectedGenre as string))
   );
 
   if (isLoading) {
@@ -69,6 +59,7 @@ const Categories: NextPageWithLayout = () => {
   if (!data) {
     return <>Không có dữ liệu</>;
   }
+
   return (
     <>
       <NavGenres />
@@ -82,41 +73,83 @@ const Categories: NextPageWithLayout = () => {
           padding: "6px",
         }}
       >
-        {gener?.genres.map((genre) => (
+        <Button
+          onClick={handleMenuOpen}
+          sx={{ display: "flex", alignItems: "center", color: "white" }}
+        >
+          Thể loại <KeyboardArrowDownIcon />
+        </Button>
+
+        <Popover
+          open={Boolean(anchorEl)}
+          anchorEl={anchorEl}
+          onClose={handleMenuClose}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "left",
+          }}
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "left",
+          }}
+          PaperProps={{
+            style: {
+              backgroundColor: "#242A32",
+            },
+          }}
+        >
           <Box
-            key={genre.id.toString()}
             sx={{
-              border: "2px solid #888",
-              color: "white ",
-              padding: "4px 8px",
-              borderRadius: "2px",
-              marginRight: "8px",
-              marginTop: "10px",
-              "&:hover": {
-                backgroundColor: "red",
-                cursor: "pointer",
-              },
+              display: "flex",
+              flexDirection: "row",
+              flexWrap: "wrap",
+              padding: "6px",
             }}
-            onClick={() => setSelectedGenreId(genre.id.toString())}
           >
-            {genre.name}
+            {gener?.genres.map((genre) => (
+              <Box
+                key={genre.id.toString()}
+                sx={{
+                  border: "2px solid #888",
+                  padding: "4px 8px",
+                  borderRadius: "2px",
+                  marginRight: "8px",
+                  marginTop: "10px",
+                  backgroundColor:
+                    selectedGenre === genre.id.toString()
+                      ? "#4a92ff"
+                      : "transparent",
+                  color:
+                    selectedGenre === genre.id.toString() ? "white" : "#949494",
+                  "&:hover": {
+                    backgroundColor: "#4a92ff",
+                    cursor: "pointer",
+                  },
+                }}
+                onClick={() => {
+                  setSelectedGenre(genre.id.toString());
+                  handleMenuClose();
+                }}
+              >
+                {genre.name}
+              </Box>
+            ))}
           </Box>
-        ))}
+        </Popover>
       </Box>
       <Typography
         sx={{
           color: "white",
           fontSize: "18px",
           textAlign: "center",
-          padding: "10px", // Thêm padding để tạo khoảng cách
-          backgroundColor: "#161722", // Một màu nền để nổi bật
-          borderRadius: "0px", // Góc bo tròn cho ô chữ
-          fontWeight: "bold", // Tăng độ đậm của chữ
-          fontFamily: "Arial, sans-serif", // Chọn font chữ
-          // Thêm các thuộc tính khác nếu cần
+          padding: "10px",
+          backgroundColor: "#161722",
+          borderRadius: "0px",
+          fontWeight: "bold",
+          fontFamily: "Arial, sans-serif",
         }}
       >
-        {gener?.genres.find((tl) => tl.id == (selectedGenreId as string))?.name}
+        {gener?.genres.find((tl) => tl.id === (selectedGenre as string))?.name}
       </Typography>
       <Box sx={{ padding: "6px", textAlign: "center" }}>
         <Grid container spacing={3}>
