@@ -2,7 +2,7 @@ import {
   CreateSessionInput,
   SessionResponse,
 } from "@/pages/movie-detail/Models/Auth";
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import axios from "axios";
 import { setCookie } from "cookies-next";
 import { redirect, useSearchParams } from "next/navigation";
@@ -33,7 +33,13 @@ const Authorize = () => {
   );
 
   if (isLoading)
-    return <Typography textAlign="center">Authorizing ... </Typography>;
+    return <>
+    <Box sx={{pt:'250px'}}>
+    <Typography sx={{color:'white'}} textAlign="center">Authorizing ... </Typography>;
+      </Box>
+      </>
+      
+   
 
   if (data) {
     router.push("/home");
@@ -44,7 +50,7 @@ const Authorize = () => {
       {data ? (
         <></>
       ) : (
-        <Typography textAlign="center">Sorry could not log in </Typography>
+        <Typography sx={{color:'white'}} textAlign="center">Sorry could not log in </Typography>
       )}
     </>
   );

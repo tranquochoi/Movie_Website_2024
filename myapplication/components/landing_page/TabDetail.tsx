@@ -70,7 +70,7 @@ export function TabDetail() {
             style={{
               color: "white",
               textTransform: "none",
-              fontFamily: "YourCustomFont, sans-serif",
+              fontFamily: " sans-serif",
             }}
           />
           <Tab
@@ -79,7 +79,7 @@ export function TabDetail() {
             style={{
               color: "white",
               textTransform: "none",
-              fontFamily: "YourCustomFont, sans-serif",
+              fontFamily: " sans-serif",
             }}
           />
           <Tab
@@ -88,7 +88,7 @@ export function TabDetail() {
             style={{
               color: "white",
               textTransform: "none",
-              fontFamily: "YourCustomFont, sans-serif",
+              fontFamily: "sans-serif",
             }}
           />
         </Tabs>
@@ -99,8 +99,11 @@ export function TabDetail() {
         
         <Box sx={{height:'30px'}}>
 
+        </Box>
+        <Box sx={{textAlign:'justify', fontSize:'20px'}}>
+        {data?.overview}
         </Box>      
-          {data?.overview}
+          
         
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>

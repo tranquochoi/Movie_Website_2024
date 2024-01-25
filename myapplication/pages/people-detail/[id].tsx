@@ -27,7 +27,11 @@ const PeopleDetail: NextPageWithLayout = () => {
   const [showFullFilmList, setShowFullFilmList] = useState(false);
 
   if (isLoading) {
-    return <Typography>{isLoading && <CircularProgress />}</Typography>;
+    return (
+      <Typography fontSize={"250px"} textAlign={"center"}>
+        {isLoading && <CircularProgress />}
+      </Typography>
+    );
   }
 
   if (error) {
@@ -42,8 +46,11 @@ const PeopleDetail: NextPageWithLayout = () => {
     (a, b) => parseInt(b.release_date.slice(0, 4)) - parseInt(a.release_date.slice(0, 4))
   );
 
-  // Lấy 20 từ đầu tiên từ tiểu sử
-  const shortBiography = data.biography.split(" ").slice(0, 20).join(" ");
+  
+  const shortBiography = data.biography.split(" ").slice(0, 15).join(" ");
+  const profileImagePath = data.images.profiles && data.images.profiles.length > 0
+    ? config.image_path + data.images.profiles[0].file_path
+    : '/default.jpg';
 
   return (
     <>
@@ -58,7 +65,7 @@ const PeopleDetail: NextPageWithLayout = () => {
               objectFit: "cover",
               borderRadius: "150px",
             }}
-            src={config.image_path + data.images.profiles[0].file_path}
+            src={profileImagePath}
             alt={"none"}
           />
 
@@ -192,7 +199,7 @@ const PeopleDetail: NextPageWithLayout = () => {
         <Box sx={{ mt: 3, borderTop: "1px solid #777" }}>
           <Typography
             sx={{
-              color: "#242760",
+              color: "greenyellow",
               fontFamily: "Inter",
               fontSize: "24px",
               fontWeight: 600,
