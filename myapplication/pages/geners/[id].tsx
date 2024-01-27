@@ -16,13 +16,12 @@ import {
 } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { NextPageWithLayout } from "../_app";
+import { initializeTraceState } from "next/dist/trace";
 
 const Categories: NextPageWithLayout = () => {
   const router = useRouter();
   const { id } = router.query;
-  const [selectedGenre, setSelectedGenre] = useState<string | null>(
-    id ? String(id) : null
-  );
+  const [selectedGenre, setSelectedGenre] = useState(0);
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -45,7 +44,9 @@ const Categories: NextPageWithLayout = () => {
     fetcher
   );
   const movieGener = data?.results.filter((movie) =>
-    movie.genre_ids.includes(parseInt(selectedGenre as string))
+    movie.genre_ids.includes(
+      selectedGenre != 0 ? selectedGenre : parseInt(id as string)
+    )
   );
 
   if (isLoading) {
@@ -116,18 +117,15 @@ const Categories: NextPageWithLayout = () => {
                   marginRight: "8px",
                   marginTop: "10px",
                   backgroundColor:
-                    selectedGenre === genre.id.toString()
-                      ? "#4a92ff"
-                      : "transparent",
-                  color:
-                    selectedGenre === genre.id.toString() ? "white" : "#949494",
+                    selectedGenre == genre.id ? "#4a92ff" : "transparent",
+                  color: selectedGenre == genre.id ? "white" : "#949494",
                   "&:hover": {
                     backgroundColor: "#4a92ff",
                     cursor: "pointer",
                   },
                 }}
                 onClick={() => {
-                  setSelectedGenre(genre.id.toString());
+                  setSelectedGenre(genre.id);
                   handleMenuClose();
                 }}
               >
@@ -149,7 +147,12 @@ const Categories: NextPageWithLayout = () => {
           fontFamily: "Arial, sans-serif",
         }}
       >
-        {gener?.genres.find((tl) => tl.id === (selectedGenre as string))?.name}
+        Selected:
+        {
+          gener?.genres.find(
+            (tl) => tl.id == (selectedGenre != 0 ? selectedGenre : id)
+          )?.name
+        }
       </Typography>
       <Box sx={{ padding: "6px", textAlign: "center" }}>
         <Grid container spacing={3}>
