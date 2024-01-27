@@ -51,7 +51,7 @@ export default function HomeMenu({}: {}) {
   };
   return (
     <>
-      <Toolbar>
+      <Toolbar sx={{ mb: "15px" }}>
         <Box>
           <Stack direction="row" gap={2}>
             {menu.map((item, index) => (

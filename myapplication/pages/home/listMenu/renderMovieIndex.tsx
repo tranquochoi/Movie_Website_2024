@@ -27,7 +27,7 @@ function RenderMovieIndex(props: { data: Movie }) {
           }}
         >
           <StarIcon sx={{ fontSize: 24, color: "orange" }} />
-          {props.data.vote_average}
+          {(props.data.vote_average * 0.5).toFixed(1)}
         </Box>
       </Box>
       <Card

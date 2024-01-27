@@ -4,6 +4,7 @@ import axios from "axios";
 import { NextPageWithLayout } from "@/pages/_app";
 import RenderMovie from "./renderMovie";
 import { Movie } from "@/pages/movie-detail/Models/Movies";
+import RenderMovie2 from "./renderMovie2";
 
 const UpComing: NextPageWithLayout = () => {
   const fetcher = (url: string) =>
@@ -26,7 +27,7 @@ const UpComing: NextPageWithLayout = () => {
       }}
     >
       {data?.results.slice(start, end).map((movie: Movie) => (
-        <RenderMovie data={movie} />
+        <RenderMovie2 data={movie} />
       ))}
     </Box>
   );
