@@ -42,4 +42,5 @@ export interface Movie {
   credits: CreditSection;
   reviews: ReviewSection;
   vote_count: number;
+  popularity: number;
 }

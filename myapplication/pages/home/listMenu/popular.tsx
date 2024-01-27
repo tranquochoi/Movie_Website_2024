@@ -1,81 +1,41 @@
-import {
-  Box,
-  Card,
-  CardContent,
-  CardMedia,
-  CircularProgress,
-  Grid,
-  Link,
-  Typography,
-} from "@mui/material";
+import { Box, CircularProgress, Typography } from "@mui/material";
 import useSWR from "swr";
-import Layout from "@/components/landing_page/layout";
 import axios from "axios";
 import { NextPageWithLayout } from "@/pages/_app";
-import HomeMenu from "@/components/landing_page/homeLayoutMenu";
-import HomeDetail from "..";
-import { Movie, MovieList } from "@/pages/movie-detail/Models/Movies";
-import StarIcon from "@mui/icons-material/Star";
-import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
-import RenderMovie from "./renderMovie";
 import RenderMovie2 from "./renderMovie2";
+import { Movie } from "@/pages/movie-detail/Models/Movies";
 
 const Popular: NextPageWithLayout = () => {
   const fetcher = (url: string) =>
     axios.get(url).then((response) => response.data);
-  const { data, error } = useSWR<MovieList>("/movie/popular", fetcher);
+  const { data, error } = useSWR("/movie/popular", fetcher);
 
-  if (!data) {
-    return <CircularProgress />;
-  }
+  if (!data) return <CircularProgress />;
+  if (error) return <Typography>Error loading data</Typography>;
 
-  if (error) {
-    return <Typography>Error loading data</Typography>;
-  }
-
-  return (
+  const renderMovies = (start: number, end: number) => (
     <Box
       sx={{
         display: "flex",
-        flexDirection: "column",
-        gap: 5,
+        overflowX: "auto",
+        gap: 1,
+        flexWrap: "nowrap",
+        margin: "-14px",
+        paddingLeft: "18px",
+        paddingRight: "16px",
       }}
     >
-      <Box
-        sx={{
-          paddingTop: "24px",
-          display: "flex",
-          overflowX: "auto",
-          gap: 1,
-          flexWrap: "nowrap",
-          margin: "-14px",
-          paddingLeft: "18px",
-          paddingRight: "16px"
+      {data.results.slice(start, end).map((movie: Movie) => (
+        <RenderMovie2 data={movie} />
+      ))}
+    </Box>
+  );
 
-        }}
-      >
-        {data?.results.slice(0, 6).map((movie) => (
-          <RenderMovie2 data={movie}></RenderMovie2>
-        ))}
-      </Box>
-      <Box
-        sx={{
-          display: "flex",
-          overflowX: "auto",
-          gap: 1,
-          flexWrap: "nowrap",
-          margin: "-14px",
-          paddingLeft: "18px",
-          paddingRight: "16px"
-
-        }}
-      >
-        {data?.results.slice(6, 12).map((movie) => (
-          <RenderMovie2 data={movie}></RenderMovie2>
-        ))}
-      </Box>
+  return (
+    <Box sx={{ display: "flex", flexDirection: "column", gap: 5 }}>
+      {renderMovies(0, 6)}
+      {renderMovies(6, 12)}
       <Box sx={{ height: "32px" }} />
-
     </Box>
   );
 };

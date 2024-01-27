@@ -1,46 +1,58 @@
 import { Movie } from "@/pages/movie-detail/Models/Movies";
 import { Box, Card, CardContent, Link, Typography } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
+import { ListGenre } from "@/pages/movie-detail/Models/Geners";
+import axios from "axios";
+import useSWR from "swr";
+import StarOutlineIcon from "@mui/icons-material/StarOutline";
+const renderStarIcons = (voteAverage: number) => {
+  const stars = [];
+  const rating = voteAverage * 0.5;
+  const roundedRating = Math.round(rating);
 
-function RenderMovie(props: { data: Movie }) {
+  for (let i = 1; i <= 5; i++) {
+    if (i <= roundedRating) {
+      stars.push(<StarIcon key={i} sx={{ fontSize: 24, color: "orange" }} />);
+    } else {
+      stars.push(
+        <StarOutlineIcon key={i} sx={{ fontSize: 24, color: "orange" }} />
+      );
+    }
+  }
+
+  return stars;
+};
+function RenderMovie3(props: { data: Movie }) {
+  const fetcher = (url: string) =>
+    axios.get(url).then((response) => response.data);
+
+  const { data: gener } = useSWR<ListGenre>(
+    "genre/movie/list?language=en",
+    fetcher
+  );
+
   return (
     <Box
       key={props.data.id.toString()}
       sx={{
         flex: "0 0 auto",
         marginRight: 0.5,
-        width: "120px",
+        width: "212px",
+        position: "relative",
       }}
     >
       <Link href={`/movie-detail/${props.data.id}`} underline="none">
         <Card
           elevation={3}
           sx={{
-            height: "174px",
+            height: "256px",
             width: "100%",
-            borderRadius: "16px",
             boxShadow: "none",
             position: "relative",
-            borderBottomLeftRadius: "0px", // Góc bo tròn cho góc đáy bên trái
-            borderBottomRightRadius: "0px",
+            borderTopLeftRadius: "16px",
+            borderTopRightRadius: "16px",
           }}
         >
-          <Box
-            sx={{
-              backgroundColor: "rgba(0, 0, 0, 0.5)",
-              borderRadius: "8px",
-              padding: "2px",
-              top: "15%",
-              left: "65%",
-              position: "absolute",
-              transform: "translate(-8%, -40%)",
-              color: "white",
-              fontSize: "12px",
-            }}
-          >
-            <StarIcon sx={{ fontSize: 24, color: "orange" }} />
-            {(props.data.vote_average * 0.5).toFixed(1)}
-          </Box>
           <Box
             component="img"
             sx={{
@@ -53,6 +65,7 @@ function RenderMovie(props: { data: Movie }) {
 
           <CardContent />
         </Card>
+
         <Box
           sx={{
             position: "relative",
@@ -63,6 +76,8 @@ function RenderMovie(props: { data: Movie }) {
             // Góc bo tròn cho hình nền
           }}
         >
+          {/* Pseudo-element để làm mờ ảnh nền */}
+
           <Box
             sx={{
               position: "absolute",
@@ -76,7 +91,8 @@ function RenderMovie(props: { data: Movie }) {
               filter: "blur(40px)", // Điều chỉnh độ mờ tại đây
               zIndex: 0,
             }}
-          />
+          ></Box>
+          {renderStarIcons(props.data.vote_average)}
           <Typography
             sx={{
               overflow: "hidden",
@@ -90,11 +106,12 @@ function RenderMovie(props: { data: Movie }) {
               fontSize: "15px",
               textAlign: "left",
               fontWeight: "bold",
-              pl: "5px",
+              pl: "8px",
             }}
           >
             {props.data.title}
           </Typography>
+
           <Typography
             sx={{
               marginLeft: "0px",
@@ -102,15 +119,34 @@ function RenderMovie(props: { data: Movie }) {
               textAlign: "left",
               color: "#888",
               fontSize: "12px",
-              pl: "5px",
+              width: "100%",
+              pl: "8px",
             }}
           >
             {props.data.release_date}
           </Typography>
+
+          <Box sx={{ display: "flex", flexDirection: "row", pl: "8px" }}>
+            {gener?.genres
+              .filter((gen) => props.data.genre_ids.includes(parseInt(gen.id)))
+              .slice(0, 2)
+              .map((gen) => (
+                <Typography
+                  key={gen.id}
+                  sx={{
+                    color: "#888",
+                    marginRight: "12px",
+                    fontSize: "15px",
+                  }}
+                >
+                  {gen.name}
+                </Typography>
+              ))}
+          </Box>
         </Box>
       </Link>
     </Box>
   );
 }
 
-export default RenderMovie;
+export default RenderMovie3;
