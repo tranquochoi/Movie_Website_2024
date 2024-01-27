@@ -42,12 +42,13 @@ const Detail: NextPageWithLayout = () => {
     return <>Không có dữ liệu</>;
   }
 
-  const formattedReleaseDate = format(
-    new Date(data.release_date),
-    "dd/MM/yyyy"
-  );
+  const formatDate = (dateString: string) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString('en-US', options);
+  };
 
-  // Function to generate star icons based on the vote average
+  const formattedReleaseDate = formatDate(data.release_date);
+
   const renderStarIcons = (voteAverage: number) => {
     const stars = [];
     const rating = voteAverage * 0.5;
@@ -160,6 +161,7 @@ const Detail: NextPageWithLayout = () => {
                 fontSize: "1rem",
                 pl: "26px",
                 pt: "10px",
+
               }}
             >
               Genres:
@@ -170,6 +172,7 @@ const Detail: NextPageWithLayout = () => {
                 display: "flex",
                 flexDirection: "row",
                 flexWrap: "wrap",
+
               }}
             >
               {data.genres.map((genre) => (
@@ -184,6 +187,11 @@ const Detail: NextPageWithLayout = () => {
                       borderRadius: "4px",
                       marginRight: "8px",
                       marginTop: "10px",
+                      transition: "border-color 0.3s",
+                      '&:hover': {
+                        borderColor: "#fff",
+                        backgroundColor: "#333",
+                      },
                     }}
                   >
                     {genre.name}

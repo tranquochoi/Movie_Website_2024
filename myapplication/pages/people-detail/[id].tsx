@@ -8,6 +8,7 @@ import {
   Link,
   Stack,
   Typography,
+  Paper,
 } from "@mui/material";
 import config from "@/config";
 import { NextPageWithLayout } from "../_app";
@@ -15,6 +16,8 @@ import { People } from "../movie-detail/Models/People";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import JobOnIcon from "@mui/icons-material/RecentActors";
 import NavProfile from "@/components/landing_page/NavProfile";
+import { Instagram } from "@mui/icons-material";
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 
 const PeopleDetail: NextPageWithLayout = () => {
   const router = useRouter();
@@ -24,7 +27,6 @@ const PeopleDetail: NextPageWithLayout = () => {
   );
 
   const [showFullBiography, setShowFullBiography] = useState(false);
-  const [showFullFilmList, setShowFullFilmList] = useState(false);
 
   if (isLoading) {
     return (
@@ -46,232 +48,232 @@ const PeopleDetail: NextPageWithLayout = () => {
     (a, b) => parseInt(b.release_date.slice(0, 4)) - parseInt(a.release_date.slice(0, 4))
   );
 
-  
   const shortBiography = data.biography.split(" ").slice(0, 15).join(" ");
   const profileImagePath = data.images.profiles && data.images.profiles.length > 0
     ? config.image_path + data.images.profiles[0].file_path
     : '/default.jpg';
 
+  const handleInstagramClick = () => {
+    const instagramId = data.external_ids.instagram_id;
+    if (instagramId) {
+      const url = `https://www.instagram.com/${instagramId}`;
+      window.open(url, "_blank");
+    }
+  };
+
   return (
     <>
       <NavProfile />
-      <Box sx={{ padding: "18px" }}>
+      <Paper sx={{ backgroundColor: "rgba(255, 255, 255, 0.9)", padding: "18px" }}>
         <Stack spacing={3} sx={{ alignItems: "center" }}>
           <Box
             component="img"
             sx={{
-              height: "100px",
-              width: "100px",
+              height: "150px",
+              width: "150px",
               objectFit: "cover",
-              borderRadius: "150px",
+              borderRadius: "10px",
             }}
             src={profileImagePath}
             alt={"none"}
           />
 
-          <Typography
+          <Box
             sx={{
-              color: "#FFF",
-              fontFamily: "monospace",
-              fontSize: "30px",
-              fontStyle: "normal",
-              fontWeight: 400,
-              lineHeight: "normal",
+              color: "#000",
+              fontWeight: 600,
+              fontSize: "24px",
             }}
           >
             {data.name}
-          </Typography>
+          </Box>
 
-          <Typography
+          <Box
             sx={{
-              color: "white",
-              fontFamily: "Inter",
-              fontSize: "20px",
-              fontStyle: "normal",
+              color: "#333",
               fontWeight: 500,
-              lineHeight: "87.523%",
+              display: "flex",
+              alignItems: "center",
             }}
           >
-            <LocationOnIcon />
+            <LocationOnIcon sx={{ marginRight: "5px" }} />
             {data.place_of_birth}
-          </Typography>
-          <Typography
+          </Box>
+          <Box
             sx={{
-              color: "white",
-              fontFamily: "Inter",
-              fontSize: "20px",
-              fontStyle: "normal",
+              color: "#333",
               fontWeight: 500,
-              lineHeight: "87.523%",
+              display: "flex",
+              alignItems: "center",
             }}
           >
-            <JobOnIcon />
+            <JobOnIcon sx={{ marginRight: "5px" }} />
             {data.known_for_department}
-          </Typography>
+          </Box>
+
+
 
           <Stack direction="row" spacing={8}>
-            <Box>
-              <Typography
+            <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+              <PeopleAltIcon sx={{ color: "#000", fontSize: "20px" }} />
+              <Box
                 sx={{
-                  color: "gold",
-                  fontFamily: "Inter",
-                  fontSize: "20px",
-                  fontStyle: "normal",
-                  fontWeight: 600,
-                  lineHeight: "87.523%",
-                }}
-              >
-                Popularity:
-              </Typography>
-              <Typography
-                sx={{
-                  color: "white",
-                  fontFamily: "Inter",
-                  fontSize: "20px",
-                  fontStyle: "normal",
+                  color: "#333",
                   fontWeight: 500,
-                  lineHeight: "87.523%",
+                  fontSize: "16px",
                   textAlign: "center",
                 }}
               >
                 {data.popularity}
-              </Typography>
+              </Box>
             </Box>
-            <Box>
-              <Typography
+            <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", cursor: "pointer" }} onClick={handleInstagramClick}>
+              <Instagram sx={{ color: "#000", fontSize: "20px" }} />
+              <Box
                 sx={{
-                  color: "gold",
-                  fontFamily: "Inter",
-                  fontSize: "20px",
-                  fontStyle: "normal",
-                  fontWeight: 600,
-                  lineHeight: "87.523%",
-                }}
-              >
-                Twitter:
-              </Typography>
-              <Typography
-                sx={{
-                  color: "#FFF",
-                  fontFamily: "Inter",
-                  fontSize: "20px",
-                  fontStyle: "normal",
+                  color: "#333",
                   fontWeight: 500,
-                  lineHeight: "87.523%",
-                }}
-              >
-                @{data.external_ids.twitter_id}
-              </Typography>
-            </Box>
-          </Stack>
-
-          <Typography
-            sx={{
-              color: "#FFF",
-              fontFamily: "Inter",
-              fontSize: "20px",
-              fontStyle: "normal",
-              fontWeight: 400,
-              lineHeight: "normal",
-              textAlign: "justify",
-              maxHeight: showFullBiography ? "none" : "100px",
-              overflow: "hidden",
-            }}
-          >
-            {showFullBiography ? data.biography : shortBiography}
-
-            {data.biography.split(" ").length > 20 && (
-              <Link
-                onClick={() => setShowFullBiography(!showFullBiography)}
-                sx={{
-                  textDecoration: "underline",
-                  color: "#00F",
-                  cursor: "pointer",
-                  display: "block",
-                  marginTop: 1,
-                }}
-              >
-                {showFullBiography ? "Read less" : "Read more"}
-              </Link>
-            )}
-          </Typography>
-        </Stack>
-        <Box sx={{ mt: 3, borderTop: "1px solid #777" }}>
-          <Typography
-            sx={{
-              color: "greenyellow",
-              fontFamily: "Inter",
-              fontSize: "24px",
-              fontWeight: 600,
-              lineHeight: "87.523%",
-            }}
-          >
-            Acting for:
-          </Typography>
-          {sortedListFilm.slice(0, showFullFilmList ? sortedListFilm.length : 5).map((ig, index) => (
-            <Box key={index}>
-              <Link
-                href={`/movie-detail/${ig.id}`}
-                underline="none"
-                sx={{
-                  textDecoration: "none",
+                  fontSize: "16px",
                   textAlign: "center",
-                  color: "#FFF",
+                  textDecoration: "none",
                   "&:hover": {
-                    color: "#00F",
+                    textDecoration: "underline",
+                    color: "#0084ff",
                   },
                 }}
               >
-                <Typography
-                  style={{
-                    fontFamily: "Roboto",
-                    fontSize: "24px",
-                    fontWeight: 700,
-                    lineHeight: "normal",
-                    display: "inline-block",
-                    marginRight: "8px",
-                    maxWidth: "calc(100% - 100px)",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap",
-                  }}
-                >
-                  {ig.release_date && ig.release_date.slice(0, 4)}
-                </Typography>
-                <Typography
-                  style={{
-                    fontFamily: "Roboto",
-                    fontSize: "24px",
-                    fontWeight: 700,
-                    lineHeight: "normal",
-                    display: "inline-block",
-                    maxWidth: "calc(100% - 100px)",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap",
-                  }}
-                >
-                  {ig.title}
-                </Typography>
-              </Link>
+                {data.external_ids.instagram_id}
+              </Box>
             </Box>
-          ))}
-          {sortedListFilm.length > 5 && (
+
+          </Stack>
+        </Stack>
+        <Box
+          sx={{
+            marginTop: "20px",
+            fontWeight: 700,
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          Gender
+        </Box>
+        <Box>{data.gender === 1 ? 'Female' : 'Male'}</Box>
+        <Box
+          sx={{
+            fontWeight: 700,
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          Age
+        </Box>
+        <Box>{new Date().getFullYear() - new Date(data.birthday).getFullYear()} </Box>
+        <Box
+          sx={{
+            fontWeight: 700,
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          Date of Birth
+        </Box>
+        <Box>{data.birthday}</Box>
+        <Box
+          sx={{
+            fontWeight: 700, color: "black", marginTop: "20px", marginBottom: "10px", fontSize: "20px",
+          }}
+        >
+          Biography
+        </Box>
+        <Box
+          sx={{
+            color: "#333",
+            fontSize: "16px",
+            lineHeight: "1.5",
+            textAlign: "justify",
+            maxHeight: showFullBiography ? "none" : "100px",
+            overflow: "hidden",
+            wordWrap: "break-word",
+            overflowWrap: "break-word",
+          }}
+        >
+
+          {showFullBiography ? data.biography : shortBiography}
+
+          {data.biography.split(" ").length > 20 && (
             <Link
-              onClick={() => setShowFullFilmList(!showFullFilmList)}
+              onClick={() => setShowFullBiography(!showFullBiography)}
               sx={{
                 textDecoration: "underline",
-                color: "#00F",
+                color: "#0084ff",
                 cursor: "pointer",
                 display: "block",
-                marginTop: 1,
               }}
             >
-              {showFullFilmList ? "Show less movies" : "Show more movies"}
+              {showFullBiography ? "Read less" : "Read more"}
             </Link>
           )}
         </Box>
-      </Box>
+        <Box sx={{ mt: 5, borderTop: "1px solid #ccc" }}>
+          <Box
+            sx={{
+              fontWeight: 700,
+              color: "black",
+              fontSize: "20px"
+            }}
+          >
+            Acting
+          </Box>
+          <Box
+            sx={{
+              marginTop: "10px",
+            }}
+          >
+            {sortedListFilm.map((ig, index) => (
+              <Box
+                key={index}
+              >
+                <Link
+                  href={`/movie-detail/${ig.id}`}
+                  underline="none"
+                >
+                  <Stack direction="row" spacing={1}>
+                    <Box
+                      sx={{
+                        color: "#666",
+                        fontWeight: 500,
+                        fontSize: "14px",
+                        maxWidth: "100%",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      {ig.release_date ? ig.release_date.slice(0, 4) : "........."}
+                    </Box>
+
+                    <Box
+                      sx={{
+                        color: "#666",
+                        fontWeight: 500,
+                        fontSize: "14px",
+                        maxWidth: "100%",
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        "&:hover": {
+                          color: "#0084ff",
+                        },
+                      }}
+                    >
+                      {ig.title}
+                    </Box>
+                  </Stack>
+                </Link>
+              </Box>
+            ))}
+          </Box>
+        </Box>
+      </Paper >
     </>
   );
 };

@@ -60,9 +60,9 @@ function RenderReview(props: { data: ReviewProps[] }) {
               }
               alt=""
             />
-            <Typography sx={{ color: "cyan" }}>
-              {credit.author_details.rating}
-            </Typography>
+            <Box sx={{ color: "cyan" }}>
+              {credit.author_details.rating} Score
+            </Box>
           </Box>
 
           <Box
@@ -76,7 +76,7 @@ function RenderReview(props: { data: ReviewProps[] }) {
                 ? credit.author_details.name
                 : "Somebody"}
             </span>
-            <Typography
+            <Box
               sx={{
                 overflow: "hidden",
                 display: "-webkit-box",
@@ -87,9 +87,14 @@ function RenderReview(props: { data: ReviewProps[] }) {
               }}
             >
               {sanitizeContent(credit.content)}
-            </Typography>
+            </Box>
             {credit.content.length > 100 && (
-              <Button onClick={() => toggleExpand(index)}>
+              <Button
+                style={{
+                  fontSize: 'small', textTransform: 'none', fontFamily: "Arial, sans-serif", fontWeight: 600
+                }}
+                onClick={() => toggleExpand(index)}
+              >
                 {expanded === index ? "Read Less" : "Read More"}
               </Button>
             )}

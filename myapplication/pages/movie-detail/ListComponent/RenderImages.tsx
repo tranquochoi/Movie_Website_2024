@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import { ListImage, Movie } from "../Models/Movies";
 import useSWR from "swr";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 interface RenderImagesProps {
   id: number;
@@ -18,7 +18,9 @@ const RenderImages: React.FC<RenderImagesProps> = (props) => {
     video.name.includes("ailer")
   );
 
-  const youtubeVideoUrl = `https://www.youtube.com/embed/${teaserVideo?.key}?autoplay=1`;
+  const youtubeVideoUrl = teaserVideo
+    ? `https://www.youtube.com/embed/${teaserVideo?.key}?enablejsapi=1`
+    : null;
 
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(
     null
@@ -30,6 +32,19 @@ const RenderImages: React.FC<RenderImagesProps> = (props) => {
 
   const closeImage = () => {
     setSelectedImageIndex(null);
+  };
+
+  const videoRef = useRef<HTMLIFrameElement | null>(null);
+
+  const togglePlayPause = () => {
+    if (videoRef.current) {
+      if (videoRef.current.contentWindow) {
+        videoRef.current.contentWindow.postMessage(
+          '{"event":"command","func":"togglePlayPause","args":""}',
+          "*"
+        );
+      }
+    }
   };
 
   return (
@@ -50,25 +65,33 @@ const RenderImages: React.FC<RenderImagesProps> = (props) => {
           margin: "-14px",
           paddingLeft: "18px",
           paddingRight: "16px",
+
         }}
       >
-        <Box
-          sx={{
-            flex: "0 0 auto",
-            marginRight: 0.5,
-            width: "100%",
-            height: "176px",
-          }}
-        >
-          <iframe
-            title="teaserVideo"
-            width="100%"
-            height="100%"
-            src={youtubeVideoUrl}
-            frameBorder="0"
-            allowFullScreen
-          />
-        </Box>
+        {youtubeVideoUrl && (
+          <Box
+            sx={{
+              flex: "0 0 auto",
+              marginRight: 0.5,
+              width: "100%",
+              height: "200px",
+
+            }}
+          >
+            <iframe
+
+              style={{
+                borderRadius: "16px",
+              }}
+              title="teaserVideo"
+              ref={videoRef}
+              width="100%"
+              height="100%"
+              src={youtubeVideoUrl}
+              allowFullScreen
+            />
+          </Box>
+        )}
 
         {data?.backdrops.slice(0, 10).map((ig, index) => (
           <Box
@@ -76,8 +99,8 @@ const RenderImages: React.FC<RenderImagesProps> = (props) => {
             sx={{
               flex: "0 0 auto",
               marginRight: 0.5,
-              width: "300px",
-              height: "176px",
+              width: "350px",
+              height: "200px",
               cursor: "pointer",
               "&:hover": {
                 opacity: 0.8,
@@ -89,8 +112,10 @@ const RenderImages: React.FC<RenderImagesProps> = (props) => {
               component="img"
               sx={{
                 height: "100%",
-                width: "100%",
+                width: "auto",
                 objectFit: "cover",
+                borderRadius: "16px",
+
               }}
               src={`https://image.tmdb.org/t/p/w500${ig.file_path}`}
               alt={"None"}
