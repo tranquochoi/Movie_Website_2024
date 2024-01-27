@@ -102,7 +102,7 @@ function NotLoggedInAvatar() {
           .get<RequestTokenResponse>("authentication/token/new")
           .then((res) =>
             window.open(
-              `https://www.themoviedb.org/authenticate/${res.data.request_token}?redirect_to=http://localhost:3000/movie/authorize`,
+              `https://www.themoviedb.org/authenticate/${res.data.request_token}?redirect_to=https://stirring-sole-multiply.ngrok-free.app/movie/authorize`,
               "_blank",
               "noopener,noreferrer"
             )
