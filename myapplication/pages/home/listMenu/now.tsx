@@ -13,7 +13,7 @@ import Layout from "@/components/landing_page/layout";
 import axios from "axios";
 import { NextPageWithLayout } from "@/pages/_app";
 import HomeMenu from "@/components/landing_page/homeLayoutMenu";
-import HomeDetail from "..";
+import HomeDetail from ".";
 import { Movie, MovieList } from "@/pages/movie-detail/Models/Movies";
 import StarIcon from "@mui/icons-material/Star";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
@@ -38,7 +38,6 @@ const Now: NextPageWithLayout = () => {
         display: "flex",
         flexDirection: "column",
         gap: 5,
-
       }}
     >
       <Box
@@ -50,8 +49,7 @@ const Now: NextPageWithLayout = () => {
           flexWrap: "nowrap",
           margin: "-14px",
           paddingLeft: "18px",
-          paddingRight: "16px"
-
+          paddingRight: "16px",
         }}
       >
         {data?.results.slice(0, 10).map((movie) => (
@@ -66,8 +64,7 @@ const Now: NextPageWithLayout = () => {
           flexWrap: "nowrap",
           margin: "-14px",
           paddingLeft: "18px",
-          paddingRight: "16px"
-
+          paddingRight: "16px",
         }}
       >
         {data?.results.slice(10, 20).map((movie) => (
@@ -75,9 +72,7 @@ const Now: NextPageWithLayout = () => {
         ))}
       </Box>
       <Box sx={{ height: "32px" }} />
-
     </Box>
-
   );
 };
 

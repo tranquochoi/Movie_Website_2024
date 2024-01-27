@@ -20,6 +20,7 @@ import StarBorderIcon from "@mui/icons-material/StarBorder";
 import StarIcon from "@mui/icons-material/Star";
 import { MovieList } from "../../movie-detail/Models/Movies";
 import Person from "@/components/Person";
+import RenderMovieIndex from "./renderMovieIndex";
 
 const HomeDetail: NextPageWithLayout = () => {
   const fetcher = (url: string) =>
@@ -45,6 +46,7 @@ const HomeDetail: NextPageWithLayout = () => {
       >
         {isLoading && <CircularProgress />}
         {error && <Typography>Error loading data</Typography>}
+
         {data?.results.map((movie) => (
           <Box
             key={movie.id.toString()}
@@ -55,46 +57,8 @@ const HomeDetail: NextPageWithLayout = () => {
             }}
           >
             <Link href={`/movie-detail/${movie.id}`} underline="none">
-              <Box sx={{ position: "relative" }}>
-                <Box
-                  sx={{
-                    marginTop: "20px",
-                    backgroundColor: "rgba(0, 0, 0, 0.5)",
-                    borderRadius: "8px",
-                    padding: "2px",
-                    left: "70%",
-                    position: "absolute",
-                    transform: "translate(-8%, -40%)",
-                    color: "white",
-                    fontSize: "12px",
-                  }}
-                >
-                  <StarIcon sx={{ fontSize: 24, color: "orange" }} />
-                  {movie.vote_average}
-                </Box>
-              </Box>
-              <Card
-                elevation={5}
-                className="small-card"
-                sx={{
-                  height: "200px",
-                  width: "139.581px",
-                  borderRadius: "16px",
-                }}
-              >
-                <CardMedia
-                  component="img"
-                  sx={{
-                    height: "100%",
-                    objectFit: "cover",
-                    width: "100%",
-                    borderRadius: "16px",
-                  }}
-                  image={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                  alt={movie.title}
-                />
-                <CardContent />
-              </Card>
+              <RenderMovieIndex data={movie} />
+
               <Box sx={{ position: "relative" }}>
                 <Typography
                   sx={{

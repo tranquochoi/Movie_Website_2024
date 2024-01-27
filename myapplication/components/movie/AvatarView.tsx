@@ -72,7 +72,7 @@ function LoggedInAvatar(props: { data: User }) {
             setOpenDialog(true);
           }}
         >
-          Log out
+          Log out${getCookie("session_id")}
         </MenuItem>
       </Menu>
       <Dialog open={openDialog} onClose={handleDialogClose}>
