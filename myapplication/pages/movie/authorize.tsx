@@ -33,15 +33,18 @@ const Authorize = () => {
   );
 
   if (isLoading)
-    return <>
-    <Box sx={{pt:'250px'}}>
-    <Typography sx={{color:'white'}} textAlign="center">Authorizing ... </Typography>;
-      </Box>
+    return (
+      <>
+        <Box sx={{ pt: "250px" }}>
+          <Typography sx={{ color: "white" }} textAlign="center">
+            Authorizing ...{" "}
+          </Typography>
+          ;
+        </Box>
       </>
-      
-   
+    );
 
-  if (data) {
+  if (data?.success == true) {
     router.push("/home");
   }
 
@@ -50,7 +53,9 @@ const Authorize = () => {
       {data ? (
         <></>
       ) : (
-        <Typography sx={{color:'white'}} textAlign="center">Sorry could not log in </Typography>
+        <Typography sx={{ color: "white" }} textAlign="center">
+          Sorry could not log in{" "}
+        </Typography>
       )}
     </>
   );

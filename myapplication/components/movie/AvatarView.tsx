@@ -44,9 +44,7 @@ function LoggedInAvatar(props: { data: User }) {
     }
   };
   const { data, isLoading, error } = useSWR<User>(
-    `/account/${getCookie(
-      "session_id"
-    )}?language=en-US&append_to_response=videos,credits`
+    `/account/${getCookie("user_id")}?session_id=${getCookie("session_id")}`
   );
 
   return (
@@ -72,7 +70,7 @@ function LoggedInAvatar(props: { data: User }) {
             setOpenDialog(true);
           }}
         >
-          Log out${getCookie("session_id")}
+          Log out{getCookie("session_id")}
         </MenuItem>
       </Menu>
       <Dialog open={openDialog} onClose={handleDialogClose}>
@@ -102,7 +100,7 @@ function NotLoggedInAvatar() {
           .get<RequestTokenResponse>("authentication/token/new")
           .then((res) =>
             window.open(
-              `https://www.themoviedb.org/authenticate/${res.data.request_token}?redirect_to=https://stirring-sole-multiply.ngrok-free.app/movie/authorize`,
+              `https://www.themoviedb.org/authenticate/${res.data.request_token}?redirect_to=http://localhost:3000/movie/authorize`,
               "_blank",
               "noopener,noreferrer"
             )

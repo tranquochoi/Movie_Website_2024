@@ -122,7 +122,7 @@ function RenderMovie2(props: { data: Movie }) {
               {props.data.release_date}
             </Typography>
             {gener?.genres
-              .filter((gen) => props.data.genre_ids.includes(parseInt(gen.id)))
+              .filter((gen) => props.data.genre_ids.includes(gen.id))
               .slice(0, 2)
               .map((gen) => (
                 <Typography
