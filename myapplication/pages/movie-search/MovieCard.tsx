@@ -40,6 +40,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => (
         "&:hover": {
           filter: "brightness(1.3)",
         },
+        borderRadius: "16px",
       }}
     >
       <Box
