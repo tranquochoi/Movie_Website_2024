@@ -17,13 +17,8 @@ const TopRated: NextPageWithLayout = () => {
   const renderMovies = (start: number, end: number) => (
     <Box
       sx={{
-        display: "flex",
-        overflowX: "auto",
-        gap: 1,
-        flexWrap: "nowrap",
-        margin: "-14px",
-        paddingLeft: "18px",
-        paddingRight: "16px",
+
+
       }}
     >
       {data.results.slice(start, end).map((movie: Movie) => (
@@ -33,8 +28,8 @@ const TopRated: NextPageWithLayout = () => {
   );
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", gap: 5 }}>
-      {renderMovies(0, 12)}
+    <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
+      {renderMovies(0, 20)}
 
       <Box sx={{ height: "32px" }} />
     </Box>

@@ -164,7 +164,7 @@ export function TabDetail() {
 
       <CustomTabPanel value={value} index={0}>
         <IconButton onClick={toggleDialog} sx={{ color: "white", display: "flex", alignItems: "center" }}>
-          <Box sx={{ paddingLeft: "8px", marginRight: "8px", fontFamily: "YourCustomFont, sans-serif", fontSize: "18px" }}>
+          <Box sx={{ marginRight: "8px", fontFamily: "YourCustomFont, sans-serif", fontSize: "18px" }}>
             Introduce
           </Box>
           <ArrowCircleRightIcon />

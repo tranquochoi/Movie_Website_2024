@@ -65,6 +65,14 @@ const Detail: NextPageWithLayout = () => {
     return stars;
   };
 
+  const backdropImage = data.backdrop_path
+    ? `${config.image_path}${data.backdrop_path}`
+    : "/nomovie.jpg";
+
+  const posterImage = data.poster_path
+    ? `${config.image_path}${data.poster_path}`
+    : "/filmdefault.jpg";
+
   return (
     <>
       <NavDetail />
@@ -83,11 +91,9 @@ const Detail: NextPageWithLayout = () => {
             borderBottomLeftRadius: "16px",
             borderBottomRightRadius: "16px",
           }}
-          src={config.image_path + data.backdrop_path}
+          src={backdropImage}
           alt={data.title}
         />
-
-
 
         <Stack direction="column" spacing={1}>
           <Box sx={{ display: "flex", flexDirection: "row" }}>
@@ -102,10 +108,9 @@ const Detail: NextPageWithLayout = () => {
                 objectFit: "cover",
                 height: "130px",
               }}
-              src={config.image_path + data.poster_path}
+              src={posterImage}
               alt={data.title}
             />
-
 
             <Box sx={{
               height: "100px",
@@ -129,7 +134,6 @@ const Detail: NextPageWithLayout = () => {
             }}
           >
             {renderStarIcons(data.vote_average)}  From {data.vote_count.toLocaleString()} users
-
           </Box>
           <Stack direction="column" alignItems="left" spacing={1}>
             <Box
@@ -201,7 +205,7 @@ const Detail: NextPageWithLayout = () => {
             </Box>
           </Stack>
         </Stack>
-      </Stack >
+      </Stack>
 
       <Box sx={{ height: "28px" }}></Box>
       <TabDetail />

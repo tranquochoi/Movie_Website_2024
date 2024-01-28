@@ -18,7 +18,7 @@ const Header = () => {
           fontWeight: 600,
         }}
       >
-        <Typography>THE MOVIE</Typography>
+        <Box>The Movie</Box>
         <AvatarView />
       </Box>
     </>

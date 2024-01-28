@@ -142,8 +142,8 @@ const RenderImages: React.FC<RenderImagesProps> = (props) => {
         >
           <Box
             sx={{
-              maxWidth: "90%",
-              maxHeight: "90%",
+              maxWidth: "95%",
+              maxHeight: "95%",
             }}
           >
             <Box

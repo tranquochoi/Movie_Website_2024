@@ -14,21 +14,24 @@ const Now: NextPageWithLayout = () => {
   if (error) return <Typography>Error loading data</Typography>;
 
   const renderMovies = (start: number, end: number) => (
-    <Box
-      sx={{
-        display: "flex",
-        overflowX: "auto",
-        gap: 1,
-        flexWrap: "nowrap",
-        margin: "-14px",
-        paddingLeft: "18px",
-        paddingRight: "16px",
-      }}
-    >
-      {data?.results.slice(start, end).map((movie: Movie) => (
-        <RenderMovie data={movie} />
-      ))}
-    </Box>
+    <>
+      <Box
+        sx={{
+          display: "flex",
+          overflowX: "auto",
+          gap: 1,
+          flexWrap: "nowrap",
+          margin: "-14px",
+          paddingLeft: "18px",
+          paddingRight: "16px",
+        }}
+      >
+        {data?.results.slice(start, end).map((movie: Movie) => (
+          <RenderMovie data={movie} />
+        ))}
+      </Box>
+    </>
+
   );
 
   return (

@@ -56,12 +56,12 @@ export default function NavProfile() {
                 >
                     <ArrowBackIosNewOutlinedIcon />
                 </IconButton>
-                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                <Box component="div" sx={{ flexGrow: 1, marginRight: "24px" }}>
                     Profile
-                </Typography>
-                
+                </Box>
+
             </Toolbar>
-        </AppBar>
+        </AppBar >
 
     );
 }
