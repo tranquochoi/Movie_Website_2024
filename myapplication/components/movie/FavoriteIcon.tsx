@@ -23,7 +23,7 @@ import { useRouter } from "next/router";
 import { MovieList } from "@/pages/movie-detail/Models/Movies";
 import { initialize } from "next/dist/server/lib/render-server";
 import { createInitialRouterState } from "next/dist/client/components/router-reducer/create-initial-router-state";
-
+import HeartIcon from "@mui/icons-material/Favorite";
 function IconFavorite(props: { id: Number }) {
   const session_id = getCookie("session_id");
   const user_id = getCookie("user_id");
@@ -62,9 +62,47 @@ function IconFavorite(props: { id: Number }) {
   return (
     <>
       {isLiked ? (
-        <Typography>Love</Typography>
+        <Box
+          onClick={updateFavorite}
+          sx={{
+            border: "1px solid #888",
+            color: "Red",
+            padding: "4px 8px",
+            borderRadius: "50%",
+            width: "10%",
+            marginRight: "8px",
+
+            marginTop: "10px",
+            transition: "border-color 0.3s",
+            "&:hover": {
+              borderColor: "#888",
+              backgroundColor: "#333",
+            },
+          }}
+        >
+          <HeartIcon />
+        </Box>
       ) : (
-        <Button onClick={updateFavorite}>Add to Favorites</Button>
+        <Box
+          onClick={updateFavorite}
+          sx={{
+            border: "1px solid #888",
+            color: "#888",
+            padding: "4px 8px",
+            borderRadius: "50%",
+            width: "10%",
+            marginRight: "8px",
+
+            marginTop: "10px",
+            transition: "border-color 0.3s",
+            "&:hover": {
+              borderColor: "#888",
+              backgroundColor: "#333",
+            },
+          }}
+        >
+          <HeartIcon />
+        </Box>
       )}
     </>
   );
