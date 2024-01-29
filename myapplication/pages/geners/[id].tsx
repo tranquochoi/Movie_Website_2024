@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import axios from "axios";
@@ -15,20 +15,15 @@ import {
   Grid,
 } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { NextPageWithLayout } from "../_app";
 
-
-interface CategoriesProps {}
-
-const Categories: React.FC<CategoriesProps> = () => {
+const Categories: NextPageWithLayout = () => {
   const router = useRouter();
   const { id } = router.query;
   const [selectedGenre, setSelectedGenre] = useState(0);
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+  const [movies, setMovies] = useState<MovieList | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [movies, setMovies] = useState<MovieList["results"] | null>(null);
-  const [moviesPerPage, setMoviesPerPage] = useState(9);
-  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
-
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -38,57 +33,59 @@ const Categories: React.FC<CategoriesProps> = () => {
     setAnchorEl(null);
   };
 
-  const fetcher = (url: string) => axios.get(url).then((response) => response.data);
+  const fetcher = (url: string) =>
+    axios.get(url).then((response) => response.data);
 
-  // Sử dụng hook useEffect để theo dõi thay đổi của id trong URL
   useEffect(() => {
-    // Kiểm tra xem id có tồn tại và là một số không
-    if (id && !isNaN(parseInt(id as string))) {
-      setSelectedGenre(parseInt(id as string));
-    }
-  }, [id]);
+    const fetchMovies = async () => {
+      try {
+        const response = await axios.get(
+          `/movie/top_rated?page=${currentPage}`
+        );
+        const newMovies = response.data;
 
-  const { data: genreData, isLoading: genreLoading, error: genreError } = useSWR<ListGenre>(
+        setMovies((prevMovies) => ({
+          page: newMovies.page,
+          results: prevMovies
+            ? [
+                ...prevMovies.results,
+                ...newMovies.results.filter(
+                  (newMovie: { id: Int16Array }) =>
+                    !prevMovies.results.some(
+                      (existingMovie) => existingMovie.id === newMovie.id
+                    )
+                ),
+              ]
+            : newMovies.results,
+        }));
+      } catch (error) {}
+    };
+
+    fetchMovies();
+  }, [currentPage]);
+
+  const { data: gener } = useSWR<ListGenre>(
     "genre/movie/list?language=en&page=3",
     fetcher
   );
 
-  const genre = genreData?.genres.find((g) => g.id === selectedGenre);
+  const movieGener = movies?.results
+    ?.filter((movie) =>
+      movie.genre_ids.includes(
+        selectedGenre !== 0 ? selectedGenre : parseInt(id as string)
+      )
+    )
+    .filter(
+      (movie, index, self) => index === self.findIndex((m) => m.id === movie.id)
+    );
 
-  const { data: movieData, isLoading: movieLoading, error: movieError } = useSWR<MovieList>(
-    genre ? `/discover/movie?with_genres=${genre.id}&page=${currentPage}` : null,
-    fetcher
-  );
-
-  useEffect(() => {
-    if (movieData?.results) {
-      setMovies((prevMovies) =>
-        prevMovies ? [...prevMovies, ...movieData.results] : movieData.results
-      );
-    }
-  }, [movieData]);
-
-  const loadMoreMovies = () => {
+  const handleLoadMore = () => {
     setCurrentPage((prevPage) => prevPage + 1);
   };
 
-  const displayedMovies = movies ? movies.slice(0, currentPage * moviesPerPage) : null;
-
-  if (genreLoading || movieLoading) {
-    return <Typography>Loading...</Typography>;
+  if (!movies) {
+    return <CircularProgress />;
   }
-
-  if (genreError || movieError) {
-    return <Typography>Error</Typography>;
-  }
-
-  if (!genreData) {
-    return <>Không có dữ liệu về thể loại</>;
-  }
-
-  const movieGener = movies?.filter((movie) =>
-    movie.genre_ids.includes(selectedGenre !== 0 ? selectedGenre : parseInt(id as string))
-  );
 
   return (
     <>
@@ -136,7 +133,7 @@ const Categories: React.FC<CategoriesProps> = () => {
               padding: "6px",
             }}
           >
-            {genreData.genres.map((genre) => (
+            {gener?.genres.map((genre) => (
               <Box
                 key={genre.id.toString()}
                 sx={{
@@ -146,8 +143,8 @@ const Categories: React.FC<CategoriesProps> = () => {
                   marginRight: "8px",
                   marginTop: "10px",
                   backgroundColor:
-                    selectedGenre === genre.id ? "#4a92ff" : "transparent",
-                  color: selectedGenre === genre.id ? "white" : "#949494",
+                    selectedGenre == genre.id ? "#4a92ff" : "transparent",
+                  color: selectedGenre == genre.id ? "white" : "#949494",
                   "&:hover": {
                     backgroundColor: "#4a92ff",
                     cursor: "pointer",
@@ -156,9 +153,6 @@ const Categories: React.FC<CategoriesProps> = () => {
                 onClick={() => {
                   setSelectedGenre(genre.id);
                   handleMenuClose();
-                  setCurrentPage(1);
-                  setMovies(null);
-                  router.push(`/categories/${genre.id}`); // Chuyển trang với thể loại được chọn
                 }}
               >
                 {genre.name}
@@ -179,7 +173,12 @@ const Categories: React.FC<CategoriesProps> = () => {
           fontFamily: "Arial, sans-serif",
         }}
       >
-        Selected: {genre?.name}
+        Selected:
+        {
+          gener?.genres.find(
+            (tl) => tl.id == (selectedGenre != 0 ? selectedGenre : id)
+          )?.name
+        }
       </Typography>
       <Box sx={{ padding: "6px", textAlign: "center" }}>
         <Grid container spacing={3}>
@@ -189,11 +188,37 @@ const Categories: React.FC<CategoriesProps> = () => {
             </Grid>
           ))}
         </Grid>
-        {movies && displayedMovies && displayedMovies.length < movies.length && (
-          <Button onClick={loadMoreMovies} sx={{ color: "white", marginTop: "10px" }}>
+        {movieGener && movieGener.length > 0 && (
+          <Button
+            onClick={handleLoadMore}
+            style={{
+              backgroundColor: "#4a92ff",
+              color: "white",
+              padding: "10px 20px ",
+              margin: "20px",
+              border: "none",
+              borderRadius: "5px",
+              cursor: "pointer",
+              fontSize: "16px",
+              transition: "background-color 0.3s ease",
+            }}
+          >
             Load More
           </Button>
         )}
+
+        {!movieGener ||
+          (movieGener.length === 0 && (
+            <Typography
+              sx={{
+                color: "white",
+                fontSize: "16px",
+                marginTop: "20px",
+              }}
+            >
+              Không có phim để hiển thị.
+            </Typography>
+          ))}
       </Box>
     </>
   );
