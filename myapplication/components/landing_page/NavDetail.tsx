@@ -44,7 +44,7 @@ export default function NavDetail() {
     }
 
     if (!data) {
-        return <>Không có dữ liệu</>;
+        return <>Not Data</>;
     }
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -80,14 +80,14 @@ export default function NavDetail() {
                 >
                     <ArrowBackIosNewOutlinedIcon />
                 </IconButton>
-                <Box sx={{ flexGrow: 1 }}>
+                <Box sx={{ flexGrow: 1, }}>
                     Detail
                 </Box>
-                <IconButton edge="end" color="inherit" aria-label="info">
+                <IconButton size='large' edge="end" color="inherit" aria-label="info" sx={{ marginBottom: "8px" }}>
                     <WatchListIcon id={data.id} />
                 </IconButton>
             </Toolbar>
-        </AppBar>
+        </AppBar >
 
     );
 }

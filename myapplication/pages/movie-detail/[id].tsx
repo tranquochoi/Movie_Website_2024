@@ -133,6 +133,11 @@ const Detail: NextPageWithLayout = () => {
             </Box>
           </Box>
 
+          <Box sx={{
+            pl: "20px",
+          }}>
+            <FavoriteIcon id={data.id} />
+          </Box>
           <Box
             sx={{
               color: "white",
@@ -148,14 +153,12 @@ const Detail: NextPageWithLayout = () => {
               sx={{
                 display: "flex",
                 flexDirection: "row",
-                alignItems: "center", 
+                alignItems: "center",
                 color: "#92929D",
                 fontSize: "1rem",
                 pl: "26px",
-                pt: "10px",
               }}
             >
-            <FavoriteIcon id={data.id} />
             </Box>
 
             <Box
@@ -163,7 +166,6 @@ const Detail: NextPageWithLayout = () => {
                 color: "#92929D",
                 fontSize: "1rem",
                 pl: "26px",
-                pt: "10px",
               }}
             >
               Date release: {formattedReleaseDate}
@@ -228,6 +230,7 @@ const Detail: NextPageWithLayout = () => {
       </Stack>
 
       <Box sx={{ height: "28px" }}></Box>
+
       <TabDetail />
     </>
   );

@@ -64,12 +64,7 @@ function IconWatchList(props: { id: Number }) {
           onClick={updateWatchList}
           sx={{
             color: "YELLOW",
-            padding: "4px 8px",
-            borderRadius: "50%",
-            width: "10%",
-            marginRight: "8px",
 
-            marginTop: "10px",
           }}
         >
           <BookmarkIcon />
@@ -79,12 +74,6 @@ function IconWatchList(props: { id: Number }) {
           onClick={updateWatchList}
           sx={{
             color: "#FFF",
-            padding: "4px 8px",
-            borderRadius: "50%",
-            width: "10%",
-            marginRight: "8px",
-
-            marginTop: "10px",
           }}
         >
           <BookmarkIcon />
@@ -95,7 +84,7 @@ function IconWatchList(props: { id: Number }) {
 }
 function WatchListIcon(props: { id: Number }) {
   const session_id = getCookie("session_id");
-  return <>{session_id ? <IconWatchList id={props.id} /> : <Box>Login</Box>}</>;
+  return <>{session_id ? <IconWatchList id={props.id} /> : null}</>;
 }
 
 export default WatchListIcon;

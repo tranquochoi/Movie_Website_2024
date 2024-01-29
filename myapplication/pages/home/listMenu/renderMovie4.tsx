@@ -1,7 +1,8 @@
+import React from "react";
 import { Movie } from "@/pages/movie-detail/Models/Movies";
 import { Box, Grid, Link, Typography, Paper } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
-import { ListGenre } from "@/pages/movie-detail/Models/Geners";
+import { ListGenre, Genre } from "@/pages/movie-detail/Models/Geners"; // Import Genre type
 import axios from "axios";
 import useSWR from "swr";
 import StarOutlineIcon from "@mui/icons-material/StarOutline";
@@ -40,12 +41,26 @@ function RenderMovie4(props: { data: Movie }) {
   const fetcher = (url: string) =>
     axios.get(url).then((response) => response.data);
 
-  const { data: gener } = useSWR<ListGenre>(
+  const { data: genreData } = useSWR<ListGenre>(
     "genre/movie/list?language=en",
     fetcher
   );
 
   const formattedReleaseDate = formatDate(props.data.release_date);
+
+  const getGenres = (genreIds: number[]) => {
+    if (!genreData || !genreData.genres) return "";
+
+    const genres: Genre[] = genreData.genres;
+    const movieGenres = genreIds
+      .map((genreId) => {
+        const genre = genres.find((g) => g.id === genreId);
+        return genre ? genre.name : "";
+      })
+      .slice(0, 3);
+
+    return movieGenres.join(", ");
+  };
 
   return (
     <Grid container spacing={4}>
@@ -111,9 +126,22 @@ function RenderMovie4(props: { data: Movie }) {
                       fontFamily: "Arial, sans-serif",
                     }}
                   >
+                    {getGenres(props.data.genre_ids)}
+                  </Typography>
+                </Box>
+                <Box>
+                  <Typography
+                    sx={{
+                      color: "#888",
+                      fontSize: "14px",
+                      fontFamily: "Arial, sans-serif",
+                    }}
+                  >
                     {formattedReleaseDate}
                   </Typography>
                 </Box>
+
+
               </Box>
             </Box>
           </Link>

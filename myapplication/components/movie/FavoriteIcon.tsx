@@ -54,19 +54,20 @@ function IconFavorite(props: IconFavoriteProps): JSX.Element {
       variant="outlined"
       color={isLiked ? "secondary" : "primary"}
       sx={{
+        fontFamily: "Arial, sans-serif",
         textTransform: "none",
-        marginRight: "8px",
-        marginTop: "4px",
-        color: isLiked ? "red" : "#92929D", // Màu chữ
+        color: isLiked ? "red" : "#92929D",
+        padding: "12px",
+        width: "8rem",
       }}
     >
       {isLiked ? (
         <>
-          In Favorites <HeartIcon sx={{ marginLeft: "4px", color: "red" }} />
+          <HeartIcon sx={{ color: "red", marginRight: "4px" }} /> Favorites
         </>
       ) : (
         <>
-          Add to Favorites <HeartIcon sx={{ marginLeft: "4px", color: "#92929D" }} />
+          <HeartIcon sx={{ color: "#92929D", marginRight: "4px" }} />  Favorites
         </>
       )}
     </Button>
@@ -79,7 +80,7 @@ interface FavoriteIconProps {
 
 function FavoriteIcon(props: FavoriteIconProps): JSX.Element {
   const session_id = getCookie("session_id");
-  return <>{session_id ? <IconFavorite id={props.id} /> : <Box>Login</Box>}</>;
+  return <>{session_id ? <IconFavorite id={props.id} /> : null}</>;
 }
 
 export default FavoriteIcon;
