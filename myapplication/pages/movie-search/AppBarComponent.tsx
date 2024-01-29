@@ -29,17 +29,13 @@ const AppBarComponent: React.FC<AppBarComponentProps> = ({
       >
         <ArrowBackIosNewOutlinedIcon />
       </IconButton>
-      <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+      <Typography
+        variant="h6"
+        component="div"
+        sx={{ flexGrow: 1, paddingRight: "25px" }}
+      >
         Search
       </Typography>
-      <IconButton
-        edge="end"
-        color="inherit"
-        aria-label="info"
-        onClick={onInfoClick}
-      >
-        <Info />
-      </IconButton>
     </Toolbar>
   </AppBar>
 );
