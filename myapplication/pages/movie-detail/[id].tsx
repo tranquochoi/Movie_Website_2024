@@ -18,6 +18,7 @@ import { Movie } from "./Models/Movies";
 import config from "@/config";
 import { NextPageWithLayout } from "../_app";
 import { TabDetail } from "@/components/landing_page/TabDetail";
+import FavoriteIcon from "@/components/movie/FavoriteIcon";
 
 const Detail: NextPageWithLayout = () => {
   const router = useRouter();
@@ -64,8 +65,10 @@ const Detail: NextPageWithLayout = () => {
       }
     }
 
+
     return stars;
   };
+
 
   const backdropImage = data.backdrop_path
     ? `${config.image_path}${data.backdrop_path}`
@@ -141,6 +144,20 @@ const Detail: NextPageWithLayout = () => {
             {data.vote_count.toLocaleString()} users
           </Box>
           <Stack direction="column" alignItems="left" spacing={1}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center", 
+                color: "#92929D",
+                fontSize: "1rem",
+                pl: "26px",
+                pt: "10px",
+              }}
+            >
+            <FavoriteIcon id={data.id} />
+            </Box>
+
             <Box
               sx={{
                 color: "#92929D",

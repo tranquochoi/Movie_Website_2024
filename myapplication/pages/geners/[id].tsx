@@ -135,16 +135,16 @@ const Categories: NextPageWithLayout = () => {
               backgroundColor: "#242A32",
               maxHeight: `${maxPopoverHeight}px`,
               overflowY: "auto",
-              display: "flex", // Sử dụng flexbox để chia thành hai cột
-              flexDirection: "row", // Sắp xếp các phần tử theo hàng ngang
-              flexWrap: "wrap", // Cho phép các phần tử chuyển hàng khi không đủ chỗ
-              justifyContent: "space-between", // Canh chỉnh các phần tử đều ra hai bên
+              display: "flex", 
+              flexDirection: "row", 
+              flexWrap: "wrap", 
+              justifyContent: "space-between", 
               padding: "16px",
             },
           }}
         >
           <Box sx={{ width: "calc(50% - 16px)" }}>
-            {/* Hiển thị các thể loại trong cột 1 */}
+           
             {gener?.genres.slice(0, Math.ceil(gener.genres.length / 2)).map((genre) => (
               <Box
                 key={genre.id.toString()}
@@ -171,7 +171,7 @@ const Categories: NextPageWithLayout = () => {
             ))}
           </Box>
           <Box sx={{ width: "calc(50% - 16px)" }}>
-            {/* Hiển thị các thể loại trong cột 2 */}
+            
             {gener?.genres.slice(Math.ceil(gener.genres.length / 2)).map((genre) => (
               <Box
                 key={genre.id.toString()}

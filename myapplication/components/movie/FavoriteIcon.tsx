@@ -1,30 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Person } from "@mui/icons-material";
-import {
-  Box,
-  Button,
-  Dialog,
-  Menu,
-  MenuItem,
-  Stack,
-  Typography,
-  DialogTitle,
-  ListItem,
-  List,
-  ListItemButton,
-  ListItemText,
-  CircularProgress,
-} from "@mui/material";
-import { RequestTokenResponse, User } from "@/pages/movie-detail/Models/Auth";
+import { Button, CircularProgress, Box } from "@mui/material";
 import axios from "axios";
 import useSWR from "swr";
-import { getCookie, setCookie, deleteCookie } from "cookies-next";
-import { useRouter } from "next/router";
+import { getCookie } from "cookies-next";
 import { MovieList } from "@/pages/movie-detail/Models/Movies";
-import { initialize } from "next/dist/server/lib/render-server";
-import { createInitialRouterState } from "next/dist/client/components/router-reducer/create-initial-router-state";
 import HeartIcon from "@mui/icons-material/Favorite";
-function IconFavorite(props: { id: Number }) {
+
+interface IconFavoriteProps {
+  id: number;
+}
+
+function IconFavorite(props: IconFavoriteProps): JSX.Element {
   const session_id = getCookie("session_id");
   const user_id = getCookie("user_id");
   const fetcher = (url: string) =>
@@ -36,6 +22,7 @@ function IconFavorite(props: { id: Number }) {
       : null,
     fetcher
   );
+
   useEffect(() => {
     if (movieFavorite && movieFavorite.results) {
       const liked = movieFavorite.results.find(
@@ -44,9 +31,10 @@ function IconFavorite(props: { id: Number }) {
       setIsLiked(liked !== undefined);
     }
   }, [movieFavorite, props.id]);
+
   const updateFavorite = async () => {
     try {
-      const response = await axios.post(
+      await axios.post(
         `https://api.themoviedb.org/3/account/${user_id}/favorite?session_id=${session_id}&api_key=95c77b4ffbd4a5cc35c3b79d2b9aa4fb`,
         {
           media_type: "movie",
@@ -56,58 +44,40 @@ function IconFavorite(props: { id: Number }) {
       );
       setIsLiked(!isLiked);
     } catch (error) {
-      console.error("Error adding to favorite:", error);
+      console.error("Error updating favorite:", error);
     }
   };
+
   return (
-    <>
+    <Button
+      onClick={updateFavorite}
+      variant="outlined"
+      color={isLiked ? "secondary" : "primary"}
+      sx={{
+        textTransform: "none",
+        marginRight: "8px",
+        marginTop: "4px",
+        color: isLiked ? "red" : "#92929D", // Màu chữ
+      }}
+    >
       {isLiked ? (
-        <Box
-          onClick={updateFavorite}
-          sx={{
-            border: "1px solid #888",
-            color: "Red",
-            padding: "4px 8px",
-            borderRadius: "50%",
-            width: "10%",
-            marginRight: "8px",
-
-            marginTop: "10px",
-            transition: "border-color 0.3s",
-            "&:hover": {
-              borderColor: "#888",
-              backgroundColor: "#333",
-            },
-          }}
-        >
-          <HeartIcon />
-        </Box>
+        <>
+          In Favorites <HeartIcon sx={{ marginLeft: "4px", color: "red" }} />
+        </>
       ) : (
-        <Box
-          onClick={updateFavorite}
-          sx={{
-            border: "1px solid #888",
-            color: "#888",
-            padding: "4px 8px",
-            borderRadius: "50%",
-            width: "10%",
-            marginRight: "8px",
-
-            marginTop: "10px",
-            transition: "border-color 0.3s",
-            "&:hover": {
-              borderColor: "#888",
-              backgroundColor: "#333",
-            },
-          }}
-        >
-          <HeartIcon />
-        </Box>
+        <>
+          Add to Favorites <HeartIcon sx={{ marginLeft: "4px", color: "#92929D" }} />
+        </>
       )}
-    </>
+    </Button>
   );
 }
-function FavoriteIcon(props: { id: Number }) {
+
+interface FavoriteIconProps {
+  id: number;
+}
+
+function FavoriteIcon(props: FavoriteIconProps): JSX.Element {
   const session_id = getCookie("session_id");
   return <>{session_id ? <IconFavorite id={props.id} /> : <Box>Login</Box>}</>;
 }
