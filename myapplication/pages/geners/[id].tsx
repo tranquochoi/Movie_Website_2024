@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import axios from "axios";
 import { MovieList } from "../movie-detail/Models/Movies";
-import RenderMovie from "../home/listMenu/renderMovie";
 import { ListGenre } from "../movie-detail/Models/Geners";
 import NavGenres from "@/components/landing_page/NavGenres";
 import {
@@ -16,8 +15,6 @@ import {
 } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { NextPageWithLayout } from "../_app";
-import RenderMovie2 from "../home/listMenu/renderMovie2";
-import RenderMovie3 from "../home/listMenu/renderMovie3";
 import RenderMovie4 from "../home/listMenu/renderMovie4";
 
 const Categories: NextPageWithLayout = () => {
@@ -27,6 +24,9 @@ const Categories: NextPageWithLayout = () => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [movies, setMovies] = useState<MovieList | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [perPage, setPerPage] = useState(10);
+
+  const lastMovieRef = useRef<HTMLDivElement>(null);
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -36,36 +36,41 @@ const Categories: NextPageWithLayout = () => {
     setAnchorEl(null);
   };
 
+  const handleGenreSelect = (genreId: number) => {
+    setSelectedGenre(genreId);
+    handleMenuClose();
+  };
+
   const fetcher = (url: string) =>
     axios.get(url).then((response) => response.data);
 
+  const fetchMovies = async () => {
+    try {
+      const response = await axios.get(
+        `/movie/top_rated?page=${currentPage}&per_page=${perPage}`
+      );
+      const newMovies = response.data;
+
+      setMovies((prevMovies) => ({
+        page: newMovies.page,
+        results: prevMovies
+          ? [
+            ...prevMovies.results,
+            ...newMovies.results.filter(
+              (newMovie: { id: Int16Array }) =>
+                !prevMovies.results.some(
+                  (existingMovie) => existingMovie.id === newMovie.id
+                )
+            ),
+          ]
+          : newMovies.results,
+      }));
+    } catch (error) { }
+  };
+
   useEffect(() => {
-    const fetchMovies = async () => {
-      try {
-        const response = await axios.get(
-          `/movie/top_rated?page=${currentPage}`
-        );
-        const newMovies = response.data;
-
-        setMovies((prevMovies) => ({
-          page: newMovies.page,
-          results: prevMovies
-            ? [
-              ...prevMovies.results,
-              ...newMovies.results.filter(
-                (newMovie: { id: Int16Array }) =>
-                  !prevMovies.results.some(
-                    (existingMovie) => existingMovie.id === newMovie.id
-                  )
-              ),
-            ]
-            : newMovies.results,
-        }));
-      } catch (error) { }
-    };
-
     fetchMovies();
-  }, [currentPage]);
+  }, [currentPage, perPage]);
 
   const { data: gener } = useSWR<ListGenre>(
     "genre/movie/list?language=en&page=3",
@@ -84,7 +89,34 @@ const Categories: NextPageWithLayout = () => {
 
   const handleLoadMore = () => {
     setCurrentPage((prevPage) => prevPage + 1);
+    setPerPage(10); // Set lại số lượng phim muốn hiển thị mỗi lần khi ấn "Load More"
   };
+
+  useEffect(() => {
+    const options = {
+      root: null,
+      rootMargin: "0px",
+      threshold: 0.1, // Trigger when 10% of the target is visible
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        handleLoadMore();
+      }
+    }, options);
+
+    // Attach the observer to the last movie element
+    if (lastMovieRef.current) {
+      observer.observe(lastMovieRef.current);
+    }
+
+    // Clean up the observer when component unmounts
+    return () => {
+      if (lastMovieRef.current) {
+        observer.unobserve(lastMovieRef.current);
+      }
+    };
+  }, [lastMovieRef.current, handleLoadMore]);
 
   if (!movies) {
     return <CircularProgress />;
@@ -94,7 +126,12 @@ const Categories: NextPageWithLayout = () => {
 
   return (
     <>
-      <NavGenres />
+      <NavGenres
+        handleMenuOpen={handleMenuOpen}
+        gener={gener}
+        selectedGenre={selectedGenre}
+        handleGenreSelect={handleGenreSelect}
+      />
       <Box
         sx={{
           color: "#92929D",
@@ -104,20 +141,6 @@ const Categories: NextPageWithLayout = () => {
           paddingLeft: "12px",
         }}
       >
-        <Button
-          onClick={handleMenuOpen}
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            color: "white",
-            textTransform: "none",
-            fontSize: "18px",
-            fontFamily: "Arial, sans-serif",
-          }}
-        >
-          Genres <KeyboardArrowDownIcon />
-        </Button>
-
         <Popover
           open={Boolean(anchorEl)}
           anchorEl={anchorEl}
@@ -139,63 +162,62 @@ const Categories: NextPageWithLayout = () => {
               flexDirection: "row", // Sắp xếp các phần tử theo hàng ngang
               flexWrap: "wrap", // Cho phép các phần tử chuyển hàng khi không đủ chỗ
               justifyContent: "space-between", // Canh chỉnh các phần tử đều ra hai bên
-              padding: "16px",
+              padding: "34px",
             },
           }}
         >
           <Box sx={{ width: "calc(50% - 16px)" }}>
             {/* Hiển thị các thể loại trong cột 1 */}
-            {gener?.genres.slice(0, Math.ceil(gener.genres.length / 2)).map((genre) => (
-              <Box
-                key={genre.id.toString()}
-                sx={{
-                  border: "2px solid #888",
-                  padding: "4px 8px",
-                  borderRadius: "2px",
-                  marginBottom: "8px",
-                  backgroundColor:
-                    selectedGenre == genre.id ? "#0CC2FF95" : "transparent",
-                  color: selectedGenre == genre.id ? "white" : "#fff",
-                  "&:hover": {
-                    backgroundColor: "#333",
-                    cursor: "pointer",
-                  },
-                }}
-                onClick={() => {
-                  setSelectedGenre(genre.id);
-                  handleMenuClose();
-                }}
-              >
-                {genre.name}
-              </Box>
-            ))}
+            {gener?.genres
+              .slice(0, Math.ceil(gener.genres.length / 2))
+              .map((genre) => (
+                <Box
+                  key={genre.id.toString()}
+                  sx={{
+                    border: "2px solid #888",
+                    padding: "8px 12px",
+                    borderRadius: "2px",
+                    marginBottom: "8px",
+                    backgroundColor:
+                      selectedGenre == genre.id ? "#0CC2FF95" : "transparent",
+                    color: selectedGenre == genre.id ? "white" : "#fff",
+                    "&:hover": {
+                      backgroundColor: "#333",
+                      cursor: "pointer",
+                    },
+                  }}
+                  onClick={() => handleGenreSelect(genre.id)}
+                >
+                  <Box sx={{ marginRight: "24px" }}>{genre.name}</Box>
+
+                </Box>
+              ))}
           </Box>
           <Box sx={{ width: "calc(50% - 16px)" }}>
             {/* Hiển thị các thể loại trong cột 2 */}
-            {gener?.genres.slice(Math.ceil(gener.genres.length / 2)).map((genre) => (
-              <Box
-                key={genre.id.toString()}
-                sx={{
-                  border: "2px solid #888",
-                  padding: "4px 8px",
-                  borderRadius: "2px",
-                  marginBottom: "8px",
-                  backgroundColor:
-                    selectedGenre == genre.id ? "#0CC2FF95" : "transparent",
-                  color: selectedGenre == genre.id ? "white" : "#fff",
-                  "&:hover": {
-                    backgroundColor: "#333",
-                    cursor: "pointer",
-                  },
-                }}
-                onClick={() => {
-                  setSelectedGenre(genre.id);
-                  handleMenuClose();
-                }}
-              >
-                {genre.name}
-              </Box>
-            ))}
+            {gener?.genres
+              .slice(Math.ceil(gener.genres.length / 2))
+              .map((genre) => (
+                <Box
+                  key={genre.id.toString()}
+                  sx={{
+                    border: "2px solid #888",
+                    padding: "8px 12px",
+                    borderRadius: "2px",
+                    marginBottom: "8px",
+                    backgroundColor:
+                      selectedGenre == genre.id ? "#0CC2FF95" : "transparent",
+                    color: selectedGenre == genre.id ? "white" : "#fff",
+                    "&:hover": {
+                      backgroundColor: "#333",
+                      cursor: "pointer",
+                    },
+                  }}
+                  onClick={() => handleGenreSelect(genre.id)}
+                >
+                  <Box sx={{ marginRight: "24px" }}>{genre.name}</Box>
+                </Box>
+              ))}
           </Box>
         </Popover>
       </Box>
@@ -221,7 +243,14 @@ const Categories: NextPageWithLayout = () => {
         <Grid container spacing={1}>
           {movieGener?.map((movie, index) => (
             <Grid item xs={12} sm={4} md={4} key={index}>
-              <RenderMovie4 data={movie} />
+              {/* Assign the ref to the last movie element */}
+              {index === movieGener.length - 1 ? (
+                <div ref={lastMovieRef}>
+                  <RenderMovie4 data={movie} />
+                </div>
+              ) : (
+                <RenderMovie4 data={movie} />
+              )}
             </Grid>
           ))}
         </Grid>
@@ -230,7 +259,6 @@ const Categories: NextPageWithLayout = () => {
             onClick={handleLoadMore}
             style={{
               color: "white",
-              backgroundColor: "#00BFFF",
               padding: "8px 16px",
               margin: "32px",
               border: "none",
@@ -241,7 +269,7 @@ const Categories: NextPageWithLayout = () => {
               fontFamily: "Arial, sans-serif",
             }}
           >
-            Load More
+            Loading...
           </Button>
         )}
 
