@@ -32,7 +32,7 @@ function IconWatchList(props: { id: Number }) {
   const [isLiked, setIsLiked] = useState(false);
   const { data: movieWL, isLoading } = useSWR<MovieList>(
     session_id
-      ? `account/${user_id}/favorite/movies?language=en-US&page=1&session_id=${session_id}&sort_by=created_at.asc`
+      ? `account/${user_id}/watchlist/movies?language=en-US&page=1&session_id=${session_id}&sort_by=created_at.asc`
       : null,
     fetcher
   );
@@ -45,7 +45,7 @@ function IconWatchList(props: { id: Number }) {
   const updateFavorite = async () => {
     try {
       const response = await axios.post(
-        `https://api.themoviedb.org/3/account/${user_id}/favorite?session_id=${session_id}&api_key=95c77b4ffbd4a5cc35c3b79d2b9aa4fb`,
+        `https://api.themoviedb.org/3/account/${user_id}/watchlist?session_id=${session_id}&api_key=95c77b4ffbd4a5cc35c3b79d2b9aa4fb`,
         {
           media_type: "movie",
           media_id: props.id,

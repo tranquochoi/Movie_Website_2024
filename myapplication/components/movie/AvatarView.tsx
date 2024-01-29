@@ -13,6 +13,7 @@ import {
   List,
   ListItemButton,
   ListItemText,
+  Link,
 } from "@mui/material";
 import { RequestTokenResponse, User } from "@/pages/movie-detail/Models/Auth";
 import axios from "axios";
@@ -70,7 +71,15 @@ function LoggedInAvatar(props: { data: User }) {
             setOpenDialog(true);
           }}
         >
-          Log out{getCookie("session_id")}
+          Log out
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            handleMenuClose();
+            setOpenDialog(true);
+          }}
+        >
+          <Link href={"/movie-favorite"}>My favorite movies</Link>
         </MenuItem>
       </Menu>
       <Dialog open={openDialog} onClose={handleDialogClose}>

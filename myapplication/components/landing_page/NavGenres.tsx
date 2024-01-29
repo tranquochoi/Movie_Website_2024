@@ -55,7 +55,7 @@ export default function NavGenres() {
           <ArrowBackIosNewOutlinedIcon />
         </IconButton>
         <Box component="div" sx={{ flexGrow: 1, marginRight: "20px" }}>
-          Genres
+          The movie
         </Box>
       </Toolbar>
     </AppBar>
