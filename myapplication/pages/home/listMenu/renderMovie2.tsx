@@ -5,6 +5,7 @@ import { ListGenre } from "@/pages/movie-detail/Models/Geners";
 import axios from "axios";
 import useSWR from "swr";
 import ViewIcon from "@mui/icons-material/Visibility";
+import FavoriteIcon from "@/components/movie/FavoriteIcon";
 function RenderMovie2(props: { data: Movie }) {
   const fetcher = (url: string) =>
     axios.get(url).then((response) => response.data);
@@ -71,12 +72,10 @@ function RenderMovie2(props: { data: Movie }) {
             position: "relative",
             overflow: "hidden",
             borderRadius: "0px",
-            borderBottomLeftRadius: "16px", // Góc bo tròn cho góc đáy bên trái
+            borderBottomLeftRadius: "16px",
             borderBottomRightRadius: "16px",
-            // Góc bo tròn cho hình nền
           }}
         >
-          {/* Pseudo-element để làm mờ ảnh nền */}
           <Box
             sx={{
               position: "absolute",
@@ -87,7 +86,7 @@ function RenderMovie2(props: { data: Movie }) {
               backgroundImage: `url(https://image.tmdb.org/t/p/w500${props.data.backdrop_path})`,
               backgroundSize: "cover",
               backgroundPosition: "center",
-              filter: "blur(40px)", // Điều chỉnh độ mờ tại đây
+              filter: "blur(40px)",
               zIndex: 0,
             }}
           />
@@ -124,7 +123,7 @@ function RenderMovie2(props: { data: Movie }) {
               {props.data.release_date}
             </Typography>
             {gener?.genres
-              .filter((gen) => props.data.genre_ids.includes(parseInt(gen.id)))
+              .filter((gen) => props.data.genre_ids.includes(gen.id))
               .slice(0, 2)
               .map((gen) => (
                 <Typography
@@ -139,6 +138,7 @@ function RenderMovie2(props: { data: Movie }) {
                 </Typography>
               ))}
           </Box>
+          <FavoriteIcon id={props.data.id} />
         </Box>
       </Link>
     </Box>

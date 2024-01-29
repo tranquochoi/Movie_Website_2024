@@ -7,24 +7,17 @@ import Person from "@/components/Person";
 import Watch from "@/components/watchList";
 
 const User: NextPageWithLayout = () => {
-
-
-    return (
-        <>
-            <NavUser />
-            <Person />
-            <Watch />
-
-        </>
-    );
+  return (
+    <>
+      <NavUser />
+      <Person />
+      <Watch />
+    </>
+  );
 };
 
 User.getLayout = function getLayout(page: ReactElement) {
-    return (
-        <Layout>
-            {page}
-        </Layout>
-    );
+  return <Layout>{page}</Layout>;
 };
 
 export default User;

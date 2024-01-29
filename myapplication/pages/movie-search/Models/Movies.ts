@@ -8,7 +8,7 @@ export interface MovieList {
 }
 
 export interface Genre {
-  id: string;
+  id: number;
   name: string;
 }
 
@@ -35,5 +35,4 @@ export interface Movie {
   credits: CreditSection;
   reviews: ReviewSection;
   vote_count: number;
-  popularity: number;
 }

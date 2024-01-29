@@ -186,18 +186,7 @@ const PeopleDetail: NextPageWithLayout = () => {
         >
           Biography
         </Box>
-        <Box
-          sx={{
-            color: "#333",
-            fontSize: "16px",
-            lineHeight: "1.5",
-            textAlign: "justify",
-            maxHeight: showFullBiography ? "none" : "100px",
-            overflow: "hidden",
-            wordWrap: "break-word",
-            overflowWrap: "break-word",
-          }}
-        >
+        <Box >
 
           {showFullBiography ? data.biography : shortBiography}
 
@@ -205,7 +194,7 @@ const PeopleDetail: NextPageWithLayout = () => {
             <Link
               onClick={() => setShowFullBiography(!showFullBiography)}
               sx={{
-                textDecoration: "underline",
+                textDecoration: "none",
                 color: "#0084ff",
                 cursor: "pointer",
                 display: "block",
