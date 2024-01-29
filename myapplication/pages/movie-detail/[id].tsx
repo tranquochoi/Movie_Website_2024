@@ -19,6 +19,7 @@ import config from "@/config";
 import { NextPageWithLayout } from "../_app";
 import { TabDetail } from "@/components/landing_page/TabDetail";
 import FavoriteIcon from "@/components/movie/FavoriteIcon";
+import AddRatingIcon from "@/components/movie/AddRating";
 
 const Detail: NextPageWithLayout = () => {
   const router = useRouter();
@@ -178,6 +179,7 @@ const Detail: NextPageWithLayout = () => {
             >
               Length: {data.runtime} Minutes
             </Box>
+            <AddRatingIcon id={data.id}/>
           </Stack>
 
           <Stack direction="row" alignItems="left" spacing={1}>
