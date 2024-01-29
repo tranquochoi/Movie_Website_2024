@@ -18,6 +18,8 @@ import { Movie } from "./Models/Movies";
 import config from "@/config";
 import { NextPageWithLayout } from "../_app";
 import { TabDetail } from "@/components/landing_page/TabDetail";
+import FavoriteIcon from "@/components/movie/FavoriteIcon";
+import AddRatingIcon from "@/components/movie/AddRating";
 
 const Detail: NextPageWithLayout = () => {
   const router = useRouter();
@@ -64,8 +66,10 @@ const Detail: NextPageWithLayout = () => {
       }
     }
 
+
     return stars;
   };
+
 
   const backdropImage = data.backdrop_path
     ? `${config.image_path}${data.backdrop_path}`
@@ -130,6 +134,11 @@ const Detail: NextPageWithLayout = () => {
             </Box>
           </Box>
 
+          <Box sx={{
+            pl: "20px",
+          }}>
+            <FavoriteIcon id={data.id} />
+          </Box>
           <Box
             sx={{
               color: "white",
@@ -143,10 +152,21 @@ const Detail: NextPageWithLayout = () => {
           <Stack direction="column" alignItems="left" spacing={1}>
             <Box
               sx={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
                 color: "#92929D",
                 fontSize: "1rem",
                 pl: "26px",
-                pt: "10px",
+              }}
+            >
+            </Box>
+
+            <Box
+              sx={{
+                color: "#92929D",
+                fontSize: "1rem",
+                pl: "26px",
               }}
             >
               Date release: {formattedReleaseDate}
@@ -161,6 +181,7 @@ const Detail: NextPageWithLayout = () => {
             >
               Length: {data.runtime} Minutes
             </Box>
+            <AddRatingIcon id={data.id}/>
           </Stack>
 
           <Stack direction="row" alignItems="left" spacing={1}>
@@ -211,6 +232,7 @@ const Detail: NextPageWithLayout = () => {
       </Stack>
 
       <Box sx={{ height: "28px" }}></Box>
+
       <TabDetail />
     </>
   );

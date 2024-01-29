@@ -5,7 +5,6 @@ import { ListGenre } from "@/pages/movie-detail/Models/Geners";
 import axios from "axios";
 import useSWR from "swr";
 import ViewIcon from "@mui/icons-material/Visibility";
-import FavoriteIcon from "@/components/movie/FavoriteIcon";
 function RenderMovie2(props: { data: Movie }) {
   const fetcher = (url: string) =>
     axios.get(url).then((response) => response.data);
@@ -72,10 +71,12 @@ function RenderMovie2(props: { data: Movie }) {
             position: "relative",
             overflow: "hidden",
             borderRadius: "0px",
-            borderBottomLeftRadius: "16px",
+            borderBottomLeftRadius: "16px", // Góc bo tròn cho góc đáy bên trái
             borderBottomRightRadius: "16px",
+            // Góc bo tròn cho hình nền
           }}
         >
+          {/* Pseudo-element để làm mờ ảnh nền */}
           <Box
             sx={{
               position: "absolute",
@@ -86,7 +87,7 @@ function RenderMovie2(props: { data: Movie }) {
               backgroundImage: `url(https://image.tmdb.org/t/p/w500${props.data.backdrop_path})`,
               backgroundSize: "cover",
               backgroundPosition: "center",
-              filter: "blur(40px)",
+              filter: "blur(40px)", // Điều chỉnh độ mờ tại đây
               zIndex: 0,
             }}
           />
@@ -138,7 +139,6 @@ function RenderMovie2(props: { data: Movie }) {
                 </Typography>
               ))}
           </Box>
-          <FavoriteIcon id={props.data.id} />
         </Box>
       </Link>
     </Box>

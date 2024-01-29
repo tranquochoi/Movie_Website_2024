@@ -5,6 +5,9 @@ import { NextPageWithLayout } from "@/pages/_app";
 import RenderMovie2 from "./renderMovie2";
 import { Movie } from "@/pages/movie-detail/Models/Movies";
 import RenderMovie3 from "./renderMovie3";
+import RenderMovie4 from "./renderMovie4";
+import RenderMovieIndex from "./renderMovieIndex";
+import RenderMovie from "./renderMovie";
 
 const TopRated: NextPageWithLayout = () => {
   const fetcher = (url: string) =>
@@ -15,14 +18,9 @@ const TopRated: NextPageWithLayout = () => {
   if (error) return <Typography>Error loading data</Typography>;
 
   const renderMovies = (start: number, end: number) => (
-    <Box
-      sx={{
-
-
-      }}
-    >
+    <Box sx={{}}>
       {data.results.slice(start, end).map((movie: Movie) => (
-        <RenderMovie3 data={movie} />
+        <RenderMovie4 data={movie} />
       ))}
     </Box>
   );
@@ -31,7 +29,7 @@ const TopRated: NextPageWithLayout = () => {
     <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
       {renderMovies(0, 20)}
 
-      <Box sx={{ height: "32px" }} />
+      <Box sx={{ height: "10px" }} />
     </Box>
   );
 };
