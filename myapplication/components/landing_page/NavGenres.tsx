@@ -54,12 +54,9 @@ export default function NavGenres() {
         >
           <ArrowBackIosNewOutlinedIcon />
         </IconButton>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+        <Box component="div" sx={{ flexGrow: 1, marginRight: "20px" }}>
           Genres
-        </Typography>
-        <IconButton edge="end" color="inherit" aria-label="info">
-          <BookmarkIcon />
-        </IconButton>
+        </Box>
       </Toolbar>
     </AppBar>
   );
