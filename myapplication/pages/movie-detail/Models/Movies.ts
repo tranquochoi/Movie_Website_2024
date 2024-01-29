@@ -25,7 +25,7 @@ export interface ListImage {
 }
 
 export interface Movie {
-  id: Int16Array;
+  id: Number;
   title: string;
   poster_path: string;
   backdrop_path: string;

@@ -5,6 +5,7 @@ import { ListGenre } from "@/pages/movie-detail/Models/Geners";
 import axios from "axios";
 import useSWR from "swr";
 import ViewIcon from "@mui/icons-material/Visibility";
+import FavoriteIcon from "@/components/movie/FavoriteIcon";
 function RenderMovie2(props: { data: Movie }) {
   const fetcher = (url: string) =>
     axios.get(url).then((response) => response.data);
@@ -137,6 +138,7 @@ function RenderMovie2(props: { data: Movie }) {
                 </Typography>
               ))}
           </Box>
+          <FavoriteIcon id={props.data.id} />
         </Box>
       </Link>
     </Box>
