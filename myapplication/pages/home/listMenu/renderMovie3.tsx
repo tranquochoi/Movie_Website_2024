@@ -1,11 +1,10 @@
 import { Movie } from "@/pages/movie-detail/Models/Movies";
-import { Box, Grid, Link, Typography, Paper } from "@mui/material";
+import { Box, Card, CardContent, Link, Typography } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
 import { ListGenre } from "@/pages/movie-detail/Models/Geners";
 import axios from "axios";
 import useSWR from "swr";
 import StarOutlineIcon from "@mui/icons-material/StarOutline";
-
 const renderStarIcons = (voteAverage: number) => {
   const stars = [];
   const rating = voteAverage * 0.5;
@@ -23,19 +22,6 @@ const renderStarIcons = (voteAverage: number) => {
 
   return stars;
 };
-
-function truncateText(text: string, maxLength: number) {
-  if (text.length > maxLength) {
-    return text.slice(0, maxLength) + "...";
-  }
-  return text;
-}
-
-const formatDate = (dateString: string) => {
-  const options = { year: 'numeric', month: 'long', day: 'numeric' };
-  return new Date(dateString).toLocaleDateString('en-US', options);
-};
-
 function RenderMovie3(props: { data: Movie }) {
   const fetcher = (url: string) =>
     axios.get(url).then((response) => response.data);
@@ -45,112 +31,121 @@ function RenderMovie3(props: { data: Movie }) {
     fetcher
   );
 
-  const formattedReleaseDate = formatDate(props.data.release_date);
-
   return (
-    <Grid container spacing={4}>
+    <Box
+      key={props.data.id.toString()}
+      sx={{
+        flex: "0 0 auto",
+        marginRight: 0.5,
+        width: "212px",
+        position: "relative",
+      }}
+    >
+      <Link href={`/movie-detail/${props.data.id}`} underline="none">
+        <Card
+          elevation={3}
+          sx={{
+            height: "256px",
+            width: "100%",
+            boxShadow: "none",
+            position: "relative",
+            borderTopLeftRadius: "16px",
+            borderTopRightRadius: "16px",
+          }}
+        >
+          <Box
+            component="img"
+            sx={{
+              height: "100%",
+              width: "100%",
+            }}
+            src={`https://image.tmdb.org/t/p/w500${props.data.poster_path}`}
+            alt={props.data.title}
+          />
 
-      <Grid item xs={12}>
-        <Box sx={{ paddingBottom: "10px" }} />
-        <Paper elevation={4} sx={{
-          borderRadius: "16px", backgroundColor: "rgba(0, 0, 0, 0.1)",
-        }}>
+          <CardContent />
+        </Card>
 
-          <Link href={`/movie-detail/${props.data.id}`} underline="none">
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-              }}
-            >
-              <Box
-                component="img"
-                sx={{
-                  width: "100px",
-                  height: "auto",
-                  objectFit: "cover",
-                  borderTopLeftRadius: "16px",
-                  borderBottomLeftRadius: "16px",
-                  marginRight: 4,
+        <Box
+          sx={{
+            position: "relative",
+            overflow: "hidden",
+            borderRadius: "0px",
+            borderBottomLeftRadius: "16px", // Góc bo tròn cho góc đáy bên trái
+            borderBottomRightRadius: "16px",
+            // Góc bo tròn cho hình nền
+          }}
+        >
+          {/* Pseudo-element để làm mờ ảnh nền */}
 
-                }}
-                src={`https://image.tmdb.org/t/p/w500${props.data.poster_path}`}
-                alt={props.data.title}
-              />
+          <Box
+            sx={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              backgroundImage: `url(https://image.tmdb.org/t/p/w500${props.data.backdrop_path})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              filter: "blur(40px)", // Điều chỉnh độ mờ tại đây
+              zIndex: 0,
+            }}
+          ></Box>
+          {renderStarIcons(props.data.vote_average)}
+          <Typography
+            sx={{
+              overflow: "hidden",
+              display: "-webkit-box",
+              WebkitBoxOrient: "vertical",
+              WebkitLineClamp: 1,
+              marginBottom: "0px",
+              marginLeft: "0px",
+              marginTop: "8px",
+              color: "#FFF",
+              fontSize: "15px",
+              textAlign: "left",
+              fontWeight: "bold",
+              pl: "8px",
+            }}
+          >
+            {props.data.title}
+          </Typography>
 
-              <Box sx={{ textAlign: "left", flex: 1 }}>
+          <Typography
+            sx={{
+              marginLeft: "0px",
+              overflow: "hidden",
+              textAlign: "left",
+              color: "#888",
+              fontSize: "12px",
+              width: "100%",
+              pl: "8px",
+            }}
+          >
+            {props.data.release_date}
+          </Typography>
+
+          <Box sx={{ display: "flex", flexDirection: "row", pl: "8px" }}>
+            {gener?.genres
+              .filter((gen) => props.data.genre_ids.includes(gen.id))
+              .slice(0, 2)
+              .map((gen) => (
                 <Typography
+                  key={gen.id}
                   sx={{
-                    color: "#FFF",
+                    color: "#888",
+                    marginRight: "12px",
                     fontSize: "15px",
-                    fontWeight: "bold",
-                    marginBottom: "5px",
                   }}
                 >
-                  {truncateText(props.data.title, 24)}
+                  {gen.name}
                 </Typography>
-
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "5px",
-                    marginBottom: "5px",
-                  }}
-                >
-                  {renderStarIcons(props.data.vote_average)}
-                </Box>
-                <Box>
-                  <Typography
-                    sx={{ color: "#888", fontSize: "14px", }}
-                  >
-                    {formattedReleaseDate}
-                  </Typography>
-                </Box>
-
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "row",
-                    flexWrap: "wrap",
-                    gap: "5px",
-
-                  }}
-                >
-                  {gener?.genres
-                    .filter((gen) =>
-                      props.data.genre_ids.includes(parseInt(gen.id))
-                    )
-                    .slice(0, 2)
-                    .map((gen) => (
-                      <Typography
-                        key={gen.id}
-                        sx={{
-                          fontSize: "12px",
-                          border: "2px solid #888",
-                          color: "white ",
-                          padding: "2px 8px",
-                          borderRadius: "4px",
-                          marginRight: "4px",
-                          marginTop: "10px",
-                          transition: "border-color 0.3s",
-                          '&:hover': {
-                            borderColor: "#fff",
-                            backgroundColor: "#333",
-                          },
-                        }}
-                      >
-                        {gen.name}
-                      </Typography>
-                    ))}
-                </Box>
-              </Box>
-            </Box>
-          </Link>
-        </Paper>
-      </Grid>
-    </Grid >
+              ))}
+          </Box>
+        </Box>
+      </Link>
+    </Box>
   );
 }
 
