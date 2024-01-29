@@ -18,7 +18,6 @@ import { Movie } from "./Models/Movies";
 import config from "@/config";
 import { NextPageWithLayout } from "../_app";
 import { TabDetail } from "@/components/landing_page/TabDetail";
-import FavoriteIcon from "@/components/movie/FavoriteIcon";
 
 const Detail: NextPageWithLayout = () => {
   const router = useRouter();
@@ -207,7 +206,6 @@ const Detail: NextPageWithLayout = () => {
                 </Link>
               ))}
             </Box>
-            <FavoriteIcon id={data.id} />
           </Stack>
         </Stack>
       </Stack>
