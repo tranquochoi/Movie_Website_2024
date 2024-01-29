@@ -1,63 +1,159 @@
 import * as React from "react";
+import { useRouter } from "next/router";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-import AccountCircle from "@mui/icons-material/AccountCircle";
-import Switch from "@mui/material/Switch";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormGroup from "@mui/material/FormGroup";
-import MenuItem from "@mui/material/MenuItem";
-import Menu from "@mui/material/Menu";
 import ArrowBackIosNewOutlinedIcon from "@mui/icons-material/ArrowBackIosNewOutlined";
-import TurnedInOutlinedIcon from "@mui/icons-material/TurnedInOutlined";
-import BookmarkIcon from "@mui/icons-material/Bookmark";
+import Button from "@mui/material/Button";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import Popover from "@mui/material/Popover";
+import { ListGenre } from "@/pages/movie-detail/Models/Geners";
 
-import { useRouter } from "next/router";
+interface NavGenresProps {
+  selectedGenre: number;
+  handleMenuOpen: (event: React.MouseEvent<HTMLElement>) => void;
+  handleMenuClose: () => void;
+  gener: ListGenre | undefined;
+  setSelectedGenre: React.Dispatch<React.SetStateAction<number>>;
+  anchorEl: HTMLElement | null; // Define anchorEl prop
+}
 
-export default function NavGenres() {
+const NavGenres: React.FC<NavGenresProps> = ({
+  selectedGenre,
+  handleMenuOpen,
+  handleMenuClose,
+  gener,
+  setSelectedGenre,
+  anchorEl, // Accept anchorEl prop
+}) => {
   const router = useRouter();
-  const [auth, setAuth] = React.useState(true);
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setAuth(event.target.checked);
-  };
-
-  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  const maxPopoverHeight = 10 * 30;
 
   return (
-    <AppBar
-      position="static"
-      sx={{
-        backgroundColor: "#242A32",
-        marginTop: "10px",
-        marginBottom: "10px",
-        boxShadow: "none",
-        textAlign: "center",
-      }}
-    >
-      <Toolbar>
-        <IconButton
-          edge="start"
-          color="inherit"
-          aria-label="back"
-          onClick={() => router.back()}
-        >
-          <ArrowBackIosNewOutlinedIcon />
-        </IconButton>
-        <Box component="div" sx={{ flexGrow: 1, marginRight: "20px" }}>
-          Genres
-        </Box>
-      </Toolbar>
-    </AppBar>
+    <Box sx={{ position: "sticky", top: -2, zIndex: 1000 }}>
+      <AppBar
+        position="static"
+        id="appbar"
+        sx={{
+          backgroundColor: "#242A32",
+        }}
+      >
+        <Toolbar>
+          <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="back"
+            onClick={() => router.back()}
+          >
+            <ArrowBackIosNewOutlinedIcon />
+          </IconButton>
+
+          <Button
+            onClick={handleMenuOpen}
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              padding: "20px",
+              color: "white",
+              textTransform: "none",
+              fontSize: "18px",
+              fontFamily: "Arial, sans-serif",
+            }}
+          >
+            Genres <KeyboardArrowDownIcon />
+          </Button>
+
+          {/* Genre selection popover */}
+          <Popover
+            open={Boolean(anchorEl)}
+            anchorEl={anchorEl}
+            onClose={handleMenuClose}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "left",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "left",
+            }}
+            PaperProps={{
+              style: {
+                backgroundColor: "#242A32",
+                maxHeight: `${maxPopoverHeight}px`,
+                overflowY: "auto",
+                display: "flex",
+                flexDirection: "row",
+                flexWrap: "wrap",
+                justifyContent: "space-between",
+                padding: "32px",
+              },
+            }}
+          >
+            {/* Genre list */}
+            <Box sx={{ width: "calc(50% - 16px)" }}>
+              {gener?.genres
+                .slice(0, Math.ceil(gener.genres.length / 2))
+                .map((genre) => (
+                  <Box
+                    key={genre.id.toString()}
+                    sx={{
+                      border: "2px solid #888",
+                      padding: "4px 8px",
+                      borderRadius: "2px",
+                      marginBottom: "8px",
+                      backgroundColor:
+                        selectedGenre == genre.id ? "#0CC2FF95" : "transparent",
+                      color: selectedGenre == genre.id ? "white" : "#fff",
+                      "&:hover": {
+                        backgroundColor: "#333",
+                        cursor: "pointer",
+                      },
+                    }}
+                    onClick={() => {
+                      setSelectedGenre(genre.id);
+                      handleMenuClose();
+                    }}
+                  >
+                    {genre.name}
+                  </Box>
+                ))}
+            </Box>
+            <Box sx={{ width: "calc(50% - 16px)" }}>
+              {gener?.genres
+                .slice(Math.ceil(gener.genres.length / 2))
+                .map((genre) => (
+                  <Box
+                    key={genre.id.toString()}
+                    sx={{
+                      border: "2px solid #888",
+                      padding: "4px 8px",
+                      borderRadius: "2px",
+                      marginBottom: "8px",
+                      backgroundColor:
+                        selectedGenre == genre.id ? "#0CC2FF95" : "transparent",
+                      color: selectedGenre == genre.id ? "white" : "#fff",
+                      "&:hover": {
+                        backgroundColor: "#333",
+                        cursor: "pointer",
+                      },
+                    }}
+                    onClick={() => {
+                      setSelectedGenre(genre.id);
+                      handleMenuClose();
+                    }}
+                  >
+                    {genre.name}
+                  </Box>
+                ))}
+            </Box>
+          </Popover>
+          {/* End of genre selection popover */}
+        </Toolbar>
+      </AppBar>
+    </Box>
   );
-}
+};
+
+export default NavGenres;

@@ -20,16 +20,16 @@ import RenderMovie2 from "../home/listMenu/renderMovie2";
 import RenderMovie3 from "../home/listMenu/renderMovie3";
 import RenderMovie4 from "../home/listMenu/renderMovie4";
 import { getCookie } from "cookies-next";
-import NavWatchlist from "@/components/landing_page/NavWatchlist";
+import NavProfile from "@/components/landing_page/NavProfile";
+import NavUser from "@/components/landing_page/navUser";
 
-const User: NextPageWithLayout = () => {
+const FavoriteMovie: NextPageWithLayout = () => {
   const router = useRouter();
   const { id } = router.query;
-  const [selectedGenre, setSelectedGenre] = useState(0);
 
   const [movies, setMovies] = useState<MovieList | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [currentOption, setCurrentOption] = useState("watchlist");
+
   const session_id = getCookie("session_id");
   const user_id = getCookie("user_id");
 
@@ -40,7 +40,7 @@ const User: NextPageWithLayout = () => {
     const fetchMovies = async () => {
       try {
         const response = await axios.get(
-          `account/${user_id}/watchlist/movies?language=en-US&page=1&session_id=${session_id}&sort_by=created_at.asc`
+          `account/${user_id}/favorite/movies?language=en-US&page=1&session_id=${session_id}&sort_by=created_at.asc`
         );
         const newMovies = response.data;
 
@@ -76,7 +76,7 @@ const User: NextPageWithLayout = () => {
 
   return (
     <>
-      <NavWatchlist/>
+      <NavUser/>
       <Box
         sx={{
           color: "#92929D",
@@ -87,7 +87,7 @@ const User: NextPageWithLayout = () => {
         }}
       ></Box>
 
-      
+     
       <Box sx={{ padding: "16px", textAlign: "center" }}>
         <Grid container spacing={1}>
           {movies.results?.map((movie) => (
@@ -133,4 +133,4 @@ const User: NextPageWithLayout = () => {
   );
 };
 
-export default User;
+export default FavoriteMovie;
