@@ -3,8 +3,8 @@ import { Box, Card, CardContent, Link, Typography } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
 
 const formatDate = (dateString: string) => {
-  const options = { year: 'numeric', month: 'long', day: 'numeric' };
-  return new Date(dateString).toLocaleDateString('en-US', options);
+  const options = { year: "numeric", month: "long", day: "numeric" };
+  return new Date(dateString).toLocaleDateString("en-US", options);
 };
 
 function RenderMovie(props: { data: Movie }) {
@@ -106,7 +106,7 @@ function RenderMovie(props: { data: Movie }) {
                 color: "#888",
                 fontSize: "12px",
                 pl: "5px",
-                pb: "5px"
+                pb: "5px",
               }}
             >
               {formattedReleaseDate}
@@ -115,7 +115,6 @@ function RenderMovie(props: { data: Movie }) {
         </Link>
       </Box>
     </>
-
   );
 }
 

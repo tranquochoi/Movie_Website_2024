@@ -18,6 +18,7 @@ import { Movie } from "./Models/Movies";
 import config from "@/config";
 import { NextPageWithLayout } from "../_app";
 import { TabDetail } from "@/components/landing_page/TabDetail";
+import FavoriteIcon from "@/components/movie/FavoriteIcon";
 
 const Detail: NextPageWithLayout = () => {
   const router = useRouter();
@@ -43,8 +44,8 @@ const Detail: NextPageWithLayout = () => {
   }
 
   const formatDate = (dateString: string) => {
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    return new Date(dateString).toLocaleDateString('en-US', options);
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    return new Date(dateString).toLocaleDateString("en-US", options);
   };
 
   const formattedReleaseDate = formatDate(data.release_date);
@@ -58,7 +59,9 @@ const Detail: NextPageWithLayout = () => {
       if (i <= roundedRating) {
         stars.push(<StarIcon key={i} sx={{ fontSize: 24, color: "orange" }} />);
       } else {
-        stars.push(<StarOutlineIcon key={i} sx={{ fontSize: 24, color: "orange" }} />);
+        stars.push(
+          <StarOutlineIcon key={i} sx={{ fontSize: 24, color: "orange" }} />
+        );
       }
     }
 
@@ -112,16 +115,18 @@ const Detail: NextPageWithLayout = () => {
               alt={data.title}
             />
 
-            <Box sx={{
-              height: "100px",
-              color: "white",
-              width: "95%",
-              pl: "138px",
-              pt: "10px",
-              fontSize: "1.1rem",
-              fontWeight: "600",
-              flexDirection: "column",
-            }}>
+            <Box
+              sx={{
+                height: "100px",
+                color: "white",
+                width: "95%",
+                pl: "138px",
+                pt: "10px",
+                fontSize: "1.1rem",
+                fontWeight: "600",
+                flexDirection: "column",
+              }}
+            >
               {data.title}
             </Box>
           </Box>
@@ -133,7 +138,8 @@ const Detail: NextPageWithLayout = () => {
               pt: "10px",
             }}
           >
-            {renderStarIcons(data.vote_average)}  From {data.vote_count.toLocaleString()} users
+            {renderStarIcons(data.vote_average)} From{" "}
+            {data.vote_count.toLocaleString()} users
           </Box>
           <Stack direction="column" alignItems="left" spacing={1}>
             <Box
@@ -165,7 +171,6 @@ const Detail: NextPageWithLayout = () => {
                 fontSize: "1rem",
                 pl: "26px",
                 pt: "10px",
-
               }}
             >
               Genres:
@@ -176,7 +181,6 @@ const Detail: NextPageWithLayout = () => {
                 display: "flex",
                 flexDirection: "row",
                 flexWrap: "wrap",
-
               }}
             >
               {data.genres.map((genre) => (
@@ -192,7 +196,7 @@ const Detail: NextPageWithLayout = () => {
                       marginRight: "8px",
                       marginTop: "10px",
                       transition: "border-color 0.3s",
-                      '&:hover': {
+                      "&:hover": {
                         borderColor: "#fff",
                         backgroundColor: "#333",
                       },
@@ -203,13 +207,13 @@ const Detail: NextPageWithLayout = () => {
                 </Link>
               ))}
             </Box>
+            <FavoriteIcon id={data.id} />
           </Stack>
         </Stack>
       </Stack>
 
       <Box sx={{ height: "28px" }}></Box>
       <TabDetail />
-
     </>
   );
 };
