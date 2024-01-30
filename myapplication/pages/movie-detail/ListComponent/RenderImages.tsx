@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { ListImage, Movie } from "../Models/Movies";
+import { ListImage, Movie } from "../../../components/Models/Movies";
 import useSWR from "swr";
 import { useState, useRef } from "react";
 
@@ -65,7 +65,6 @@ const RenderImages: React.FC<RenderImagesProps> = (props) => {
           margin: "-14px",
           paddingLeft: "18px",
           paddingRight: "16px",
-
         }}
       >
         {youtubeVideoUrl && (
@@ -75,11 +74,9 @@ const RenderImages: React.FC<RenderImagesProps> = (props) => {
               marginRight: 0.5,
               width: "100%",
               height: "200px",
-
             }}
           >
             <iframe
-
               style={{
                 borderRadius: "16px",
               }}
@@ -115,7 +112,6 @@ const RenderImages: React.FC<RenderImagesProps> = (props) => {
                 width: "auto",
                 objectFit: "cover",
                 borderRadius: "16px",
-
               }}
               src={`https://image.tmdb.org/t/p/w500${ig.file_path}`}
               alt={"None"}

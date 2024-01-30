@@ -2,8 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import axios from "axios";
-import { MovieList } from "../movie-detail/Models/Movies";
-import { ListGenre } from "../movie-detail/Models/Geners";
+import { MovieList } from "../../components/Models/Movies";
+import { ListGenre } from "../../components/Models/Geners";
 import NavGenres from "@/components/landing_page/NavGenres";
 import {
   Box,

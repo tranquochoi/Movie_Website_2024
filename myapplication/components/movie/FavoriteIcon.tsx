@@ -3,7 +3,7 @@ import { Button, CircularProgress, Box } from "@mui/material";
 import axios from "axios";
 import useSWR from "swr";
 import { getCookie } from "cookies-next";
-import { MovieList } from "@/pages/movie-detail/Models/Movies";
+import { MovieList } from "@/components/Models/Movies";
 import HeartIcon from "@mui/icons-material/Favorite";
 
 interface IconFavoriteProps {
@@ -67,7 +67,7 @@ function IconFavorite(props: IconFavoriteProps): JSX.Element {
         </>
       ) : (
         <>
-          <HeartIcon sx={{ color: "#92929D", marginRight: "4px" }} />  Favorites
+          <HeartIcon sx={{ color: "#92929D", marginRight: "4px" }} /> Favorites
         </>
       )}
     </Button>

@@ -15,7 +15,7 @@ import {
   ListItemText,
   Link,
 } from "@mui/material";
-import { RequestTokenResponse, User } from "@/pages/movie-detail/Models/Auth";
+import { RequestTokenResponse, User } from "@/components/Models/Auth";
 import axios from "axios";
 import useSWR from "swr";
 import { getCookie, setCookie, deleteCookie } from "cookies-next";
@@ -52,10 +52,14 @@ function LoggedInAvatar(props: { data: User }) {
     <>
       <Button onClick={handleMenuClick} variant="text" sx={{ color: "white" }}>
         <Stack direction="row" gap={1}>
-          <Box sx={{
-            textTransform: "none",
-            fontFamily: "Arial, sans-serif",
-          }}>{data?.username}</Box>
+          <Box
+            sx={{
+              textTransform: "none",
+              fontFamily: "Arial, sans-serif",
+            }}
+          >
+            {data?.username}
+          </Box>
           {avatar_path ? <Box component="img" src={avatar_path} /> : <Person />}
         </Stack>
       </Button>
@@ -68,28 +72,36 @@ function LoggedInAvatar(props: { data: User }) {
           "aria-labelledby": "basic-button",
         }}
       >
-        <MenuItem
-          onClick={() => {
-          }}
-        >
-
-          <Link sx={{ color: 'black', textDecoration: 'none', fontFamily: "Arial, sans-serif", }} href={"/movie-favorite"}>My favorite</Link>
+        <MenuItem onClick={() => {}}>
+          <Link
+            sx={{
+              color: "black",
+              textDecoration: "none",
+              fontFamily: "Arial, sans-serif",
+            }}
+            href={"/movie-favorite"}
+          >
+            My favorite
+          </Link>
         </MenuItem>
         <MenuItem
           onClick={() => {
             handleMenuClose();
             setOpenDialog(true);
           }}
-          sx={{ fontFamily: "Arial, sans-serif", }}
+          sx={{ fontFamily: "Arial, sans-serif" }}
         >
           Log out
         </MenuItem>
       </Menu>
       <Dialog open={openDialog} onClose={handleDialogClose}>
-        <DialogTitle sx={{ fontFamily: "Arial, sans-serif", }}> Are you sure?</DialogTitle>
-        <List >
-          <ListItem disableGutters  >
-            <ListItemButton autoFocus onClick={() => handleDialogClose("YES")} >
+        <DialogTitle sx={{ fontFamily: "Arial, sans-serif" }}>
+          {" "}
+          Are you sure?
+        </DialogTitle>
+        <List>
+          <ListItem disableGutters>
+            <ListItemButton autoFocus onClick={() => handleDialogClose("YES")}>
               <ListItemText primary="Yes" />
             </ListItemButton>
           </ListItem>

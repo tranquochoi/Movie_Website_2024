@@ -1,4 +1,4 @@
-import { Movie } from "@/pages/movie-detail/Models/Movies";
+import { Movie } from "@/components/Models/Movies";
 import {
   Box,
   Card,

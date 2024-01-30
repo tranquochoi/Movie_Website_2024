@@ -7,7 +7,7 @@ export interface People {
   images: PeopleImage;
   known_for_department: string;
   place_of_birth: string;
-  popularity: Int16Array;
+  popularity: number;
   biography: string;
   external_ids: Info;
   movie_credits: MovieCredits;

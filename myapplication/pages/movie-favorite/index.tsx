@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import axios from "axios";
-import { MovieList } from "../movie-detail/Models/Movies";
+import { MovieList } from "../../components/Models/Movies";
 import RenderMovie from "../home/listMenu/renderMovie";
-import { ListGenre } from "../movie-detail/Models/Geners";
+import { ListGenre } from "../../components/Models/Geners";
 import NavGenres from "@/components/landing_page/NavGenres";
 import {
   Box,
@@ -76,7 +76,7 @@ const FavoriteMovie: NextPageWithLayout = () => {
 
   return (
     <>
-      <NavUser/>
+      <NavUser />
       <Box
         sx={{
           color: "#92929D",
@@ -87,7 +87,6 @@ const FavoriteMovie: NextPageWithLayout = () => {
         }}
       ></Box>
 
-     
       <Box sx={{ padding: "16px", textAlign: "center" }}>
         <Grid container spacing={1}>
           {movies.results?.map((movie) => (

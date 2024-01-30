@@ -1,7 +1,7 @@
-import { Movie } from "@/pages/movie-detail/Models/Movies";
+import { Movie } from "@/components/Models/Movies";
 import { Box, Card, CardContent, Link, Typography } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
-import { ListGenre } from "@/pages/movie-detail/Models/Geners";
+import { ListGenre } from "@/components/Models/Geners";
 import axios from "axios";
 import useSWR from "swr";
 import StarOutlineIcon from "@mui/icons-material/StarOutline";

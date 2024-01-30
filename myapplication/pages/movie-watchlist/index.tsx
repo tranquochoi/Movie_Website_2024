@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import axios from "axios";
-import { MovieList } from "../movie-detail/Models/Movies";
+import { MovieList } from "../../components/Models/Movies";
 import RenderMovie from "../home/listMenu/renderMovie";
-import { ListGenre } from "../movie-detail/Models/Geners";
+import { ListGenre } from "../../components/Models/Geners";
 import NavGenres from "@/components/landing_page/NavGenres";
 import {
   Box,
@@ -50,17 +50,17 @@ const User: NextPageWithLayout = () => {
           page: newMovies.page,
           results: prevMovies
             ? [
-              ...prevMovies.results,
-              ...newMovies.results.filter(
-                (newMovie: { id: Int16Array }) =>
-                  !prevMovies.results.some(
-                    (existingMovie) => existingMovie.id === newMovie.id
-                  )
-              ),
-            ]
+                ...prevMovies.results,
+                ...newMovies.results.filter(
+                  (newMovie: { id: Int16Array }) =>
+                    !prevMovies.results.some(
+                      (existingMovie) => existingMovie.id === newMovie.id
+                    )
+                ),
+              ]
             : newMovies.results,
         }));
-      } catch (error) { }
+      } catch (error) {}
     };
 
     fetchMovies();
@@ -88,7 +88,6 @@ const User: NextPageWithLayout = () => {
           paddingLeft: "12px",
         }}
       ></Box>
-
 
       <Box sx={{ padding: "16px", textAlign: "center" }}>
         <Grid container spacing={1}>
@@ -135,7 +134,6 @@ const User: NextPageWithLayout = () => {
     </>
   );
 };
-
 
 User.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;

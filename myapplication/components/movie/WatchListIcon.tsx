@@ -15,12 +15,12 @@ import {
   ListItemText,
   CircularProgress,
 } from "@mui/material";
-import { RequestTokenResponse, User } from "@/pages/movie-detail/Models/Auth";
+import { RequestTokenResponse, User } from "@/components/Models/Auth";
 import axios from "axios";
 import useSWR from "swr";
 import { getCookie, setCookie, deleteCookie } from "cookies-next";
 import { useRouter } from "next/router";
-import { MovieList } from "@/pages/movie-detail/Models/Movies";
+import { MovieList } from "@/components/Models/Movies";
 import { initialize } from "next/dist/server/lib/render-server";
 import { createInitialRouterState } from "next/dist/client/components/router-reducer/create-initial-router-state";
 import BookmarkIcon from "@mui/icons-material/Bookmark";

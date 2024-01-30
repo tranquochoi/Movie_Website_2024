@@ -16,7 +16,7 @@ import {
   CircularProgress,
   Rating,
 } from "@mui/material";
-import { RequestTokenResponse, User } from "@/pages/movie-detail/Models/Auth";
+import { RequestTokenResponse, User } from "@/components/Models/Auth";
 import axios from "axios";
 import useSWR from "swr";
 import { getCookie, setCookie, deleteCookie } from "cookies-next";
@@ -25,7 +25,7 @@ import { useRouter } from "next/router";
 import { initialize } from "next/dist/server/lib/render-server";
 import { createInitialRouterState } from "next/dist/client/components/router-reducer/create-initial-router-state";
 import IconStar from "@mui/icons-material/Star";
-import { MovieList } from "@/pages/movie-detail/Models/MovieRating";
+import { MovieList } from "@/components/Models/MovieRating";
 function IconAddRating(props: { id: Number }) {
   const [isBoxVisible, setIsBoxVisible] = useState(false);
   const session_id = getCookie("session_id");

@@ -18,7 +18,7 @@ import SearchBar from "@/components/landing_page/search";
 import HomeMenu from "@/components/landing_page/homeLayoutMenu";
 import StarIcon from "@mui/icons-material/Star";
 import Person from "@/components/Person";
-import { MovieList } from "../movie-detail/Models/Movies";
+import { MovieList } from "../../components/Models/Movies";
 import RenderMovieIndex from "./listMenu/renderMovieIndex";
 
 const HomeDetail: NextPageWithLayout = () => {

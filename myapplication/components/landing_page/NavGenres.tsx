@@ -8,7 +8,7 @@ import ArrowBackIosNewOutlinedIcon from "@mui/icons-material/ArrowBackIosNewOutl
 import Button from "@mui/material/Button";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import Popover from "@mui/material/Popover";
-import { ListGenre } from "@/pages/movie-detail/Models/Geners";
+import { ListGenre } from "@/components/Models/Geners";
 
 interface NavGenresProps {
   selectedGenre: number;

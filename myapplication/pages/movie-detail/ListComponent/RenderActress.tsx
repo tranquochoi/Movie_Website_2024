@@ -1,5 +1,5 @@
 import { Box, Grid, Link, Typography, Paper } from "@mui/material";
-import { Cast } from "../Models/Credits";
+import { Cast } from "../../../components/Models/Credits";
 
 function RenderActress(props: { data: Cast[] }) {
   return (
@@ -12,7 +12,6 @@ function RenderActress(props: { data: Cast[] }) {
               padding: 2,
               backgroundColor: "rgba(0, 0, 0, 0.1)",
               borderRadius: "16px",
-
             }}
           >
             <Link href={`/people-detail/${credit.id}`} underline="none">
@@ -41,12 +40,17 @@ function RenderActress(props: { data: Cast[] }) {
                 />
 
                 <Box sx={{ textAlign: "left" }}>
-                  <Box sx={{ fontWeight: "bold", marginBottom: 1, fontSize: "18px", color: "white" }}>
+                  <Box
+                    sx={{
+                      fontWeight: "bold",
+                      marginBottom: 1,
+                      fontSize: "18px",
+                      color: "white",
+                    }}
+                  >
                     {credit.original_name}
                   </Box>
-                  < Box sx={{ color: "#888" }}>
-                    as {credit.character}
-                  </Box>
+                  <Box sx={{ color: "#888" }}>as {credit.character}</Box>
                 </Box>
               </Box>
             </Link>

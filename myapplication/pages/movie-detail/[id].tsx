@@ -14,7 +14,7 @@ import {
   Typography,
 } from "@mui/material";
 import { format } from "date-fns";
-import { Movie } from "./Models/Movies";
+import { Movie } from "../../components/Models/Movies";
 import config from "@/config";
 import { NextPageWithLayout } from "../_app";
 import { TabDetail } from "@/components/landing_page/TabDetail";

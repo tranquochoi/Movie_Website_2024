@@ -1,8 +1,8 @@
 import React from "react";
-import { Movie } from "@/pages/movie-detail/Models/Movies";
+import { Movie } from "@/components/Models/Movies";
 import { Box, Grid, Link, Typography, Paper } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
-import { ListGenre, Genre } from "@/pages/movie-detail/Models/Geners"; // Import Genre type
+import { ListGenre, Genre } from "@/components/Models/Geners"; // Import Genre type
 import axios from "axios";
 import useSWR from "swr";
 import StarOutlineIcon from "@mui/icons-material/StarOutline";
@@ -140,8 +140,6 @@ function RenderMovie4(props: { data: Movie }) {
                     {formattedReleaseDate}
                   </Typography>
                 </Box>
-
-
               </Box>
             </Box>
           </Link>

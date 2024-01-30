@@ -1,7 +1,4 @@
-import {
-  CreateSessionInput,
-  SessionResponse,
-} from "@/pages/movie-detail/Models/Auth";
+import { CreateSessionInput, SessionResponse } from "@/components/Models/Auth";
 import { Box, Typography } from "@mui/material";
 import axios from "axios";
 import { setCookie } from "cookies-next";

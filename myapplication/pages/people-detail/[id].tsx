@@ -12,12 +12,12 @@ import {
 } from "@mui/material";
 import config from "@/config";
 import { NextPageWithLayout } from "../_app";
-import { People } from "../movie-detail/Models/People";
+import { People } from "../../components/Models/People";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import JobOnIcon from "@mui/icons-material/RecentActors";
 import NavProfile from "@/components/landing_page/NavProfile";
 import { Instagram } from "@mui/icons-material";
-import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 
 const PeopleDetail: NextPageWithLayout = () => {
   const router = useRouter();
@@ -45,13 +45,16 @@ const PeopleDetail: NextPageWithLayout = () => {
   }
 
   const sortedListFilm = data.movie_credits.cast.sort(
-    (a, b) => parseInt(b.release_date.slice(0, 4)) - parseInt(a.release_date.slice(0, 4))
+    (a, b) =>
+      parseInt(b.release_date.slice(0, 4)) -
+      parseInt(a.release_date.slice(0, 4))
   );
 
   const shortBiography = data.biography.split(" ").slice(0, 15).join(" ");
-  const profileImagePath = data.images.profiles && data.images.profiles.length > 0
-    ? config.image_path + data.images.profiles[0].file_path
-    : '/default.jpg';
+  const profileImagePath =
+    data.images.profiles && data.images.profiles.length > 0
+      ? config.image_path + data.images.profiles[0].file_path
+      : "/default.jpg";
 
   const handleInstagramClick = () => {
     const instagramId = data.external_ids.instagram_id;
@@ -64,7 +67,9 @@ const PeopleDetail: NextPageWithLayout = () => {
   return (
     <>
       <NavProfile />
-      <Paper sx={{ backgroundColor: "rgba(255, 255, 255, 0.9)", padding: "18px" }}>
+      <Paper
+        sx={{ backgroundColor: "rgba(255, 255, 255, 0.9)", padding: "18px" }}
+      >
         <Stack spacing={3} sx={{ alignItems: "center" }}>
           <Box
             component="img"
@@ -111,10 +116,14 @@ const PeopleDetail: NextPageWithLayout = () => {
             {data.known_for_department}
           </Box>
 
-
-
           <Stack direction="row" spacing={8}>
-            <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
               <PeopleAltIcon sx={{ color: "#000", fontSize: "20px" }} />
               <Box
                 sx={{
@@ -127,7 +136,15 @@ const PeopleDetail: NextPageWithLayout = () => {
                 {data.popularity}
               </Box>
             </Box>
-            <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", cursor: "pointer" }} onClick={handleInstagramClick}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                cursor: "pointer",
+              }}
+              onClick={handleInstagramClick}
+            >
               <Instagram sx={{ color: "#000", fontSize: "20px" }} />
               <Box
                 sx={{
@@ -145,7 +162,6 @@ const PeopleDetail: NextPageWithLayout = () => {
                 {data.external_ids.instagram_id}
               </Box>
             </Box>
-
           </Stack>
         </Stack>
         <Box
@@ -158,7 +174,7 @@ const PeopleDetail: NextPageWithLayout = () => {
         >
           Gender
         </Box>
-        <Box>{data.gender === 1 ? 'Female' : 'Male'}</Box>
+        <Box>{data.gender === 1 ? "Female" : "Male"}</Box>
         <Box
           sx={{
             fontWeight: 700,
@@ -168,7 +184,9 @@ const PeopleDetail: NextPageWithLayout = () => {
         >
           Age
         </Box>
-        <Box>{new Date().getFullYear() - new Date(data.birthday).getFullYear()} </Box>
+        <Box>
+          {new Date().getFullYear() - new Date(data.birthday).getFullYear()}{" "}
+        </Box>
         <Box
           sx={{
             fontWeight: 700,
@@ -181,13 +199,16 @@ const PeopleDetail: NextPageWithLayout = () => {
         <Box>{data.birthday}</Box>
         <Box
           sx={{
-            fontWeight: 700, color: "black", marginTop: "20px", marginBottom: "10px", fontSize: "20px",
+            fontWeight: 700,
+            color: "black",
+            marginTop: "20px",
+            marginBottom: "10px",
+            fontSize: "20px",
           }}
         >
           Biography
         </Box>
-        <Box >
-
+        <Box>
           {showFullBiography ? data.biography : shortBiography}
 
           {data.biography.split(" ").length > 20 && (
@@ -209,7 +230,7 @@ const PeopleDetail: NextPageWithLayout = () => {
             sx={{
               fontWeight: 700,
               color: "black",
-              fontSize: "20px"
+              fontSize: "20px",
             }}
           >
             Acting
@@ -220,13 +241,8 @@ const PeopleDetail: NextPageWithLayout = () => {
             }}
           >
             {sortedListFilm.map((ig, index) => (
-              <Box
-                key={index}
-              >
-                <Link
-                  href={`/movie-detail/${ig.id}`}
-                  underline="none"
-                >
+              <Box key={index}>
+                <Link href={`/movie-detail/${ig.id}`} underline="none">
                   <Stack direction="row" spacing={1}>
                     <Box
                       sx={{
@@ -237,7 +253,9 @@ const PeopleDetail: NextPageWithLayout = () => {
                         whiteSpace: "nowrap",
                       }}
                     >
-                      {ig.release_date ? ig.release_date.slice(0, 4) : "........."}
+                      {ig.release_date
+                        ? ig.release_date.slice(0, 4)
+                        : "........."}
                     </Box>
 
                     <Box
@@ -262,7 +280,7 @@ const PeopleDetail: NextPageWithLayout = () => {
             ))}
           </Box>
         </Box>
-      </Paper >
+      </Paper>
     </>
   );
 };

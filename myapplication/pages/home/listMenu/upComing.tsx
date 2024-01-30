@@ -3,7 +3,7 @@ import useSWR from "swr";
 import axios from "axios";
 import { NextPageWithLayout } from "@/pages/_app";
 import RenderMovie from "./renderMovie";
-import { Movie } from "@/pages/movie-detail/Models/Movies";
+import { Movie } from "@/components/Models/Movies";
 import RenderMovie2 from "./renderMovie2";
 
 const UpComing: NextPageWithLayout = () => {

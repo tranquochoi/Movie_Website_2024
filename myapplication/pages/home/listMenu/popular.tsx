@@ -3,7 +3,8 @@ import useSWR from "swr";
 import axios from "axios";
 import { NextPageWithLayout } from "@/pages/_app";
 import RenderMovie2 from "./renderMovie2";
-import { Movie } from "@/pages/movie-detail/Models/Movies";
+import { Movie } from "@/components/Models/Movies";
+import RenderMovie3 from "./renderMovie3";
 
 const Popular: NextPageWithLayout = () => {
   const fetcher = (url: string) =>
@@ -26,7 +27,7 @@ const Popular: NextPageWithLayout = () => {
       }}
     >
       {data.results.slice(start, end).map((movie: Movie) => (
-        <RenderMovie2 data={movie} />
+        <RenderMovie3 data={movie} />
       ))}
     </Box>
   );

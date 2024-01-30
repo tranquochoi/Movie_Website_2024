@@ -3,7 +3,7 @@ import useSWR from "swr";
 import axios from "axios";
 import { NextPageWithLayout } from "@/pages/_app";
 import RenderMovie from "./renderMovie";
-import { Movie } from "@/pages/movie-detail/Models/Movies";
+import { Movie } from "@/components/Models/Movies";
 
 const Now: NextPageWithLayout = () => {
   const fetcher = (url: string) =>
@@ -31,7 +31,6 @@ const Now: NextPageWithLayout = () => {
         ))}
       </Box>
     </>
-
   );
 
   return (
