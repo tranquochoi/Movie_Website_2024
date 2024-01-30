@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, CircularProgress, Grid } from "@mui/material";
 import MovieCard from "./MovieCard";
-import { Movie } from "./Models/Movies";
+import { Movie } from "@/components/Models/Movies";
 
 interface MainContentProps {
   displayedMovies: Movie[];
