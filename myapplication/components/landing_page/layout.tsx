@@ -57,7 +57,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <Stack direction="row" gap={3}>
                 {menu.map((item, index) => (
                   <Link href={item.url} key={item.url}>
-                    <div
+                    <Box
                       onClick={() => setCurrentMenu(index)}
                       style={{ textAlign: "center", cursor: "pointer" }}
                     >
@@ -80,7 +80,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                       >
                         {item.title}
                       </Typography>
-                    </div>
+                    </Box>
                   </Link>
                 ))}
               </Stack>
