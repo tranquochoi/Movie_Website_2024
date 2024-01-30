@@ -52,8 +52,11 @@ function LoggedInAvatar(props: { data: User }) {
     <>
       <Button onClick={handleMenuClick} variant="text" sx={{ color: "white" }}>
         <Stack direction="row" gap={1}>
+          <Box sx={{
+            textTransform: "none",
+            fontFamily: "Arial, sans-serif",
+          }}>{data?.username}</Box>
           {avatar_path ? <Box component="img" src={avatar_path} /> : <Person />}
-          <Typography>{data?.username}</Typography>
         </Stack>
       </Button>
       <Menu
@@ -67,32 +70,32 @@ function LoggedInAvatar(props: { data: User }) {
       >
         <MenuItem
           onClick={() => {
-            handleMenuClose();
-            setOpenDialog(true);
           }}
         >
-          Log out
+
+          <Link sx={{ color: 'black', textDecoration: 'none', fontFamily: "Arial, sans-serif", }} href={"/movie-favorite"}>My favorite</Link>
         </MenuItem>
         <MenuItem
           onClick={() => {
             handleMenuClose();
             setOpenDialog(true);
           }}
+          sx={{ fontFamily: "Arial, sans-serif", }}
         >
-          <Link href={"/movie-favorite"}>My favorite movies</Link>
+          Log out
         </MenuItem>
       </Menu>
       <Dialog open={openDialog} onClose={handleDialogClose}>
-        <DialogTitle>Set backup account</DialogTitle>
-        <List>
-          <ListItem disableGutters>
-            <ListItemButton autoFocus onClick={() => handleDialogClose("YES")}>
-              <ListItemText primary="YES" />
+        <DialogTitle sx={{ fontFamily: "Arial, sans-serif", }}> Are you sure?</DialogTitle>
+        <List >
+          <ListItem disableGutters  >
+            <ListItemButton autoFocus onClick={() => handleDialogClose("YES")} >
+              <ListItemText primary="Yes" />
             </ListItemButton>
           </ListItem>
           <ListItem disableGutters>
             <ListItemButton autoFocus onClick={() => handleDialogClose("NO")}>
-              <ListItemText primary="NO" />
+              <ListItemText primary="No" />
             </ListItemButton>
           </ListItem>
         </List>

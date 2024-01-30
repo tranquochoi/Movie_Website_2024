@@ -20,6 +20,9 @@ import RenderMovie2 from "../home/listMenu/renderMovie2";
 import RenderMovie3 from "../home/listMenu/renderMovie3";
 import RenderMovie4 from "../home/listMenu/renderMovie4";
 import { getCookie } from "cookies-next";
+import NavWatchlist from "@/components/landing_page/NavWatchlist";
+import Layout from "@/components/landing_page/layout";
+import HomeMenu from "@/components/landing_page/homeLayoutMenu";
 
 const User: NextPageWithLayout = () => {
   const router = useRouter();
@@ -47,17 +50,17 @@ const User: NextPageWithLayout = () => {
           page: newMovies.page,
           results: prevMovies
             ? [
-                ...prevMovies.results,
-                ...newMovies.results.filter(
-                  (newMovie: { id: Int16Array }) =>
-                    !prevMovies.results.some(
-                      (existingMovie) => existingMovie.id === newMovie.id
-                    )
-                ),
-              ]
+              ...prevMovies.results,
+              ...newMovies.results.filter(
+                (newMovie: { id: Int16Array }) =>
+                  !prevMovies.results.some(
+                    (existingMovie) => existingMovie.id === newMovie.id
+                  )
+              ),
+            ]
             : newMovies.results,
         }));
-      } catch (error) {}
+      } catch (error) { }
     };
 
     fetchMovies();
@@ -75,7 +78,7 @@ const User: NextPageWithLayout = () => {
 
   return (
     <>
-      <NavGenres />
+      <NavWatchlist />
       <Box
         sx={{
           color: "#92929D",
@@ -86,19 +89,7 @@ const User: NextPageWithLayout = () => {
         }}
       ></Box>
 
-      <Box
-        sx={{
-          color: "white",
-          fontSize: "18px",
-          textAlign: "center",
-          padding: "10px",
-          backgroundColor: "#161722",
-          borderRadius: "0px",
-          fontWeight: "bold",
-        }}
-      >
-        My {currentOption}
-      </Box>
+
       <Box sx={{ padding: "16px", textAlign: "center" }}>
         <Grid container spacing={1}>
           {movies.results?.map((movie) => (
@@ -140,8 +131,14 @@ const User: NextPageWithLayout = () => {
             </Box>
           ))}
       </Box>
+      <Box sx={{ height: "64px" }} />
     </>
   );
+};
+
+
+User.getLayout = function getLayout(page) {
+  return <Layout>{page}</Layout>;
 };
 
 export default User;

@@ -19,6 +19,7 @@ import config from "@/config";
 import { NextPageWithLayout } from "../_app";
 import { TabDetail } from "@/components/landing_page/TabDetail";
 import AddRatingIcon from "@/components/movie/AddRating";
+import FavoriteIcon from "@/components/movie/FavoriteIcon";
 
 const Detail: NextPageWithLayout = () => {
   const router = useRouter();
@@ -133,6 +134,13 @@ const Detail: NextPageWithLayout = () => {
 
           <Box
             sx={{
+              pl: "20px",
+            }}
+          >
+            <FavoriteIcon id={data.id} />
+          </Box>
+          <Box
+            sx={{
               color: "white",
               pl: "20px",
               pt: "10px",
@@ -144,10 +152,20 @@ const Detail: NextPageWithLayout = () => {
           <Stack direction="column" alignItems="left" spacing={1}>
             <Box
               sx={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
                 color: "#92929D",
                 fontSize: "1rem",
                 pl: "26px",
-                pt: "10px",
+              }}
+            ></Box>
+
+            <Box
+              sx={{
+                color: "#92929D",
+                fontSize: "1rem",
+                pl: "26px",
               }}
             >
               Date release: {formattedReleaseDate}
@@ -210,8 +228,9 @@ const Detail: NextPageWithLayout = () => {
           </Stack>
         </Stack>
       </Stack>
-      <AddRatingIcon id={data.id} />
+
       <Box sx={{ height: "28px" }}></Box>
+
       <TabDetail />
     </>
   );

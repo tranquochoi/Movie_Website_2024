@@ -11,10 +11,28 @@ import StarIcon from "@mui/icons-material/Star";
 import EventIcon from "@mui/icons-material/Event";
 import { Movie } from "./Models/Movies";
 import { format } from "date-fns";
+import StarOutlineIcon from "@mui/icons-material/StarOutline";
 
 interface MovieCardProps {
   movie: Movie;
 }
+const renderStarIcons = (voteAverage: number) => {
+  const stars = [];
+  const rating = voteAverage * 0.5;
+  const roundedRating = Math.round(rating);
+
+  for (let i = 1; i <= 5; i++) {
+    if (i <= roundedRating) {
+      stars.push(<StarIcon key={i} sx={{ fontSize: 24, color: "orange" }} />);
+    } else {
+      stars.push(
+        <StarOutlineIcon key={i} sx={{ fontSize: 24, color: "orange" }} />
+      );
+    }
+  }
+
+  return stars;
+};
 const truncateText = (
   text: string,
   maxLines: number,
@@ -58,7 +76,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => (
           image={
             movie.poster_path
               ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-              : "/filmdefault.jpg"
+              : "/nomovie.jpg"
           }
           alt={movie.title}
           sx={{
@@ -111,16 +129,13 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => (
             sx={{
               display: "flex",
               alignItems: "center",
+              marginTop: "8px",
               position: "relative",
               zIndex: 1,
             }}
           >
-            <StarIcon
-              sx={{ fontSize: 20, color: "orange", marginRight: "4px" }}
-            />
-            <Typography>{(movie.vote_average * 0.5).toFixed(1)}</Typography>
+            {renderStarIcons(movie.vote_average)}
           </Box>
-
           <Box
             sx={{
               display: "flex",

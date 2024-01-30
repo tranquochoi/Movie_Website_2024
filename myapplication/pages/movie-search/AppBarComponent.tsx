@@ -1,5 +1,5 @@
 import React from "react";
-import { AppBar, Toolbar, IconButton, Typography } from "@mui/material";
+import { AppBar, Toolbar, IconButton, Typography, Box } from "@mui/material";
 import ArrowBackIosNewOutlinedIcon from "@mui/icons-material/ArrowBackIosNewOutlined";
 import { Info } from "@mui/icons-material";
 
@@ -29,17 +29,9 @@ const AppBarComponent: React.FC<AppBarComponentProps> = ({
       >
         <ArrowBackIosNewOutlinedIcon />
       </IconButton>
-      <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+      <Box component="div" sx={{ flexGrow: 1, paddingRight: "25px" }}>
         Search
-      </Typography>
-      <IconButton
-        edge="end"
-        color="inherit"
-        aria-label="info"
-        onClick={onInfoClick}
-      >
-        <Info />
-      </IconButton>
+      </Box>
     </Toolbar>
   </AppBar>
 );

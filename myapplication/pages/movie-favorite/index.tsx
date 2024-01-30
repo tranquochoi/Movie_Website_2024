@@ -20,6 +20,8 @@ import RenderMovie2 from "../home/listMenu/renderMovie2";
 import RenderMovie3 from "../home/listMenu/renderMovie3";
 import RenderMovie4 from "../home/listMenu/renderMovie4";
 import { getCookie } from "cookies-next";
+import NavProfile from "@/components/landing_page/NavProfile";
+import NavUser from "@/components/landing_page/navUser";
 
 const FavoriteMovie: NextPageWithLayout = () => {
   const router = useRouter();
@@ -74,7 +76,7 @@ const FavoriteMovie: NextPageWithLayout = () => {
 
   return (
     <>
-      <NavGenres />
+      <NavUser/>
       <Box
         sx={{
           color: "#92929D",
@@ -85,19 +87,7 @@ const FavoriteMovie: NextPageWithLayout = () => {
         }}
       ></Box>
 
-      <Box
-        sx={{
-          color: "white",
-          fontSize: "18px",
-          textAlign: "center",
-          padding: "10px",
-          backgroundColor: "#161722",
-          borderRadius: "0px",
-          fontWeight: "bold",
-        }}
-      >
-        My favorite movie
-      </Box>
+     
       <Box sx={{ padding: "16px", textAlign: "center" }}>
         <Grid container spacing={1}>
           {movies.results?.map((movie) => (
