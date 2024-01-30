@@ -56,19 +56,17 @@ function IconFavorite(props: IconFavoriteProps): JSX.Element {
       sx={{
         fontFamily: "Arial, sans-serif",
         textTransform: "none",
-        color: isLiked ? "red" : "#92929D",
-        padding: "12px",
+        color: isLiked ? "white" : "#888",
+        padding: "8px",
         width: "8rem",
       }}
     >
       {isLiked ? (
         <>
-          <HeartIcon sx={{ color: "red", marginRight: "4px" }} /> Favorites
+          <HeartIcon sx={{ color: "#a82424", marginRight: "4px" }} /> Favorites
         </>
       ) : (
-        <>
-          <HeartIcon sx={{ color: "#92929D", marginRight: "4px" }} /> Favorites
-        </>
+        <>Add Favorites</>
       )}
     </Button>
   );
