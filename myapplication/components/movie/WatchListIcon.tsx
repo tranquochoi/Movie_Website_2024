@@ -42,14 +42,14 @@ function IconWatchList(props: { id: Number }) {
       setIsLiked(liked !== undefined);
     }
   }, [movieWL, props.id]);
-  const updateFavorite = async () => {
+  const updateWatchList = async () => {
     try {
       const response = await axios.post(
         `https://api.themoviedb.org/3/account/${user_id}/watchlist?session_id=${session_id}&api_key=95c77b4ffbd4a5cc35c3b79d2b9aa4fb`,
         {
           media_type: "movie",
           media_id: props.id,
-          favorite: !isLiked,
+          watchlist: !isLiked,
         }
       );
       setIsLiked(!isLiked);
@@ -61,42 +61,18 @@ function IconWatchList(props: { id: Number }) {
     <>
       {isLiked ? (
         <Box
-          onClick={updateFavorite}
+          onClick={updateWatchList}
           sx={{
-            border: "1px solid #888",
             color: "YELLOW",
-            padding: "4px 8px",
-            borderRadius: "50%",
-            width: "10%",
-            marginRight: "8px",
-
-            marginTop: "10px",
-            transition: "border-color 0.3s",
-            "&:hover": {
-              borderColor: "#888",
-              backgroundColor: "#333",
-            },
           }}
         >
           <BookmarkIcon />
         </Box>
       ) : (
         <Box
-          onClick={updateFavorite}
+          onClick={updateWatchList}
           sx={{
-            border: "1px solid #888",
-            color: "#888",
-            padding: "4px 8px",
-            borderRadius: "50%",
-            width: "10%",
-            marginRight: "8px",
-
-            marginTop: "10px",
-            transition: "border-color 0.3s",
-            "&:hover": {
-              borderColor: "#888",
-              backgroundColor: "#333",
-            },
+            color: "#FFF",
           }}
         >
           <BookmarkIcon />
@@ -107,7 +83,7 @@ function IconWatchList(props: { id: Number }) {
 }
 function WatchListIcon(props: { id: Number }) {
   const session_id = getCookie("session_id");
-  return <>{session_id ? <IconWatchList id={props.id} /> : <Box>Login</Box>}</>;
+  return <>{session_id ? <IconWatchList id={props.id} /> : null}</>;
 }
 
 export default WatchListIcon;

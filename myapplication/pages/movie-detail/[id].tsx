@@ -18,6 +18,7 @@ import { Movie } from "./Models/Movies";
 import config from "@/config";
 import { NextPageWithLayout } from "../_app";
 import { TabDetail } from "@/components/landing_page/TabDetail";
+import AddRatingIcon from "@/components/movie/AddRating";
 
 const Detail: NextPageWithLayout = () => {
   const router = useRouter();
@@ -209,7 +210,7 @@ const Detail: NextPageWithLayout = () => {
           </Stack>
         </Stack>
       </Stack>
-
+      <AddRatingIcon id={data.id} />
       <Box sx={{ height: "28px" }}></Box>
       <TabDetail />
     </>
