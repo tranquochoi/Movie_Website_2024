@@ -18,7 +18,7 @@ import config from "@/config";
 import StarIcon from "@mui/icons-material/Star";
 import StarOutlineIcon from "@mui/icons-material/StarOutline";
 import { CircularProgress } from "@mui/material";
-import RenderMovieRelate from "@/components/landing_page/RenderMovieRelate";
+import RenderMovieRelate from "@/pages/home/listMenu/RenderMovieRelate";
 function RenderAboutMV(props: { data: Number }) {
   const { data, isLoading, error } = useSWR<Movie>(
     `/movie/${props.data}?language=en-US&append_to_response=videos,credits,reviews`

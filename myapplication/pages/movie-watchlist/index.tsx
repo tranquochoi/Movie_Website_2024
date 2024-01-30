@@ -52,7 +52,7 @@ const User: NextPageWithLayout = () => {
             ? [
                 ...prevMovies.results,
                 ...newMovies.results.filter(
-                  (newMovie: { id: Int16Array }) =>
+                  (newMovie: { id: Number }) =>
                     !prevMovies.results.some(
                       (existingMovie) => existingMovie.id === newMovie.id
                     )

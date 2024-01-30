@@ -50,7 +50,7 @@ const FavoriteMovie: NextPageWithLayout = () => {
             ? [
                 ...prevMovies.results,
                 ...newMovies.results.filter(
-                  (newMovie: { id: Int16Array }) =>
+                  (newMovie: { id: Number }) =>
                     !prevMovies.results.some(
                       (existingMovie) => existingMovie.id === newMovie.id
                     )
@@ -69,7 +69,11 @@ const FavoriteMovie: NextPageWithLayout = () => {
   };
 
   if (!movies) {
-    return <CircularProgress />;
+    return (
+      <Typography fontSize={"250px"} textAlign={"center"}>
+        <CircularProgress />
+      </Typography>
+    );
   }
 
   const maxPopoverHeight = 10 * 20;

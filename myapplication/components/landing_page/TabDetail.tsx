@@ -18,7 +18,7 @@ import config from "@/config";
 import StarIcon from "@mui/icons-material/Star";
 import StarOutlineIcon from "@mui/icons-material/StarOutline";
 import { CircularProgress } from "@mui/material";
-import RenderMovieRelate from "./RenderMovieRelate";
+import RenderMovieRelate from "../../pages/home/listMenu/RenderMovieRelate";
 import RenderAboutMV from "@/pages/movie-detail/ListComponent/RenderAboutMV";
 
 interface TabPanelProps {
