@@ -50,7 +50,7 @@ function IconAddRating(props: { id: Number }) {
   const handleRateMovie = async (value: number) => {
     try {
       const response = await axios.post(
-        `https://api.themoviedb.org/3/movie/${props.id}/rating?api_key=95c77b4ffbd4a5cc35c3b79d2b9aa4fb`,
+        `https://api.themoviedb.org/3/movie/${props.id}/rating?session_id=${session_id}`,
         { value }
       );
 
