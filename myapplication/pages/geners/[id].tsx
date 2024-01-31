@@ -47,7 +47,7 @@ const Categories: NextPageWithLayout = () => {
   const fetchMovies = async () => {
     try {
       const response = await axios.get(
-        `/movie/top_rated?page=${currentPage}&per_page=${perPage}`
+        `/movie/popular?page=${currentPage}&per_page=${perPage}`
       );
       const newMovies = response.data;
 
@@ -77,6 +77,9 @@ const Categories: NextPageWithLayout = () => {
     fetcher
   );
 
+  const allGenre = { id: 0, name: "All" };
+  const genresWithAll = gener?.genres ? [allGenre, ...gener.genres] : [];
+
   const movieGener = movies?.results
     ?.filter((movie) =>
       movie.genre_ids.includes(
@@ -89,14 +92,14 @@ const Categories: NextPageWithLayout = () => {
 
   const handleLoadMore = () => {
     setCurrentPage((prevPage) => prevPage + 1);
-    setPerPage(10); // Set lại số lượng phim muốn hiển thị mỗi lần khi ấn "Load More"
+    setPerPage(10);
   };
 
   useEffect(() => {
     const options = {
       root: null,
       rootMargin: "0px",
-      threshold: 0.1, // Trigger when 10% of the target is visible
+      threshold: 0.1,
     };
 
     const observer = new IntersectionObserver((entries) => {
@@ -105,12 +108,10 @@ const Categories: NextPageWithLayout = () => {
       }
     }, options);
 
-    // Attach the observer to the last movie element
     if (lastMovieRef.current) {
       observer.observe(lastMovieRef.current);
     }
 
-    // Clean up the observer when component unmounts
     return () => {
       if (lastMovieRef.current) {
         observer.unobserve(lastMovieRef.current);
@@ -118,7 +119,7 @@ const Categories: NextPageWithLayout = () => {
     };
   }, [lastMovieRef.current, handleLoadMore]);
 
-  if (!movies) {
+  if (!movies || !gener) {
     return (
       <Typography fontSize={"250px"} textAlign={"center"}>
         <CircularProgress />
@@ -160,19 +161,20 @@ const Categories: NextPageWithLayout = () => {
           PaperProps={{
             style: {
               backgroundColor: "#242A32",
-              maxHeight: `${maxPopoverHeight}px`,
+              maxHeight: `300px`,
               overflowY: "auto",
               display: "flex",
               flexDirection: "row",
               flexWrap: "wrap",
               justifyContent: "space-between",
-              padding: "16px",
+              padding: "14px",
+              width: "100%",
             },
           }}
         >
           <Box sx={{ width: "calc(50% - 16px)" }}>
-            {gener?.genres
-              .slice(0, Math.ceil(gener.genres.length / 2))
+            {genresWithAll
+              .slice(0, Math.ceil(genresWithAll.length / 2))
               .map((genre) => (
                 <Box
                   key={genre.id.toString()}
@@ -182,8 +184,8 @@ const Categories: NextPageWithLayout = () => {
                     borderRadius: "2px",
                     marginBottom: "8px",
                     backgroundColor:
-                      selectedGenre == genre.id ? "#0CC2FF95" : "transparent",
-                    color: selectedGenre == genre.id ? "white" : "#fff",
+                      selectedGenre === genre.id ? "#0CC2FF95" : "transparent",
+                    color: selectedGenre === genre.id ? "white" : "#fff",
                     "&:hover": {
                       backgroundColor: "#333",
                       cursor: "pointer",
@@ -194,13 +196,13 @@ const Categories: NextPageWithLayout = () => {
                     handleMenuClose();
                   }}
                 >
-                  {genre.name}
+                  {genre.id === 0 ? "All" : genre.name}
                 </Box>
               ))}
           </Box>
           <Box sx={{ width: "calc(50% - 16px)" }}>
-            {gener?.genres
-              .slice(Math.ceil(gener.genres.length / 2))
+            {genresWithAll
+              .slice(Math.ceil(genresWithAll.length / 2))
               .map((genre) => (
                 <Box
                   key={genre.id.toString()}
@@ -210,8 +212,8 @@ const Categories: NextPageWithLayout = () => {
                     borderRadius: "2px",
                     marginBottom: "8px",
                     backgroundColor:
-                      selectedGenre == genre.id ? "#0CC2FF95" : "transparent",
-                    color: selectedGenre == genre.id ? "white" : "#fff",
+                      selectedGenre === genre.id ? "#0CC2FF95" : "transparent",
+                    color: selectedGenre === genre.id ? "white" : "#fff",
                     "&:hover": {
                       backgroundColor: "#333",
                       cursor: "pointer",
@@ -222,30 +224,13 @@ const Categories: NextPageWithLayout = () => {
                     handleMenuClose();
                   }}
                 >
-                  {genre.name}
+                  {genre.id === 0 ? "All" : genre.name}
                 </Box>
               ))}
           </Box>
         </Popover>
       </Box>
-      <Box
-        sx={{
-          color: "white",
-          fontSize: "18px",
-          textAlign: "center",
-          padding: "10px",
-          backgroundColor: "#161722",
-          borderRadius: "0px",
-          fontWeight: "bold",
-        }}
-      >
-        Selected:
-        {
-          gener?.genres.find(
-            (tl) => tl.id == (selectedGenre != 0 ? selectedGenre : id)
-          )?.name
-        }
-      </Box>
+
       <Box sx={{ padding: "16px", textAlign: "center" }}>
         <Grid container spacing={1}>
           {movieGener?.map((movie, index) => (
@@ -279,19 +264,6 @@ const Categories: NextPageWithLayout = () => {
             Loading...
           </Button>
         )}
-
-        {!movieGener ||
-          (movieGener.length === 0 && (
-            <Box
-              sx={{
-                color: "white",
-                fontSize: "16px",
-                marginTop: "20px",
-              }}
-            >
-              Nothing to show.
-            </Box>
-          ))}
       </Box>
     </>
   );
