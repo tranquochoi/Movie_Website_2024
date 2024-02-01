@@ -15,6 +15,14 @@ const Now: NextPageWithLayout = () => {
 
   const renderMovies = (start: number, end: number) => (
     <>
+      {data?.results.slice(start, end).map((movie: Movie, index: number) => (
+        <RenderMovie data={movie} />
+      ))}
+    </>
+  );
+
+  return (
+    <Box sx={{ display: "flex", flexDirection: "column", gap: 5 }}>
       <Box
         sx={{
           display: "flex",
@@ -26,17 +34,10 @@ const Now: NextPageWithLayout = () => {
           paddingRight: "16px",
         }}
       >
-        {data?.results.slice(start, end).map((movie: Movie) => (
-          <RenderMovie data={movie} />
-        ))}
+        {renderMovies(0, 10)}
+        {renderMovies(10, 20)}
       </Box>
-    </>
-  );
 
-  return (
-    <Box sx={{ display: "flex", flexDirection: "column", gap: 5 }}>
-      {renderMovies(0, 10)}
-      {renderMovies(10, 20)}
       <Box sx={{ height: "32px" }} />
     </Box>
   );

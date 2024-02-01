@@ -3,7 +3,7 @@ import { Button, CircularProgress, Box } from "@mui/material";
 import axios from "axios";
 import useSWR from "swr";
 import { getCookie } from "cookies-next";
-import { MovieList } from "@/components/Models/Movies";
+import { Movie, MovieList } from "@/components/Models/Movies";
 import HeartIcon from "@mui/icons-material/Favorite";
 
 interface IconFavoriteProps {
@@ -16,18 +16,16 @@ function IconFavorite(props: IconFavoriteProps): JSX.Element {
   const fetcher = (url: string) =>
     axios.get(url).then((response) => response.data);
   const [isLiked, setIsLiked] = useState(false);
-  const { data: movieFavorite, isLoading } = useSWR<MovieList>(
+  const { data: movieFavorite, isLoading } = useSWR<Movie>(
     session_id
-      ? `account/${user_id}/favorite/movies?language=en-US&page=1&session_id=${session_id}&sort_by=created_at.asc`
+      ? `https://api.themoviedb.org/3/movie/${props.id}/account_states?session_id=${session_id}`
       : null,
     fetcher
   );
 
   useEffect(() => {
-    if (movieFavorite && movieFavorite.results) {
-      const liked = movieFavorite.results.find(
-        (movie) => movie.id === props.id
-      );
+    if (movieFavorite) {
+      const liked = movieFavorite.id == props.id;
       setIsLiked(liked !== undefined);
     }
   }, [movieFavorite, props.id]);

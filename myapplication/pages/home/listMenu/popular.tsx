@@ -5,7 +5,6 @@ import { NextPageWithLayout } from "@/pages/_app";
 import RenderMovie2 from "./renderMovie2";
 import { Movie } from "@/components/Models/Movies";
 
-
 const Popular: NextPageWithLayout = () => {
   const fetcher = (url: string) =>
     axios.get(url).then((response) => response.data);
@@ -34,8 +33,7 @@ const Popular: NextPageWithLayout = () => {
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 5 }}>
-      {renderMovies(0, 6)}
-      {renderMovies(6, 12)}
+      {renderMovies(0, 20)}
       <Box sx={{ height: "32px" }} />
     </Box>
   );
