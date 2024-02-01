@@ -65,9 +65,9 @@ function IconAddRating(props: { id: Number }) {
   return (
     <>
       <Box sx={{ display: "flex", flexDirection: "row", mt: "10px" }}>
-        <Typography sx={{ color: "#92929D", fontSize: "1rem", pl: "26px" }}>
+        <Box sx={{ color: "#92929D", fontSize: "1rem", pl: "26px" }}>
           Your rating:
-        </Typography>
+        </Box>
         <Button
           onClick={toggleBoxVisibility}
           sx={{ color: "#876", top: "-5px" }}
