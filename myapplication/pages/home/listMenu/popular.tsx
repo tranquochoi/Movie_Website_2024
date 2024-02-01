@@ -4,9 +4,7 @@ import axios from "axios";
 import { NextPageWithLayout } from "@/pages/_app";
 import RenderMovie2 from "./renderMovie2";
 import { Movie } from "@/components/Models/Movies";
-import RenderMovie3 from "./renderMovie3";
-import RenderMovie from "./renderMovie";
-import RenderMovie4 from "./renderMovie4";
+
 
 const Popular: NextPageWithLayout = () => {
   const fetcher = (url: string) =>

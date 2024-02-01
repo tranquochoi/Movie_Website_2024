@@ -63,8 +63,6 @@ export default function NavDetail() {
       position="static"
       sx={{
         backgroundColor: "#242A32",
-        marginTop: "10px",
-        marginBottom: "10px",
         boxShadow: "none",
         textAlign: "center",
       }}
