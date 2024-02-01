@@ -34,8 +34,7 @@ const UpComing: NextPageWithLayout = () => {
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 5 }}>
-      {renderMovies(0, 10)}
-      {renderMovies(10, 20)}
+      {renderMovies(0, 20)}
       <Box sx={{ height: "32px" }} />
     </Box>
   );

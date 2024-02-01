@@ -228,7 +228,7 @@ const Detail: NextPageWithLayout = () => {
           </Stack>
         </Stack>
       </Stack>
-
+      <AddRatingIcon id={data.id} />
       <Box sx={{ height: "28px" }}></Box>
 
       <TabDetail />

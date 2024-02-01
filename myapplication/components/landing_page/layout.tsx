@@ -13,8 +13,7 @@ import {
 } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import SearchIcon from "@mui/icons-material/Search";
-import BookmarkIcon from "@mui/icons-material/Bookmark";
-
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 interface MenuItemObject {
   title: string;
   url: string;
@@ -25,7 +24,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const menu: MenuItemObject[] = [
     { title: "Home", url: "/home", icon: <HomeIcon /> },
     { title: "Search", url: "/movie-search", icon: <SearchIcon /> },
-    { title: "Watch List", url: "/movie-watchlist", icon: <BookmarkIcon /> },
+    { title: "Users", url: "/users", icon: <AccountCircleIcon /> },
   ];
 
   const router = useRouter();
@@ -63,10 +62,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     >
                       <IconButton
                         sx={{
-                          color: `${
-                            currentMenu === index ? "#0296E5" : "#67686D"
-                          }`,
-                          padding: "16px 40px",
+                          color: `${currentMenu === index ? "#0296E5" : "#67686D"
+                            }`,
+                          padding: "12px 40px",
                           height: "24px",
                         }}
                       >
@@ -74,9 +72,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                       </IconButton>
                       <Typography
                         variant="caption"
-                        color={`${
-                          currentMenu === index ? "#0296E5" : "#67686D"
-                        }`}
+                        color={`${currentMenu === index ? "#0296E5" : "#67686D"
+                          }`}
                       >
                         {item.title}
                       </Typography>

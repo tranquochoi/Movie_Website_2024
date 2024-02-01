@@ -4,7 +4,7 @@ import axios from "axios";
 import { NextPageWithLayout } from "@/pages/_app";
 import RenderMovie2 from "./renderMovie2";
 import { Movie } from "@/components/Models/Movies";
-import RenderMovie3 from "./renderMovie3";
+
 import RenderMovie4 from "./renderMovie4";
 import RenderMovieIndex from "./renderMovieIndex";
 import RenderMovie from "./renderMovie";
@@ -26,10 +26,15 @@ const TopRated: NextPageWithLayout = () => {
   );
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        gap: 4,
+      }}
+    >
       {renderMovies(0, 20)}
-
-      <Box sx={{ height: "10px" }} />
+      <Box sx={{ height: "20px" }} />
     </Box>
   );
 };

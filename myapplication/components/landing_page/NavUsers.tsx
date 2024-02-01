@@ -17,7 +17,7 @@ import BookmarkIcon from "@mui/icons-material/Bookmark";
 
 import { useRouter } from "next/router";
 
-export default function NavWatchlist() {
+export default function NavUsers() {
   const router = useRouter();
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -39,7 +39,6 @@ export default function NavWatchlist() {
       position="static"
       sx={{
         backgroundColor: "#242A32",
-        marginTop: "10px",
         marginBottom: "10px",
         boxShadow: "none",
         textAlign: "center",
@@ -54,8 +53,8 @@ export default function NavWatchlist() {
         >
           <ArrowBackIosNewOutlinedIcon />
         </IconButton>
-        <Box component="div" sx={{ flexGrow: 1, marginRight: "20px" }}>
-          Watchlist
+        <Box component="div" sx={{ flexGrow: 1, marginRight: "26px" }}>
+          Users
         </Box>
       </Toolbar>
     </AppBar>

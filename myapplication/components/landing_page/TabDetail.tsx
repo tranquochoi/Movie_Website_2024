@@ -115,12 +115,7 @@ export function TabDetail() {
         </Tabs>
       </Box>
 
-      <Dialog open={openDialog} onClose={toggleDialog}>
-        <DialogContent>
-          <Box sx={{ fontSize: "1.5rem", height: "50px" }}>Introduce</Box>
-          <Box>{`Movie Title: ${data?.overview}`}</Box>
-        </DialogContent>
-      </Dialog>
+
 
       <CustomTabPanel value={value} index={0}>
         <RenderAboutMV data={parseInt(id as string)} />

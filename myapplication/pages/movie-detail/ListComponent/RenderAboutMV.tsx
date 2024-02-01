@@ -49,6 +49,12 @@ function RenderAboutMV(props: { data: Number }) {
         </Box>
         <ArrowCircleRightIcon />
       </IconButton>
+      <Dialog open={openDialog} onClose={toggleDialog}>
+        <DialogContent>
+          <Box sx={{ fontSize: "1.5rem", height: "50px" }}>Introduce</Box>
+          <Box>{`Movie Title: ${data?.overview}`}</Box>
+        </DialogContent>
+      </Dialog>
       <RenderImages id={props.data}></RenderImages>
       {similarLoading ? (
         <CircularProgress />

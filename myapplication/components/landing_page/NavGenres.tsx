@@ -9,6 +9,7 @@ import Button from "@mui/material/Button";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import Popover from "@mui/material/Popover";
 import { ListGenre } from "@/components/Models/Geners";
+import { useState, useEffect } from "react";
 
 interface NavGenresProps {
   selectedGenre: number;
@@ -16,7 +17,7 @@ interface NavGenresProps {
   handleMenuClose: () => void;
   gener: ListGenre | undefined;
   setSelectedGenre: React.Dispatch<React.SetStateAction<number>>;
-  anchorEl: HTMLElement | null; // Define anchorEl prop
+  anchorEl: HTMLElement | null;
 }
 
 const NavGenres: React.FC<NavGenresProps> = ({
@@ -25,9 +26,27 @@ const NavGenres: React.FC<NavGenresProps> = ({
   handleMenuClose,
   gener,
   setSelectedGenre,
-  anchorEl, // Accept anchorEl prop
+  anchorEl,
 }) => {
   const router = useRouter();
+  const [selectedGenreName, setSelectedGenreName] = useState("Genres");
+
+  useEffect(() => {
+    // Update selectedGenreName when selectedGenre changes
+    if (selectedGenre === 0) {
+      setSelectedGenreName("All");
+    } else {
+      const selectedGenreObject = gener?.genres.find(
+        (genre) => genre.id === selectedGenre
+      );
+      setSelectedGenreName(selectedGenreObject?.name || "Genres");
+    }
+  }, [selectedGenre, gener]);
+
+  const handleGenreSelect = (genreId: number) => {
+    setSelectedGenre(genreId);
+    handleMenuClose();
+  };
 
   const maxPopoverHeight = 10 * 30;
 
@@ -62,10 +81,8 @@ const NavGenres: React.FC<NavGenresProps> = ({
               fontFamily: "Arial, sans-serif",
             }}
           >
-            Genres <KeyboardArrowDownIcon />
+            {selectedGenreName} <KeyboardArrowDownIcon />
           </Button>
-
-          {/* Genre selection popover */}
           <Popover
             open={Boolean(anchorEl)}
             anchorEl={anchorEl}
@@ -91,7 +108,6 @@ const NavGenres: React.FC<NavGenresProps> = ({
               },
             }}
           >
-            {/* Genre list */}
             <Box sx={{ width: "calc(50% - 16px)" }}>
               {gener?.genres
                 .slice(0, Math.ceil(gener.genres.length / 2))
@@ -104,44 +120,17 @@ const NavGenres: React.FC<NavGenresProps> = ({
                       borderRadius: "2px",
                       marginBottom: "8px",
                       backgroundColor:
-                        selectedGenre == genre.id ? "#0CC2FF95" : "transparent",
-                      color: selectedGenre == genre.id ? "white" : "#fff",
+                        selectedGenre === genre.id
+                          ? "#0CC2FF95"
+                          : "transparent",
+                      color: selectedGenre === genre.id ? "white" : "#fff",
                       "&:hover": {
                         backgroundColor: "#333",
                         cursor: "pointer",
                       },
                     }}
                     onClick={() => {
-                      setSelectedGenre(genre.id);
-                      handleMenuClose();
-                    }}
-                  >
-                    {genre.name}
-                  </Box>
-                ))}
-            </Box>
-            <Box sx={{ width: "calc(50% - 16px)" }}>
-              {gener?.genres
-                .slice(Math.ceil(gener.genres.length / 2))
-                .map((genre) => (
-                  <Box
-                    key={genre.id.toString()}
-                    sx={{
-                      border: "2px solid #888",
-                      padding: "4px 8px",
-                      borderRadius: "2px",
-                      marginBottom: "8px",
-                      backgroundColor:
-                        selectedGenre == genre.id ? "#0CC2FF95" : "transparent",
-                      color: selectedGenre == genre.id ? "white" : "#fff",
-                      "&:hover": {
-                        backgroundColor: "#333",
-                        cursor: "pointer",
-                      },
-                    }}
-                    onClick={() => {
-                      setSelectedGenre(genre.id);
-                      handleMenuClose();
+                      handleGenreSelect(genre.id);
                     }}
                   >
                     {genre.name}
@@ -149,7 +138,6 @@ const NavGenres: React.FC<NavGenresProps> = ({
                 ))}
             </Box>
           </Popover>
-          {/* End of genre selection popover */}
         </Toolbar>
       </AppBar>
     </Box>

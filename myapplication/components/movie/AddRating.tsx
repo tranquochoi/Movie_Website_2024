@@ -39,7 +39,8 @@ function IconAddRating(props: { id: Number }) {
       : null,
     fetcher
   );
-  const vl = movieRated?.results.find((movie) => movie.id == props.id)?.rating;
+  const vl =
+    movieRated?.results.find((movie) => movie.id == props.id)?.rating / 2;
 
   const [rating, setRating] = useState(0);
 
@@ -49,8 +50,9 @@ function IconAddRating(props: { id: Number }) {
 
   const handleRateMovie = async (value: number) => {
     try {
+      value = value * 2;
       const response = await axios.post(
-        `https://api.themoviedb.org/3/movie/${props.id}/rating?api_key=95c77b4ffbd4a5cc35c3b79d2b9aa4fb`,
+        `https://api.themoviedb.org/3/movie/${props.id}/rating?session_id=${session_id}`,
         { value }
       );
 
@@ -62,15 +64,19 @@ function IconAddRating(props: { id: Number }) {
   };
   return (
     <>
-      <Box>
-        <Button onClick={toggleBoxVisibility}>
-          {isBoxVisible ? "Ratting" : "Your Rating: "}
-        </Button>
-        {isBoxVisible && (
+      <Box sx={{ display: "flex", flexDirection: "row", mt: "10px" }}>
+        <Box sx={{ color: "#92929D", fontSize: "1rem", pl: "26px" }}>
+          Your rating:
+        </Box>
+        <Button
+          onClick={toggleBoxVisibility}
+          sx={{ color: "#876", top: "-5px" }}
+        >
           <Box>
             <Rating
               name="movie-rating"
               value={rating == 0 ? vl : rating}
+              color="#7B61FF"
               precision={0.5}
               onChange={(event, newValue) => {
                 setRating(newValue);
@@ -79,7 +85,7 @@ function IconAddRating(props: { id: Number }) {
               }}
             />
           </Box>
-        )}
+        </Button>
       </Box>
     </>
   );
