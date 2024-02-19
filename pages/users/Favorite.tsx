@@ -14,14 +14,9 @@ import {
   Popover,
   Grid,
 } from "@mui/material";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { NextPageWithLayout } from "../_app";
-import RenderMovie2 from "../home/listMenu/renderMovie2";
-
-import RenderMovie4 from "../home/listMenu/renderMovie4";
 import { getCookie } from "cookies-next";
-import NavProfile from "@/components/landing_page/NavProfile";
-
+import RenderMovie4 from "../home/listMenu/renderMovie4";
 const FavoriteMovie: NextPageWithLayout = () => {
   const router = useRouter();
   const { id } = router.query;
@@ -47,17 +42,17 @@ const FavoriteMovie: NextPageWithLayout = () => {
           page: newMovies.page,
           results: prevMovies
             ? [
-                ...prevMovies.results,
-                ...newMovies.results.filter(
-                  (newMovie: { id: Number }) =>
-                    !prevMovies.results.some(
-                      (existingMovie) => existingMovie.id === newMovie.id
-                    )
-                ),
-              ]
+              ...prevMovies.results,
+              ...newMovies.results.filter(
+                (newMovie: { id: Number }) =>
+                  !prevMovies.results.some(
+                    (existingMovie) => existingMovie.id === newMovie.id
+                  )
+              ),
+            ]
             : newMovies.results,
         }));
-      } catch (error) {}
+      } catch (error) { }
     };
 
     fetchMovies();
