@@ -14,14 +14,9 @@ import {
   Popover,
   Grid,
 } from "@mui/material";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { NextPageWithLayout } from "../_app";
-import RenderMovie2 from "../home/listMenu/renderMovie2";
-import RenderMovie3 from "../home/listMenu/renderMovie3";
-import RenderMovie4 from "../home/listMenu/renderMovie4";
 import { getCookie } from "cookies-next";
-import NavProfile from "@/components/landing_page/NavProfile";
-
+import RenderMovie4 from "../home/listMenu/renderMovie4";
 const FavoriteMovie: NextPageWithLayout = () => {
   const router = useRouter();
   const { id } = router.query;
@@ -130,7 +125,6 @@ const FavoriteMovie: NextPageWithLayout = () => {
             </Box>
           ))}
       </Box>
-
     </>
   );
 };

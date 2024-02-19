@@ -9,9 +9,10 @@ import {
 } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
 import EventIcon from "@mui/icons-material/Event";
-import { Movie } from "./Models/Movies";
+
 import { format } from "date-fns";
 import StarOutlineIcon from "@mui/icons-material/StarOutline";
+import { Movie } from "@/components/Models/Movies";
 
 interface MovieCardProps {
   movie: Movie;

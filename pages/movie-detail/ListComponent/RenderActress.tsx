@@ -1,10 +1,10 @@
 import { Box, Grid, Link, Typography, Paper } from "@mui/material";
 import { Cast } from "../../../components/Models/Credits";
 
-function RenderActress(props: { data: Cast[] }) {
+function RenderActress(props: { data?: Cast[] }) {
   return (
     <Grid container spacing={2}>
-      {props.data.map((credit) => (
+      {props.data?.map((credit) => (
         <Grid item xs={12} key={credit.id}>
           <Paper
             elevation={2}

@@ -39,9 +39,8 @@ function IconAddRating(props: { id: Number }) {
       : null,
     fetcher
   );
-  const vl =
-    movieRated?.results.find((movie) => movie.id == props.id)?.rating / 2;
-
+  const vl = movieRated?.results.find((movie) => (movie.id = props.id))
+    ?.rating as number;
   const [rating, setRating] = useState(0);
 
   const toggleBoxVisibility = () => {
@@ -79,8 +78,8 @@ function IconAddRating(props: { id: Number }) {
               color="#7B61FF"
               precision={0.5}
               onChange={(event, newValue) => {
-                setRating(newValue);
-                handleRateMovie(newValue);
+                setRating(newValue as number);
+                handleRateMovie(newValue as number);
                 toggleBoxVisibility;
               }}
             />

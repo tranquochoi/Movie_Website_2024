@@ -15,7 +15,7 @@ interface Author_detail {
   rating: number;
 }
 
-function RenderReview(props: { data: ReviewProps[] }) {
+function RenderReview(props: { data?: ReviewProps[] }) {
   const [expanded, setExpanded] = useState<number | null>(null);
 
   const toggleExpand = (index: number) => {
@@ -28,7 +28,7 @@ function RenderReview(props: { data: ReviewProps[] }) {
 
   return (
     <>
-      {props.data.map((credit, index) => (
+      {props.data?.map((credit, index) => (
         <Box
           key={credit.created_at}
           sx={{
@@ -91,7 +91,10 @@ function RenderReview(props: { data: ReviewProps[] }) {
             {credit.content.length > 100 && (
               <Button
                 style={{
-                  fontSize: 'small', textTransform: 'none', fontFamily: "Arial, sans-serif", fontWeight: 600
+                  fontSize: "small",
+                  textTransform: "none",
+                  fontFamily: "Arial, sans-serif",
+                  fontWeight: 600,
                 }}
                 onClick={() => toggleExpand(index)}
               >
@@ -106,6 +109,5 @@ function RenderReview(props: { data: ReviewProps[] }) {
 }
 
 export default RenderReview;
-
 
 //<RenderReview data={data.reviews.results}></RenderReview>;
