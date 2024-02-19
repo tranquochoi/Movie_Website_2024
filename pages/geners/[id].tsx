@@ -131,12 +131,6 @@ const Categories: NextPageWithLayout = () => {
 
   return (
     <>
-      <NavGenres
-        handleMenuOpen={handleMenuOpen}
-        gener={gener}
-        selectedGenre={selectedGenre}
-        handleGenreSelect={handleGenreSelect}
-      />
       <Box
         sx={{
           color: "#92929D",
