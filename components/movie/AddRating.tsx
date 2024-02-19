@@ -78,8 +78,8 @@ function IconAddRating(props: { id: Number }) {
               color="#7B61FF"
               precision={0.5}
               onChange={(event, newValue) => {
-                setRating(newValue);
-                handleRateMovie(newValue);
+                setRating(newValue as number);
+                handleRateMovie(newValue as number);
                 toggleBoxVisibility;
               }}
             />
