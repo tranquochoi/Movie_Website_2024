@@ -57,7 +57,7 @@ const Categories: NextPageWithLayout = () => {
           ? [
               ...prevMovies.results,
               ...newMovies.results.filter(
-                (newMovie: { id: Int16Array }) =>
+                (newMovie: { id: number }) =>
                   !prevMovies.results.some(
                     (existingMovie) => existingMovie.id === newMovie.id
                   )
