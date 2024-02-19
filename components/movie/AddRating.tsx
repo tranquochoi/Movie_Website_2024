@@ -39,9 +39,8 @@ function IconAddRating(props: { id: Number }) {
       : null,
     fetcher
   );
-  const vl =
-    movieRated?.results.find((movie) => movie.id == props.id)?.rating / 2;
-
+  const vl = movieRated?.results.find((movie) => (movie.id = props.id))
+    ?.rating as number;
   const [rating, setRating] = useState(0);
 
   const toggleBoxVisibility = () => {
