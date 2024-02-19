@@ -19,7 +19,7 @@ import StarIcon from "@mui/icons-material/Star";
 import StarOutlineIcon from "@mui/icons-material/StarOutline";
 import { CircularProgress } from "@mui/material";
 import RenderMovieRelate from "@/pages/home/listMenu/RenderMovieRelate";
-function RenderAboutMV(props: { data: Number }) {
+function RenderAboutMV(props: { data: number }) {
   const { data, isLoading, error } = useSWR<Movie>(
     `/movie/${props.data}?language=en-US&append_to_response=videos,credits,reviews`
   );
@@ -69,7 +69,7 @@ function RenderAboutMV(props: { data: Number }) {
             <CircularProgress />
           ) : (
             <Stack direction="column" spacing={2}>
-              {similarMovies?.results?.map((similarMovie) => (
+              {similarMovies?.results?.map((similarMovie: Movie) => (
                 <RenderMovieRelate data={similarMovie} />
               ))}
             </Stack>
