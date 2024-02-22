@@ -20,6 +20,7 @@ const Header = () => {
       >
         <Box>The Movie</Box>
         <AvatarView />
+        <Box></Box>
       </Box>
     </>
   );
