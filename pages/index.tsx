@@ -1,4 +1,5 @@
 import type { ReactElement } from "react";
+import Layout from "@/components/landing_page/layout";
 import {
   Box,
   Container,
