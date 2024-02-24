@@ -21,16 +21,22 @@ const Categories: NextPageWithLayout = () => {
   const router = useRouter();
   const { id } = router.query;
   const [selectedGenre, setSelectedGenre] = useState(0);
+  const [al, setAl] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        if (selectedGenre == 0) setSelectedGenre(parseInt(id as string));
-      } catch (error) {
-        console.error("Error fetching genre name:", error);
+      if (!al) {
+        try {
+          {
+            setSelectedGenre(parseInt(id as string));
+          }
+        } catch (error) {
+          console.error("Error fetching genre name:", error);
+        }
       }
     };
     fetchData();
   });
+
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [movies, setMovies] = useState<MovieList | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -231,6 +237,7 @@ const Categories: NextPageWithLayout = () => {
                   }}
                   onClick={() => {
                     setSelectedGenre(genre.id);
+                    setAl(true);
                     handleMenuClose();
                   }}
                 >
