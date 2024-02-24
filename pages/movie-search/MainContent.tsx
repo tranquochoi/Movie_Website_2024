@@ -16,7 +16,7 @@ const MainContent: React.FC<MainContentProps> = ({
     {isLoading && <CircularProgress />}
     <Grid container spacing={1}>
       {displayedMovies.map((movie) => (
-        <Grid xs={12} sm={2} md={4} lg={3}>
+        <Grid item key={movie.id} xs={12} sm={2} md={4} lg={3}>
           <MovieCard movie={movie} />
         </Grid>
       ))}

@@ -27,14 +27,12 @@ function RenderMovieRelate(props: { data: Movie }) {
     return null;
   }
   const getGenreNameById = (genreId: number) => {
-    const genre = movieGenres.genres.find(
-      (g: { id: number }) => g.id === genreId
-    );
+    const genre = movieGenres.genres.find((g) => g.id === genreId);
     return genre ? genre.name : "Unknown Genre";
   };
   const formatDate = (dateString: string) => {
     const options = { year: "numeric", month: "long", day: "numeric" };
-    return new Date(dateString).toLocaleDateString("en-US");
+    return new Date(dateString).toLocaleDateString("en-US", options);
   };
   const truncateMovieTitle = (title: string, maxLength: number) => {
     if (title.length > maxLength) {
