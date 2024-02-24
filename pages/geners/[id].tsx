@@ -57,7 +57,7 @@ const Categories: NextPageWithLayout = () => {
           ? [
               ...prevMovies.results,
               ...newMovies.results.filter(
-                (newMovie: { id: number }) =>
+                (newMovie: { id: Int16Array }) =>
                   !prevMovies.results.some(
                     (existingMovie) => existingMovie.id === newMovie.id
                   )
@@ -131,6 +131,12 @@ const Categories: NextPageWithLayout = () => {
 
   return (
     <>
+      <NavGenres
+        handleMenuOpen={handleMenuOpen}
+        gener={gener}
+        selectedGenre={selectedGenre}
+        handleGenreSelect={handleGenreSelect}
+      />
       <Box
         sx={{
           color: "#92929D",

@@ -1,7 +1,6 @@
 import { Movie } from "./Movies";
 
 export interface People {
-  gender: number;
   also_known_as: string;
   birthday: string;
   name: string;
@@ -12,7 +11,6 @@ export interface People {
   biography: string;
   external_ids: Info;
   movie_credits: MovieCredits;
-  cali: string;
 }
 export interface MovieCredits {
   cast: Movie[];
