@@ -4,6 +4,7 @@ export interface People {
   also_known_as: string;
   birthday: string;
   name: string;
+  gender: number;
   images: PeopleImage;
   known_for_department: string;
   place_of_birth: string;

@@ -24,7 +24,7 @@ const Categories: NextPageWithLayout = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setSelectedGenre(parseInt(id as string));
+        if (selectedGenre == 0) setSelectedGenre(parseInt(id as string));
       } catch (error) {
         console.error("Error fetching genre name:", error);
       }
