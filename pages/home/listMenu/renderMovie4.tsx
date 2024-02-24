@@ -70,7 +70,7 @@ function RenderMovie4(props: { data: Movie }) {
           elevation={4}
           sx={{
             borderRadius: "16px",
-            backgroundColor: "rgba(0, 0, 0, 0.1)",
+            backgroundColor: "rgba(0, 0, 0, 0.3)",
           }}
         >
           <Link href={`/movie-detail/${props.data.id}`} underline="none">
