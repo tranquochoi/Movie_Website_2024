@@ -91,14 +91,21 @@ const Detail: NextPageWithLayout = () => {
           component="img"
           sx={{
             width: "100%",
+            height: "230px",
             objectFit: "cover",
-            borderBottomLeftRadius: "16px",
-            borderBottomRightRadius: "16px",
           }}
           src={backdropImage}
           alt={data.title}
         />
-
+        <Box
+          sx={{
+            position: "absolute",
+            width: "100%",
+            top: "110px",
+            height: "121px", // Thay đổi kích thước theo ý muốn
+            backgroundImage: `linear-gradient(to bottom, rgba(36, 42, 50, 0), rgba(36, 42, 50, 1))`,
+          }}
+        />
         <Stack direction="column" spacing={1}>
           <Box sx={{ display: "flex", flexDirection: "row" }}>
             <Box
@@ -115,7 +122,18 @@ const Detail: NextPageWithLayout = () => {
               src={posterImage}
               alt={data.title}
             />
-
+            <Box
+              sx={{
+                color: "white",
+                pl: "20px",
+                pt: "10px",
+                top: "180px",
+                left: "240px",
+                position: "absolute",
+              }}
+            >
+              {renderStarIcons(data.vote_average)}
+            </Box>
             <Box
               sx={{
                 height: "100px",
@@ -139,16 +157,7 @@ const Detail: NextPageWithLayout = () => {
           >
             <FavoriteIcon id={data.id} />
           </Box>
-          <Box
-            sx={{
-              color: "white",
-              pl: "20px",
-              pt: "10px",
-            }}
-          >
-            {renderStarIcons(data.vote_average)} From{" "}
-            {data.vote_count.toLocaleString()} users
-          </Box>
+
           <Stack direction="column" alignItems="left" spacing={1}>
             <Box
               sx={{
