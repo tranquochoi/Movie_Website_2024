@@ -1,28 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Person } from "@mui/icons-material";
-import {
-  Box,
-  Button,
-  Dialog,
-  Menu,
-  MenuItem,
-  Stack,
-  Typography,
-  DialogTitle,
-  ListItem,
-  List,
-  ListItemButton,
-  ListItemText,
-  CircularProgress,
-} from "@mui/material";
-import { RequestTokenResponse, User } from "@/components/Models/Auth";
+import { Box } from "@mui/material";
 import axios from "axios";
 import useSWR from "swr";
-import { getCookie, setCookie, deleteCookie } from "cookies-next";
-import { useRouter } from "next/router";
-import { MovieList } from "@/components/Models/Movies";
-import { initialize } from "next/dist/server/lib/render-server";
-import { createInitialRouterState } from "next/dist/client/components/router-reducer/create-initial-router-state";
+import { getCookie } from "cookies-next";
+import { Movie, MovieList } from "@/components/Models/Movies";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 function IconWatchList(props: { id: Number }) {
   const session_id = getCookie("session_id");
@@ -30,18 +11,19 @@ function IconWatchList(props: { id: Number }) {
   const fetcher = (url: string) =>
     axios.get(url).then((response) => response.data);
   const [isLiked, setIsLiked] = useState(false);
-  const { data: movieWL, isLoading } = useSWR<MovieList>(
+  const { data: movieFavorite, isLoading } = useSWR<Movie>(
     session_id
-      ? `account/${user_id}/watchlist/movies?language=en-US&page=1&session_id=${session_id}&sort_by=created_at.asc`
+      ? `https://api.themoviedb.org/3/movie/${props.id}/account_states?session_id=${session_id}`
       : null,
     fetcher
   );
+
   useEffect(() => {
-    if (movieWL && movieWL.results) {
-      const liked = movieWL.results.find((movie) => movie.id === props.id);
-      setIsLiked(liked !== undefined);
+    if (movieFavorite) {
+      const liked = movieFavorite.watchlist;
+      setIsLiked(liked);
     }
-  }, [movieWL, props.id]);
+  }, [movieFavorite, props.id]);
   const updateWatchList = async () => {
     try {
       const response = await axios.post(

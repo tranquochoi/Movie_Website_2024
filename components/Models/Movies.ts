@@ -32,6 +32,8 @@ export interface Movie {
   budget: string;
   genres: Genre[];
   genre_ids: number[];
+  favorite: boolean;
+  watchlist: boolean;
   overview: string;
   vote_average: number;
   release_date: string;
