@@ -16,7 +16,7 @@ const Now: NextPageWithLayout = () => {
   const renderMovies = (start: number, end: number) => (
     <>
       {data?.results.slice(start, end).map((movie: Movie, index: number) => (
-        <RenderMovie data={movie} />
+        movie && movie.release_date ? <RenderMovie key={index} data={movie} /> : null
       ))}
     </>
   );

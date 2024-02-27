@@ -4,7 +4,6 @@ import useSWR from "swr";
 import axios from "axios";
 import { MovieList } from "../../components/Models/Movies";
 import { ListGenre } from "../../components/Models/Geners";
-import NavGenres from "@/components/landing_page/NavGenres";
 import {
   Box,
   CircularProgress,
@@ -12,15 +11,24 @@ import {
   Button,
   Popover,
   Grid,
+  Select,
+  MenuItem,
+  colors,
 } from "@mui/material";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { NextPageWithLayout } from "../_app";
 import RenderMovie4 from "../home/listMenu/renderMovie4";
 
-const Categories: NextPageWithLayout = () => {
+const Categories = () => {
   const router = useRouter();
   const { id } = router.query;
   const [selectedGenre, setSelectedGenre] = useState(0);
+  const [al, setAl] = useState(false);
+
+  useEffect(() => {
+    if (!al && id) {
+      setSelectedGenre(parseInt(id as string));
+    }
+  }, [id, al]);
+
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [movies, setMovies] = useState<MovieList | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -57,7 +65,7 @@ const Categories: NextPageWithLayout = () => {
           ? [
               ...prevMovies.results,
               ...newMovies.results.filter(
-                (newMovie: { id: Int16Array }) =>
+                (newMovie: { id: number }) =>
                   !prevMovies.results.some(
                     (existingMovie) => existingMovie.id === newMovie.id
                   )
@@ -65,7 +73,9 @@ const Categories: NextPageWithLayout = () => {
             ]
           : newMovies.results,
       }));
-    } catch (error) {}
+    } catch (error) {
+      console.error("Error fetching movies:", error);
+    }
   };
 
   useEffect(() => {
@@ -121,22 +131,25 @@ const Categories: NextPageWithLayout = () => {
 
   if (!movies || !gener) {
     return (
-      <Typography fontSize={"250px"} textAlign={"center"}>
+      <Box sx={{ textAlign: "center" }}>
         <CircularProgress />
-      </Typography>
+      </Box>
     );
   }
 
-  const maxPopoverHeight = 10 * 20;
-
   return (
     <>
-      <NavGenres
-        handleMenuOpen={handleMenuOpen}
-        gener={gener}
-        selectedGenre={selectedGenre}
-        handleGenreSelect={handleGenreSelect}
-      />
+      <Select sx={{backgroundColor:'white'}}
+        value={selectedGenre}
+        onChange={(e) => setSelectedGenre(parseInt(e.target.value as string))}
+        
+      >
+        {gener?.genres.map((genre) => (
+          <MenuItem key={genre.id} value={genre.id}>
+            {genre.name}
+          </MenuItem>
+        ))}
+      </Select>
       <Box
         sx={{
           color: "#92929D",
@@ -221,6 +234,7 @@ const Categories: NextPageWithLayout = () => {
                   }}
                   onClick={() => {
                     setSelectedGenre(genre.id);
+                    setAl(true);
                     handleMenuClose();
                   }}
                 >

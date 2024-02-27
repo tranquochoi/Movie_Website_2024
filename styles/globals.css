@@ -21,8 +21,6 @@
   object-fit: contain;
 }
 
-
-
 :root {
   background-color: #242a32;
 }
@@ -30,7 +28,6 @@
 @media (prefers-color-scheme: dark) {
   :root {
     background-color: #242a32;
-
   }
 }
 

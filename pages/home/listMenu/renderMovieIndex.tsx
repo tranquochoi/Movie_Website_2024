@@ -1,4 +1,3 @@
-import { Movie } from "@/components/Models/Movies";
 import {
   Box,
   Card,
@@ -8,8 +7,13 @@ import {
   Typography,
 } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
+import { Movie } from "@/components/Models/Movies";
 
 function RenderMovieIndex(props: { data: Movie }) {
+  const voteAverage = props.data?.vote_average ?? 0; // Sử dụng optional chaining và nullish coalescing
+  const posterPath = props.data?.poster_path || ""; // Kiểm tra và xử lý trường hợp poster_path không tồn tại
+  const title = props.data?.title || ""; // Kiểm tra và xử lý trường hợp title không tồn tại
+
   return (
     <>
       <Box sx={{ position: "relative" }}>
@@ -27,7 +31,7 @@ function RenderMovieIndex(props: { data: Movie }) {
           }}
         >
           <StarIcon sx={{ fontSize: 24, color: "orange" }} />
-          {(props.data.vote_average * 0.5).toFixed(1)}
+          {(voteAverage * 0.5).toFixed(1)}
         </Box>
       </Box>
       <Card
@@ -47,8 +51,8 @@ function RenderMovieIndex(props: { data: Movie }) {
             width: "100%",
             borderRadius: "16px",
           }}
-          image={`https://image.tmdb.org/t/p/w500${props.data.poster_path}`}
-          alt={props.data.title}
+          image={`https://image.tmdb.org/t/p/w500${posterPath}`}
+          alt={title} // Sử dụng biến title đã kiểm tra
         />
         <CardContent />
       </Card>
@@ -57,3 +61,4 @@ function RenderMovieIndex(props: { data: Movie }) {
 }
 
 export default RenderMovieIndex;
+

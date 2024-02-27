@@ -20,7 +20,7 @@ import axios from "axios";
 import useSWR from "swr";
 import { getCookie, setCookie, deleteCookie } from "cookies-next";
 import { useRouter } from "next/router";
-import LogoutIcon from '@mui/icons-material/Logout';
+import LogoutIcon from "@mui/icons-material/Logout";
 function LoggedInAvatar(props: { data: User }) {
   const avatar_path = props.data.avatar.tmdb.avatar_path;
   const username = props.data.username;
@@ -72,7 +72,6 @@ function LoggedInAvatar(props: { data: User }) {
           "aria-labelledby": "basic-button",
         }}
       >
-
         <MenuItem
           onClick={() => {
             handleMenuClose();
@@ -80,7 +79,16 @@ function LoggedInAvatar(props: { data: User }) {
           }}
           sx={{ fontFamily: "Arial, sans-serif" }}
         >
-          <LogoutIcon />  Log out
+          <LogoutIcon /> Log out
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            handleMenuClose();
+            setOpenDialog(true);
+          }}
+          sx={{ fontFamily: "Arial, sans-serif" }}
+        >
+          <LogoutIcon /> Contact us
         </MenuItem>
       </Menu>
       <Dialog open={openDialog} onClose={handleDialogClose}>
@@ -113,7 +121,7 @@ function NotLoggedInAvatar() {
           .get<RequestTokenResponse>("authentication/token/new")
           .then((res) =>
             window.open(
-              `https://www.themoviedb.org/authenticate/${res.data.request_token}?redirect_to=http://localhost:3000/movie/authorize`,
+              `https://www.themoviedb.org/authenticate/${res.data.request_token}?redirect_to=https://movie-website-2024-git-develop-tranquochois-projects.vercel.app/movie/authorize`,
               "_blank",
               "noopener,noreferrer"
             )

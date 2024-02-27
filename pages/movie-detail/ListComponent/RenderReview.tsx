@@ -15,7 +15,7 @@ interface Author_detail {
   rating: number;
 }
 
-function RenderReview(props: { data: ReviewProps[] }) {
+function RenderReview(props: { data?: ReviewProps[] }) {
   const [expanded, setExpanded] = useState<number | null>(null);
 
   const toggleExpand = (index: number) => {
@@ -28,7 +28,7 @@ function RenderReview(props: { data: ReviewProps[] }) {
 
   return (
     <>
-      {props.data.map((credit, index) => (
+      {props.data?.map((credit, index) => (
         <Box
           key={credit.created_at}
           sx={{

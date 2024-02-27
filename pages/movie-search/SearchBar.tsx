@@ -11,7 +11,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
   onSearchTermChange,
 }) => {
   const getOptions = () => {
-    if (searchTerm.length === 0) {
+    if (!searchTerm || searchTerm.length === 0) {
       return [];
     } else {
       return searchTerm.map((term) => term.toLowerCase());
@@ -50,7 +50,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
               ...params.inputProps,
               "aria-label": "search movies",
             }}
-            value={searchTerm.join(" ")}
+            value={searchTerm ? searchTerm.join(" ") : ""}
             onChange={(e) => onSearchTermChange(e.target.value.split(" "))}
           />
           <img
