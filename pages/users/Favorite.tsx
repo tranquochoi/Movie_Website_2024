@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import useSWR from "swr";
 import axios from "axios";
 import { MovieList } from "../../components/Models/Movies";
-import RenderMovie from "../home/listMenu/renderMovie";
-import { ListGenre } from "../../components/Models/Geners";
-import NavGenres from "@/components/landing_page/NavGenres";
 import {
   Box,
   CircularProgress,
@@ -14,13 +10,9 @@ import {
   Popover,
   Grid,
 } from "@mui/material";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { NextPageWithLayout } from "../_app";
-import RenderMovie2 from "../home/listMenu/renderMovie2";
-import RenderMovie3 from "../home/listMenu/renderMovie3";
 import RenderMovie4 from "../home/listMenu/renderMovie4";
 import { getCookie } from "cookies-next";
-import NavProfile from "@/components/landing_page/NavProfile";
 
 const FavoriteMovie: NextPageWithLayout = () => {
   const router = useRouter();

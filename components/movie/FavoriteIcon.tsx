@@ -6,11 +6,7 @@ import { getCookie } from "cookies-next";
 import { Movie, MovieList } from "@/components/Models/Movies";
 import HeartIcon from "@mui/icons-material/Favorite";
 
-interface IconFavoriteProps {
-  id: number;
-}
-
-function IconFavorite(props: IconFavoriteProps): JSX.Element {
+function IconFavorite(props: { id: Number }) {
   const session_id = getCookie("session_id");
   const user_id = getCookie("user_id");
   const fetcher = (url: string) =>
@@ -25,8 +21,8 @@ function IconFavorite(props: IconFavoriteProps): JSX.Element {
 
   useEffect(() => {
     if (movieFavorite) {
-      const liked = movieFavorite.id == props.id;
-      setIsLiked(liked !== undefined);
+      const liked = movieFavorite.favorite;
+      setIsLiked(liked);
     }
   }, [movieFavorite, props.id]);
 
@@ -70,11 +66,7 @@ function IconFavorite(props: IconFavoriteProps): JSX.Element {
   );
 }
 
-interface FavoriteIconProps {
-  id: number;
-}
-
-function FavoriteIcon(props: FavoriteIconProps): JSX.Element {
+function FavoriteIcon(props: { id: Number }) {
   const session_id = getCookie("session_id");
   return <>{session_id ? <IconFavorite id={props.id} /> : null}</>;
 }

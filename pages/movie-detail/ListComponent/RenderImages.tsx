@@ -4,7 +4,7 @@ import useSWR from "swr";
 import { useState, useRef } from "react";
 
 interface RenderImagesProps {
-  id: number;
+  id: Number;
 }
 
 const RenderImages: React.FC<RenderImagesProps> = (props) => {

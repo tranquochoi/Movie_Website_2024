@@ -24,7 +24,6 @@ const TopRated: NextPageWithLayout = () => {
       ))}
     </Box>
   );
-
   return (
     <Box
       sx={{
@@ -34,7 +33,7 @@ const TopRated: NextPageWithLayout = () => {
       }}
     >
       {renderMovies(0, 20)}
-      <Box sx={{ height: "20px" }} />
+      <Box sx={{ height: "30px" }} />
     </Box>
   );
 };
