@@ -32,7 +32,7 @@ const Users: NextPageWithLayout = () => {
                         .get<RequestTokenResponse>("authentication/token/new")
                         .then((res) =>
                             window.open(
-                                `https://www.themoviedb.org/authenticate/${res.data.request_token}?redirect_to=http://localhost:3000/movie/authorize`,
+                                `https://www.themoviedb.org/authenticate/${res.data.request_token}?redirect_to=https://movie-website-2024-git-develop-tranquochois-projects.vercel.app//movie/authorize`,
                                 "_blank",
                                 "noopener,noreferrer"
                             )
