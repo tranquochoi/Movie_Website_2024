@@ -4,7 +4,6 @@ import useSWR from "swr";
 import axios from "axios";
 import { MovieList } from "../../components/Models/Movies";
 import { ListGenre } from "../../components/Models/Geners";
-import NavGenres from "@/components/landing_page/NavGenres";
 import {
   Box,
   CircularProgress,
@@ -12,30 +11,22 @@ import {
   Button,
   Popover,
   Grid,
+  Select,
+  MenuItem,
 } from "@mui/material";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { NextPageWithLayout } from "../_app";
 import RenderMovie4 from "../home/listMenu/renderMovie4";
 
-const Categories: NextPageWithLayout = () => {
+const Categories = () => {
   const router = useRouter();
   const { id } = router.query;
   const [selectedGenre, setSelectedGenre] = useState(0);
   const [al, setAl] = useState(false);
+
   useEffect(() => {
-    const fetchData = async () => {
-      if (!al) {
-        try {
-          {
-            setSelectedGenre(parseInt(id as string));
-          }
-        } catch (error) {
-          console.error("Error fetching genre name:", error);
-        }
-      }
-    };
-    fetchData();
-  });
+    if (!al && id) {
+      setSelectedGenre(parseInt(id as string));
+    }
+  }, [id, al]);
 
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [movies, setMovies] = useState<MovieList | null>(null);
@@ -81,7 +72,9 @@ const Categories: NextPageWithLayout = () => {
             ]
           : newMovies.results,
       }));
-    } catch (error) {}
+    } catch (error) {
+      console.error("Error fetching movies:", error);
+    }
   };
 
   useEffect(() => {
@@ -137,22 +130,24 @@ const Categories: NextPageWithLayout = () => {
 
   if (!movies || !gener) {
     return (
-      <Typography fontSize={"250px"} textAlign={"center"}>
+      <Box sx={{ textAlign: "center" }}>
         <CircularProgress />
-      </Typography>
+      </Box>
     );
   }
 
-  const maxPopoverHeight = 10 * 20;
-
   return (
     <>
-      <NavGenres
-        handleMenuOpen={handleMenuOpen}
-        gener={gener}
-        selectedGenre={selectedGenre}
-        handleGenreSelect={handleGenreSelect}
-      />
+      <Select
+        value={selectedGenre}
+        onChange={(e) => setSelectedGenre(parseInt(e.target.value as string))}
+      >
+        {gener?.genres.map((genre) => (
+          <MenuItem key={genre.id} value={genre.id}>
+            {genre.name}
+          </MenuItem>
+        ))}
+      </Select>
       <Box
         sx={{
           color: "#92929D",
