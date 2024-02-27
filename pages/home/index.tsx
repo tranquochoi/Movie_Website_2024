@@ -20,6 +20,7 @@ import StarIcon from "@mui/icons-material/Star";
 import Person from "@/components/Person";
 import { MovieList } from "../../components/Models/Movies";
 import RenderMovieIndex from "./listMenu/renderMovieIndex";
+import React from "react";
 
 const HomeDetail: NextPageWithLayout = () => {
   const fetcher = (url: string) =>
