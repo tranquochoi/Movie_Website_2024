@@ -5,13 +5,17 @@ import { ListGenre } from "@/components/Models/Geners";
 import axios from "axios";
 import useSWR from "swr";
 import ViewIcon from "@mui/icons-material/Visibility";
+
 function formatNumber(num: number) {
   if (num >= 1) {
     return (num / 1).toFixed(1) + "k";
   }
   return num;
 }
+
 function RenderMovie2(props: { data: Movie }) {
+  if (!props.data || !props.data.id) return null; // Check if props.data or props.data.id is undefined
+
   const fetcher = (url: string) =>
     axios.get(url).then((response) => response.data);
 
@@ -35,7 +39,6 @@ function RenderMovie2(props: { data: Movie }) {
           sx={{
             height: "130px",
             width: "100%",
-
             boxShadow: "none",
             position: "relative",
             borderTopLeftRadius: "16px",
@@ -77,12 +80,10 @@ function RenderMovie2(props: { data: Movie }) {
             position: "relative",
             overflow: "hidden",
             borderRadius: "0px",
-            borderBottomLeftRadius: "16px", // Góc bo tròn cho góc đáy bên trái
+            borderBottomLeftRadius: "16px",
             borderBottomRightRadius: "16px",
-            // Góc bo tròn cho hình nền
           }}
         >
-          {/* Pseudo-element để làm mờ ảnh nền */}
           <Box
             sx={{
               position: "absolute",
@@ -93,7 +94,7 @@ function RenderMovie2(props: { data: Movie }) {
               backgroundImage: `url(https://image.tmdb.org/t/p/w500${props.data.backdrop_path})`,
               backgroundSize: "cover",
               backgroundPosition: "center",
-              filter: "blur(40px)", // Điều chỉnh độ mờ tại đây
+              filter: "blur(40px)",
               zIndex: 0,
             }}
           />

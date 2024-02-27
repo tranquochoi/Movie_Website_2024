@@ -45,9 +45,10 @@ const Detail: NextPageWithLayout = () => {
   }
 
   const formatDate = (dateString: string) => {
-    const options = { year: "numeric", month: "long", day: "numeric" };
+    const options: Intl.DateTimeFormatOptions = { year: "numeric", month: "long", day: "numeric" };
     return new Date(dateString).toLocaleDateString("en-US", options);
   };
+
 
   const formattedReleaseDate = formatDate(data.release_date);
 

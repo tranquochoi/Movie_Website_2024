@@ -33,11 +33,16 @@ function truncateText(text: string, maxLength: number) {
 }
 
 const formatDate = (dateString: string) => {
-  const options = { year: "numeric", month: "long", day: "numeric" };
+  const options: Intl.DateTimeFormatOptions = { year: "numeric", month: "long", day: "numeric" };
   return new Date(dateString).toLocaleDateString("en-US", options);
 };
 
+
 function RenderMovie4(props: { data: Movie }) {
+  if (!props.data || !props.data.release_date) {
+    return null; // Trả về null nếu props.data hoặc props.data.release_date không tồn tại
+  }
+
   const fetcher = (url: string) =>
     axios.get(url).then((response) => response.data);
 

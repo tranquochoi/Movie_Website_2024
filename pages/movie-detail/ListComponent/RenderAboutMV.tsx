@@ -69,7 +69,7 @@ function RenderAboutMV(props: { data: Number }) {
             <CircularProgress />
           ) : (
             <Stack direction="column" spacing={2}>
-              {similarMovies?.results?.map((similarMovie) => (
+              {similarMovies?.results?.map((similarMovie: Movie) => (
                 <RenderMovieRelate data={similarMovie} />
               ))}
             </Stack>

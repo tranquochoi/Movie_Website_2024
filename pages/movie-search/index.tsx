@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import useSWR from "swr";
-import { Movie } from "./Models/Movies";
 import { format } from "date-fns";
 import AppBarComponent from "./AppBarComponent";
 import PaginationComponent from "./Pagination";
@@ -10,6 +9,7 @@ import MainContent from "./MainContent";
 import Layout from "@/components/landing_page/layout";
 import { NextPageWithLayout } from "../_app";
 import SearchBar from "./SearchBar";
+import { Movie } from "@/components/Models/Movies";
 
 const SearchDetail: NextPageWithLayout = () => {
   const router = useRouter();
