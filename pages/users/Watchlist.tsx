@@ -17,7 +17,6 @@ import {
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { NextPageWithLayout } from "../_app";
 import RenderMovie2 from "../home/listMenu/renderMovie2";
-import RenderMovie3 from "../home/listMenu/renderMovie3";
 import RenderMovie4 from "../home/listMenu/renderMovie4";
 import { getCookie } from "cookies-next";
 import Layout from "@/components/landing_page/layout";

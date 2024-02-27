@@ -21,7 +21,7 @@ import Popular from "@/pages/home/listMenu/popular";
 interface MenuItemObject {
   title: string;
 }
-export default function HomeMenu({ }: {}) {
+export default function HomeMenu({}: {}) {
   const menu: MenuItemObject[] = [
     { title: "Now playing" },
     { title: "Up comming" },
@@ -51,7 +51,7 @@ export default function HomeMenu({ }: {}) {
   };
   return (
     <>
-      <Toolbar sx={{ mb: "26px" }}>
+      <Toolbar sx={{ mb: "10px" }}>
         <Box>
           <Stack direction="row" gap={2}>
             {menu.map((item, index) => (
